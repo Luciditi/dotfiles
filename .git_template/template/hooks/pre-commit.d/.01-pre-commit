@@ -1,0 +1,3 @@
+#!/bin/sh
+
+# TODO: Test condition and use exit 1 if pre-commit checks fail

@@ -1,0 +1,10 @@
+#!/bin/sh
+#set -evx
+
+# Execute all scripts in .git/pre-commit.d for testing
+DIR="$(dirname "$0")"/pre-commit.d
+if [ "$(ls "$DIR")" ]; then
+  for PRE_COMMIT_HOOK in "$DIR"/*; do
+    [ -f "$PRE_COMMIT_HOOK" ] && [ -x "$PRE_COMMIT_HOOK" ] && "$PRE_COMMIT_HOOK"
+  done
+fi
