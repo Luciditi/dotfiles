@@ -1,0 +1,84 @@
+[user]
+  name = Shawn Conn
+  email = shawn@luciditi.io
+  useconfigonly = true
+  #gpgsign = true
+  #signingkey = F6B20B16A781816C
+
+[alias]
+  # Shorten commit commands
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  cam = commit -am
+  # Git via vim
+  d = difftool
+  # Diff by words
+  dw = diff --color-words="[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+"
+  # Graph branches
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  # Remove branches not on remote
+  prune-remote = fetch --prune
+  # Remove branches not on local
+  prune-local = remote prune 
+  # Stash even unadded files
+  stash-all = stash save --include-untracked
+  # Undo commit
+  undo = reset --soft HEAD^
+
+[apply]
+  #whitespace = nowarn
+  ignorewhitespace = change
+
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+
+[core]
+  whitespace = -blank-at-eol,-space-before-tab,-blank-at-eof
+  excludesfile = ~/.gitignore_global
+  autocrlf = input
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[ghi]
+  token = !security find-internet-password -a ShawnConn -s github.com -l 'ghi token' -w
+
+[github]
+  user = ShawnConn
+
+[guitool "pull"]
+  cmd = git pull
+[guitool "status"]
+  cmd = git status
+
+[http]
+  sslVerify = true
+
+[init]
+  templatedir = ~/.git_template/template
+
+[mergetool]
+  keepBackup = false
+
+[pager]
+  diff =
+
+[pull]
+  ff = only
+
+[push]
+  default = current
+
+[merge]
+  conflictStyle = diff3
+  ff = no
+
+[status]
+  showUntrackedFiles = all

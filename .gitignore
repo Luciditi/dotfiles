@@ -1,0 +1,220 @@
+####################     TEMPLATE
+
+####################     HISTORY
+.bash_history
+.bash_sessions/
+.composer/cache/
+.lesshst
+.mysql_history
+.ncftp/firewall
+.ncftp/history
+.ncftp/init_v3
+.ncftp/log
+.phpsh/
+.rediscli_history
+.sh_history
+.config/psysh_history
+
+####################     MAC OSX
+Applications/
+Desktop/
+Documents/
+Downloads/
+Google Drive/
+Google Drive
+Keys
+Library/
+Movies/
+Music/
+Pictures/
+Public/
+.CFUserTextEncoding
+.DS_Store
+.MacOSX/
+.Trash/
+
+####################     UBUNTU
+.Xauthority
+
+####################     OTHER
+.adobe/
+.bro
+.cache/fontconfig/
+.dropbox/
+.dvdcss/
+.elinks/
+.gdrive/
+.gcalcli_*
+.fontconfig/
+.itmstransporter/
+.local/
+.sw*
+
+
+####################     WINE & OTHER VM EMULATION
+Applications (Parallels)/
+.docker/
+.wine/
+Wine Files/
+.windows-serial
+
+
+####################     DEV TOOLS
+####################
+####################
+
+
+####################     ANDROID
+.android/
+.nexustools/
+
+####################     ANSIBLE
+.ansible/
+.ansible_galaxy
+playbook.retry
+
+####################     AWS
+.aws/
+
+####################     BASH
+.bash_logout
+.bin/cmsmap/
+
+####################     BOWER
+.cache/bower/
+
+####################     DEV DESKTOP
+Sites/
+.acquia/
+
+####################     DEV ENVIRONMENT
+api
+api-storage
+drupal
+newrelic-npi/
+test
+
+####################     DRUSH
+.bin/drush-source/
+.drush/cache
+Commands
+drush-backups/
+
+####################     FLOOBITS
+.floorc.json
+floobits/
+
+####################     GO
+.bin/go/
+
+####################     HEROKU
+.cache/heroku/
+.config/heroku/
+
+####################     KUBERNETES
+.kube/
+
+####################     NODE.JS
+.v8flags*
+.config/configstore/
+.node-gyp/
+.node_repl_history
+.npm/
+.nvm/
+
+.standard-cache/
+.babel.json
+
+####################     OTHER
+.bin/terminus
+.bin/sh/.slack
+.cocoapods/
+.config/toggl-cli
+.cups/
+.config/hub
+.config/thefuck/
+.htoprc
+.httpie/
+.gnupg/
+.gpg-agent-info
+.lando/
+.lpass/
+.macports/
+.mytop
+.oracle_jre_usage/
+.putty/
+.terminus/
+.sqldeveloper/
+.wireshark/
+.wireshark-etc/
+.wp-cli/
+
+####################     PHP
+.cache/composer/
+.composer
+.config/composer/
+.pdepend
+.pearrc
+
+####################     RACKSPACE
+.rack/
+rack.*
+
+####################     RUBY
+.gem/
+
+####################     RUST
+.cargo/
+
+####################     SSH
+.rnd
+.ssh/
+.sshbak/
+SSH Keys Static
+
+####################     TERRAFORM
+.terraform.d/
+
+####################     TFS
+.microsoft
+
+####################     TRELLO
+.trello-cli/
+
+####################     VAGRANT
+.novaclient/
+.vagrant.d/boxes/
+.vagrant.d/data
+.vagrant.d/gems
+.vagrant.d/insecure_private_key
+.vagrant.d/plugins.json
+.vagrant.d/rgloader/
+.vagrant.d/setup_version
+.vagrant.d/tmp
+VirtualBox\ VMs/
+VirtualBox\ VMs
+www/
+www
+
+####################     VIM
+.cache/abrt/
+.cache/ctrlp/
+.cache/neocomplcache/
+.cache/pip/
+.config/nvim
+.unite/
+.vim/backup/
+.vim/gutentags/
+.vim/init.vim
+.vim/.netrwhist
+.vim/swap/
+.viminfo
+
+####################     ZSH / OH-MY_ZSH
+.oh-my-zsh/
+.zsh_history
+.zsh-update
+.zcompdump*
+####################     DEV TOOLS
+####################
+####################

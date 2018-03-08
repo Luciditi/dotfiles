@@ -1,0 +1,68 @@
+# SED Examples:
+
+>cat file.txt
+unix is great os. unix is opensource. unix is free os.
+learn operating system.
+unixlinux which one you choose.
+
+
+1. Replacing or substituting string
+>sed 's/unix/linux/' file.txt
+linux is great os. unix is opensource. unix is free os.
+learn operating system.
+linuxlinux which one you choose.
+
+
+#2. Replacing the nth occurrence of a pattern in a line.
+>sed 's/unix/linux/2' file.txt
+unix is great os. linux is opensource. unix is free os.
+learn operating system.
+unixlinux which one you choose.
+
+
+#3. Replacing all the occurrence of the pattern in a line.
+>sed 's/unix/linux/g' file.txt
+linux is great os. linux is opensource. linux is free os.
+learn operating system.
+linuxlinux which one you choose.
+
+
+
+#4. Replacing from nth occurrence to all occurrences in a line.
+>sed 's/unix/linux/3g' file.txt
+unix is great os. unix is opensource. linux is free os.
+learn operating system.
+unixlinux which one you choose.
+
+
+
+#5. Changing the slash (/) delimiter.
+>sed 's/http:\/\//www/' file.txt
+
+
+#6. Using & as the matched string.
+>sed 's/unix/{&}/' file.txt
+{unix} is great os. unix is opensource. unix is free os.
+learn operating system.
+{unix}linux which one you choose.
+
+>sed 's/unix/{&&}/' file.txt
+{unixunix} is great os. unix is opensource. unix is free os.
+learn operating system.
+{unixunix}linux which one you choose.
+
+
+#7. Using \1,\2 and so on to \9
+>sed 's/\(unix\)\(linux\)/\2\1/' file.txt
+unix is great os. unix is opensource. unix is free os.
+learn operating system.
+linuxunix which one you choose.
+
+
+#8. Duplicating the replaced line with /p flag
+>sed 's/unix/linux/p' file.txt
+linux is great os. unix is opensource. unix is free os.
+linux is great os. unix is opensource. unix is free os.
+learn operating system.
+linuxlinux which one you choose.
+linuxlinux which one you choose
