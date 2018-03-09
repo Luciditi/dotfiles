@@ -35,6 +35,7 @@ antigen bundle symfony2
 antigen bundle urltools 
 antigen bundle vagrant 
 antigen bundle vi-mode 
+antigen bundle vundle
 antigen bundle wd 
 antigen bundle web-search 
 antigen bundle yum 
