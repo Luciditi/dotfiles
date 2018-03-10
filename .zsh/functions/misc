@@ -1,0 +1,37 @@
+#!/usr/bin/env zsh
+##
+## misc: Various functions
+##
+
+# Execute on every dir change
+function chpwd() {
+  emulate -L zsh
+
+  git-aliases
+}
+
+# Execute on ZSH exit
+function zshexit() {
+
+}
+
+########## OMZ/NVM #################################################################
+export NVM_DIR="$HOME/.nvm"
+
+#@TODO: OMZ has an issue with booting NVM, use wrapper function until resolved.
+function nvm() {
+  if [ -z "$NVM_BOOTED" ]; then
+    export NVM_BOOTED="1"
+    unset -f nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    nvm "$@"
+  fi
+}
+
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  fi
+}
+add-zsh-hook chpwd load-nvmrc

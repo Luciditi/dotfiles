@@ -191,7 +191,7 @@ source "$HOME/.sh/alias"
 
 ##########FUNCTIONS#############################################################
 # Add custom ZSH completions
-fpath=("$HOME/.zsh/completions" "$fpath")
+fpath=("$HOME/.zsh/completions" $fpath)
 autoload -U compinit && compinit -u
 source "$HOME/.sh/functions/"*
 source "$HOME/.zsh/functions/"*
