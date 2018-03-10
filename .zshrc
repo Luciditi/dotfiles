@@ -190,8 +190,10 @@ bindkey '^[[Z' reverse-menu-complete
 source "$HOME/.sh/alias"
 
 ##########FUNCTIONS#############################################################
-source "$HOME/.sh/functions/"*
-source "$HOME/.zsh/functions/"*
+source $HOME/.sh/functions/macos
+source $HOME/.sh/functions/git-aliases
+source $HOME/.sh/functions/misc
+source $HOME/.zsh/functions/misc
 
 ##########COMPLETIONS###########################################################
 # Add custom ZSH completions
