@@ -67,12 +67,12 @@ antigen apply
 # Check for ZDOTDIR to detect PHPStorm
 if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]] ; then
 
+##########P9K###################################################################
   # Setup awesome fonts & config PL9K
   if [[ -d "$HOME/.fonts" ]] ; then
     source $HOME/.fonts/*.sh
   fi
 
-##########P9K###################################################################
   ##### POWERLEVEL9K_CUSTOM_WIFI_SIGNAL:
   POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="black"
   POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="yellow"
