@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+##########ALIASES###############################################################
+alias ..1='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias ..6='cd ../../../../../..'
+alias ..7='cd ../../../../../../..'
+alias ..8='cd ../../../../../../../..'
+alias ..9='cd ../../../../../../../../..'
+
+#Apache Shortcuts
+alias a-gra='sudo service httpd graceful'
+alias a-lo='sudo service httpd reload'
+alias a-resta='sudo service httpd restart'
+alias a-sta='sudo service httpd start'
+alias a-stat='sudo service httpd status'
+alias a-end='sudo service httpd stop'
+alias a-drush='sudo -u apache drush'
+alias a-git='sudo -u apache git'
+
+#Tag git repo
+alias ctagit='ctags -R -f ./.git/tags .'
+
+#Shortcut Drush
+alias dr='drush'
+
+#Colorize grep
+alias grep='grep --color=auto'
+
+#Retrieve git remote
+alias git-remote-current="git branch -vv | grep '\* ' | sed 's/.*\[\(.*\)\].*/\1/g; s/.*(HEAD detached at \(.*\)).*/\1/g; s/\* \(.*\)                           .*/\1/g; s/\*\ \([^ ]*\)\ .*/\1/g'"
+
+#Git push all branches
+alias git-push-branches='git push -u $(git config --get branch.master.remote) --all'
+
+#Shortcut detailed listing
+alias lsl='ls -al'
+
+#No RC Vim
+alias nrcvim='vim -u NONE'
+
+#Toggle Show/Hide hidden files in Finder
+alias osx-file-hide='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+alias osx-file-show='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+
+#Network setup
+alias osx-net-change='networksetup -switchtolocation'
+
+#Adjust alias for pup
+alias pup='$HOME/.bin/go/bin/pup'
+
+#OS-dependant aliases
+case "$OSTYPE" in
+  "darwin"* )
+    #SVIM = root edit w/ .vimrc config
+    alias svim='sudo vim'
+    ;;
+  "linux-gnu" )
+    #SVIM = root edit w/ .vimrc config
+    alias svim='sudoedit'
+    ;;
+  * )
+    ;;
+esac
+
+#Setup Toggl
+alias toggl='nvm use 5.0 && toggl'
+
+#Get external IP
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+
+#WGet to StdOut
+alias wgetout='wget -qO- '
+##########ALIASES###############################################################
