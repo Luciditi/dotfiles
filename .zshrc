@@ -104,7 +104,6 @@ if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]]
   POWERLEVEL9K_VCS_SHOW_SUBMODULE_DIRTY=false
 
   source "$HOME/.zsh/powerlevel9k-override.zsh-theme"
-  ZSH_THEME="powerlevel9k/powerlevel9k"
 ##########P9K###################################################################
 else
   ZSH_THEME="crunch"
