@@ -1,3 +1,4 @@
+##########ZSH###################################################################
 ##########ANTIGEN###############################################################
 # @TODO: Determine if we'll lookup source
 source /usr/local/share/antigen/antigen.zsh
@@ -60,7 +61,7 @@ antigen theme bhilburn/powerlevel9k powerlevel9k
 antigen apply
 ##########ANTIGEN###############################################################
 
-##########ZSH###################################################################
+##########OMZ###################################################################
 
 # DYNAMIC THEME:
 # Check for ZDOTDIR to detect PHPStorm
@@ -89,3 +90,86 @@ else
   ZSH_THEME="crunch"
 fi
 
+#Hide host on local machine
+DEFAULT_USER=me
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+
+# Smart URLs (escape control chars)
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+#Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
+
+# Add custom ZSH completions
+#fpath=($ZSH_CUSTOM/completions $fpath)
+#autoload -U compinit && compinit -u
+# @TODO: Load bin/function/completion/phar/multi-dirs
+
+##########PLUGINS CONFIGURATION#################################################
+#SUDO: Ctrl+z to sudo command
+bindkey "^z" sudo-command-line
+
+#ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command
+bindkey '^ ' autosuggest-accept
+
+#VI MODE: Ctrl+Space to auto complete history command
+#10 ms key sequence for VI mode
+KEYTIMEOUT=1
+
+#Set custom cursor for vi mode
+function zle-keymap-select zle-line-init {
+  # change cursor shape in iTerm2
+  case $KEYMAP in
+    vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+    viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+  esac
+
+  zle reset-prompt
+  zle -R
+}
+function zle-line-finish {
+  print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+}
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
+
+#Fix search results to reverse cron
+history-beginning-search-backward-then-append() {
+  zle history-beginning-search-backward
+  zle vi-add-eol
+}
+zle -N history-beginning-search-backward-then-append
+
+# Bind L in normal/visual mode to EOL
+bindkey -M vicmd 'L' end-of-line
+bindkey -M vivis 'L' vi-visual-eol
+
+# Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
+bindkey '^[[Z' reverse-menu-complete
+
+##########OMZ###################################################################
+##########ZSH###################################################################
