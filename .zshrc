@@ -200,6 +200,6 @@ autoload -U compinit && compinit -u
 
 autoload bashcompinit
 bashcompinit
-source "$HOME/.sh/completions/osx-pref.bash"
+source "$HOME/.sh/completions/"*
 #source "$HOME/.drush/drush.complete.sh"
 ##########SOURCES###############################################################
