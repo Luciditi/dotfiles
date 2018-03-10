@@ -141,11 +141,6 @@ else
   export EDITOR='vim'
 fi
 
-# Add custom ZSH completions
-#fpath=($ZSH_CUSTOM/completions $fpath)
-#autoload -U compinit && compinit -u
-# @TODO: Load bin/function/completion/phar/multi-dirs
-
 ##########PLUGINS CONFIGURATION#################################################
 #SUDO: Ctrl+z to sudo command
 bindkey "^z" sudo-command-line
@@ -188,10 +183,23 @@ bindkey -M vivis 'L' vi-visual-eol
 
 # Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
 bindkey '^[[Z' reverse-menu-complete
-
 ##########OMZ###################################################################
 
-##########SOURCES###############################################################
+
 ##########ALIASES###############################################################
 source "$HOME/.sh/alias"
+
 ##########FUNCTIONS#############################################################
+# Add custom ZSH completions
+fpath=("$HOME/.zsh/completions" "$fpath")
+autoload -U compinit && compinit -u
+source "$HOME/.sh/functions/"*
+source "$HOME/.zsh/functions/"*
+
+##########COMPLETIONS###########################################################
+autoload bashcompinit
+bashcompinit
+source "$HOME/.drush/drush.complete.sh"
+source "$HOME/.sh/completions/"*
+source "$HOME/.zsh/completions/"*
+##########SOURCES###############################################################

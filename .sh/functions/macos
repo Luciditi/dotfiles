@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+##
+## macos: macOS-env specific functions.
+##
+
+#Open a specfied OSX PrefPane
+function osx-pref {
+  if [[ ! -z "$1" ]]; then
+    if [[ -d "/System/Library/PreferencePanes/$1.prefPane" ]]; then
+      open "/System/Library/PreferencePanes/$1.prefPane"
+    fi
+  fi
+}
+
+#Connect to a Tunnelblick configured VPN: connect/disconnect "VPN"
+function osx-ovpn {
+  /usr/bin/env osascript <<-EOF
+tell application "Tunnelblick"
+  "$1" "$2"
+end tell
+EOF
+}
+
+#Connect to a MacOSX configured VPN
+#Config is stored in /Library/Preferences/SystemConfiguration/preferences.plist
+function osx-vpn-connect {
+  /usr/bin/env osascript <<-EOF
+tell application "System Events"
+  tell current location of network preferences
+    set VPN to service "$1"
+    if exists VPN then connect VPN
+    repeat while (current configuration of VPN is not connected)
+      delay 1
+    end repeat
+  end tell
+end tell
+EOF
+}
+
+#Disconnect from a MacOSX configured VPN
+#Config is stored in /Library/Preferences/SystemConfiguration/preferences.plist
+function osx-vpn-disconnect {
+  /usr/bin/env osascript <<-EOF
+tell application "System Events"
+  tell current location of network preferences
+    set VPN to service "$1"
+    if exists VPN then disconnect VPN
+  end tell
+end tell
+return
+EOF
+}
+
+#Attempt WiFi Relogin
+function osx-wifi-relogin {
+  echo "GATEWAY: http://"$(netstat -rn | grep default | awk '{print $2}')/
+  networksetup -switchtolocation "Automatic"
+  echo "Use 'networksetup -switchtolocation \"Google DNS\"' to switch back to Google DNS"
+  open "http://www.gstatic.com/generate_204"
+}
+

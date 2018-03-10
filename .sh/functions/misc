@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+##
+## misc: Various functions
+##
+
+#Countdown function
+function countdown() {
+  local now=$(date +%s)
+  local end=$((now + $1))
+  title_default="Countdown"
+  title=${2:-$title_default}
+  message_default="The countdown of $1 seconds is finished."
+  message=${3:-$message_default}
+  while (( now < end )); do
+    case "$OSTYPE" in
+      "darwin"* )
+        printf "%s\r" "$(date -u -j -f %s $((end - now)) +%T)"
+        ;;
+      "linux-gnu" )
+        printf "%s\r" "$(date -u -d @$((end - now)) +%T)"
+        ;;
+      * )
+        ;;
+    esac
+    sleep 0.25
+    now=$(date +%s)
+  done
+  echo
+  mac-notify.sh "$title" "$message"
+  tput bel
+  say "$message"
+}
+
+# GitDiff function to use vim.
+function git_diff() {
+  git diff --no-ext-diff -w "$@" | vim -R -
+}
+
+
+#Output the timestamp of the last commmand
+function last-command-start() {
+  COLUMNS=$(tput cols)
+  COLUMNS="$(($COLUMNS-1))"
+  RED=$(tput setaf 1)
+  GREEN=$(tput setaf 2)
+  YELLOW=$(tput setaf 3)
+  NORMAL=$(tput sgr0)
+  TIMESTAMP=$(fc -l -t '%F %T' | tail -n1 | cut -f3-5 -d' ')
+  TIMESTAMP=$(echo $TIMESTAMP | xargs echo -n)
+  printf '%s%*s%s' "$YELLOW" $COLUMNS "[${TIMESTAMP:2}]" " $NORMAL"
+}
+
+#Colorize Manual
+function man() {
+    env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    man "$@"
+}
+
+#print out a line w/ title
+function printline() {
+  if [ "$1" ]; then
+    echo ""
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+    echo "$1"
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+    echo ""
+  else
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  fi
+}
+
+
+#SSH without public key
+function ssh-nokey() {
+  ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no $@
+}
+
+#Retrieve SSH RSA fingerprint
+function ssh-fingerprint-rsa() {
+  ssh-keyscan -t rsa "$@" 2>/dev/null | cut -f3 -d' '
+}
+
+#Shortcut to open URL
+function wopen() {
+  if [[ $1 == "http://"* || $1 == "https://"* ]]; then
+    open "$1"
+  else
+    open "http://$1"
+  fi
+}
