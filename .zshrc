@@ -190,16 +190,16 @@ bindkey '^[[Z' reverse-menu-complete
 source "$HOME/.sh/alias"
 
 ##########FUNCTIONS#############################################################
-# Add custom ZSH completions
-fpath=("$HOME/.zsh/completions" $fpath)
-autoload -U compinit && compinit -u
 source "$HOME/.sh/functions/"*
 source "$HOME/.zsh/functions/"*
 
 ##########COMPLETIONS###########################################################
+# Add custom ZSH completions
+fpath=("$HOME/.zsh/completions" $fpath)
+autoload -U compinit && compinit -u
+
 autoload bashcompinit
 bashcompinit
-source "$HOME/.drush/drush.complete.sh"
-source "$HOME/.sh/completions/"*
-source "$HOME/.zsh/completions/"*
+source "$HOME/.sh/completions/osx-pref.bash"
+#source "$HOME/.drush/drush.complete.sh"
 ##########SOURCES###############################################################
