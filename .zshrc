@@ -72,7 +72,25 @@ if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]]
     source $HOME/.fonts/*.sh
   fi
 
-  # PL9K Theme Options
+##########P9K###################################################################
+  ##### POWERLEVEL9K_CUSTOM_WIFI_SIGNAL:
+  POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="black"
+  POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="yellow"
+  function zsh_wifi_signal() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      AIRPORT="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
+      if [ -x "$(command -v $AIRPORT)" ]; then
+        SIGNAL=$(${AIRPORT} -I | grep 'agrCtlRSSI' | sed -e 's/^.*://g' | xargs -I SIGNAL echo "SIGNAL")
+        local COLOR='%F{yellow}'
+        [[ $SIGNAL -lt -80 ]] && COLOR='%F{red}'
+        [[ $SIGNAL -gt -60 ]] && COLOR='%F{green}'
+        [[ ! "$SIGNAL" =~ "^-?[0-9]+([0-9]+)?$" ]] && COLOR='%F{red}'
+        echo -n "%{$COLOR%} $SIGNAL%{%f%}"
+      fi
+    fi
+  }
+  POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
+  ##### POWERLEVEL9K_CUSTOM_WIFI_SIGNAL:
 
   # Set PL9K Segment options
   POWERLEVEL9K_CHANGESET_HASH_LENGTH=7
@@ -85,7 +103,9 @@ if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]]
   POWERLEVEL9K_SHOW_CHANGESET=true
   POWERLEVEL9K_VCS_SHOW_SUBMODULE_DIRTY=false
 
+  source "$HOME/.zsh/powerlevel9k-override.zsh-theme"
   ZSH_THEME="powerlevel9k/powerlevel9k"
+##########P9K###################################################################
 else
   ZSH_THEME="crunch"
 fi
