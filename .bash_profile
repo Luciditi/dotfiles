@@ -15,6 +15,11 @@ source "$HOME/.sh/completions/"*
 
 #######   SOURCES   ############################################################
 
+# Get the aliases and functions
+if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+fi
+
 
 #######   BASH   ###############################################################
 #Set File Colors
