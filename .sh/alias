@@ -24,6 +24,10 @@ alias a-git='sudo -u apache git'
 #Tag git repo
 alias ctagit='ctags -R -f ./.git/tags .'
 
+########## DIFF ################################################################
+command -v colordiff >/dev/null 2>&1 && { alias diff="colordiff"; }
+########## DIFF ################################################################
+
 #Shortcut Drush
 alias dr='drush'
 
@@ -69,6 +73,15 @@ esac
 #Setup Toggl
 alias toggl='nvm use 5.0 && toggl'
 
+########## VIM #################################################################
+#Use MacVim In Terminal
+if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
+  alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+  alias mvim='/Applications/MacVim.app/Contents/MacOS/Vim'
+fi
+########## VIM #################################################################
+
+#Use MacVim In Terminal
 #Get external IP
 alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
 

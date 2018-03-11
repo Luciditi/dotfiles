@@ -9,38 +9,38 @@ antigen use oh-my-zsh
 # PLUGINS
 # Bundles from oh-my-zsh
 antigen bundle aws
-antigen bundle battery 
-antigen bundle composer 
+antigen bundle battery
+antigen bundle composer
 antigen bundle command-not-found
-antigen bundle docker 
-antigen bundle docker-compose 
+antigen bundle docker
+antigen bundle docker-compose
 antigen bundle heroku
-antigen bundle git 
-antigen bundle gitfast 
-antigen bundle git-extras 
-antigen bundle git_remote_branch 
-antigen bundle grunt 
-antigen bundle history 
-antigen bundle jira 
-antigen bundle jsontools 
-antigen bundle node 
-antigen bundle npm 
-antigen bundle nvm 
-antigen bundle osx 
-antigen bundle pip 
-antigen bundle redis-cli 
-antigen bundle rsync 
-antigen bundle safe-paste 
-antigen bundle sudo 
-antigen bundle symfony2 
-antigen bundle urltools 
-antigen bundle vagrant 
-antigen bundle vi-mode 
-antigen bundle vundle
-antigen bundle wd 
-antigen bundle web-search 
-antigen bundle yum 
-antigen bundle zsh-autosuggestions
+antigen bundle git
+antigen bundle gitfast
+antigen bundle git-extras
+antigen bundle git_remote_branch
+antigen bundle grunt
+antigen bundle history
+antigen bundle jira
+antigen bundle jsontools
+antigen bundle node
+antigen bundle npm
+antigen bundle nvm
+antigen bundle osx
+antigen bundle pip
+antigen bundle redis-cli
+antigen bundle rsync
+antigen bundle safe-paste
+antigen bundle sudo
+antigen bundle symfony2
+antigen bundle urltools
+antigen bundle vagrant
+antigen bundle vi-mode
+antigen bundle vundl
+antigen bundle wd
+antigen bundle web-search
+antigen bundle yum
+antigen bundle zsh-autosuggestion
 
 # COMLETIONS
 # TODO: https://github.com/github/hub/blob/master/etc/hub.zsh_completion
@@ -206,5 +206,40 @@ source "$HOME/.sh/completions/"*
 #source "$HOME/.drush/drush.complete.sh"
 #######   SOURCES   ############################################################
 
+# Set custom bin paths
+PATH=$PATH:$HOME/.bin:$HOME/.luciditi/bin
+#$HOME/.nexustools
 
+# Configure Go Paths
+export GOROOT=/usr/local/bin/go
+export GOPATH=$HOME/.go
+export GOBIN=$HOME/.go/bin
+export PATH=$PATH:${GOPATH}/bin:${GOROOT}/bin
+
+# Add Custom Config
+if [ -f "$HOME/.luciditi/config" ]; then
+  source "$HOME/.luciditi/config"
+fi
+
+# Export / File Mask
+export PATH
+umask 007
 #######   ZSH   ################################################################
+
+
+#######   APP CONFIG   #########################################################
+
+
+#######   CHEAT   ##############################################################
+export CHEAT_EDITOR="vim"
+export CHEATCOLORS=true
+
+#######   ORACLE   #############################################################
+# Setup Oracle Environment If Installed
+if [ -d /usr/lib/oracle/instantclient ]; then
+  export ORACLE_HOME=/usr/lib/oracle/instantclient
+  export LD_LIBRARY_PATH=$ORACLE_HOME/
+  export TNS_ADMIN=/etc
+  export NLS_LANG=AMERICAN_AMERICA.UTF8
+fi
+
