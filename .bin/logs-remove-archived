@@ -1,0 +1,3 @@
+#!/bin/sh
+#Remove all gzipped archive files
+sudo find /var/log/ -maxdepth 3 -type f -name "*.gz" -delete

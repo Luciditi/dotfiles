@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+#Retrieve Drupal module/theme tarball and dump it to a local directory
+if [[ -n "$1" ]]; then
+  wget -q -O - $1 | tar -xzf -
+else
+  echo "usage: gettar.sh url"
+  echo "   url- the URL of the tarball to get"
+fi

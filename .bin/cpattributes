@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+#Copy permissions & ownership from one file to the next
+
+copy-chmod.sh "$1" "$2"
+copy-chown.sh "$1" "$2"

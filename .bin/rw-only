@@ -1,0 +1,4 @@
+#!/bin/sh
+#Set chmod 600 = R/W by owner only
+
+chmod 600 $1

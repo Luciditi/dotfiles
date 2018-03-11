@@ -1,0 +1,3 @@
+#!/bin/sh
+#Retrieve rotated logs (assuming format {log_name}-YYYYMMDD
+sudo find /var/log/ -maxdepth 3 -type f -regex ".*-20[0-9][0-9][0-9]+" -delete

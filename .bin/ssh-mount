@@ -1,0 +1,29 @@
+#!/bin/sh
+#Set SSH mount point dir or removes it
+
+#Display usage
+usage() {
+  echo "usage: ssh-mount.sh <NAME> <SSH_PATH>"
+  echo "       <NAME>:  The name of the dir to mount"
+  echo "   <SSH_PATH>:  The SSH URL schema USER@HOST:PATH of the remote path"
+}
+
+if [ -n "$1" ]; then
+  dir=$1
+  remote_path=$2
+  if mount | grep "$dir" > /dev/null; then 
+    echo "Unmounting ${dir}..."
+    umount $dir
+    rmdir $dir
+  else 
+    if [ -n "$remote_path" ]; then
+      echo "Mounting $remote_path on $dir"
+      mkdir -p $dir
+      sshfs $remote_path $dir
+    else
+      usage
+    fi
+  fi
+else
+  usage
+fi

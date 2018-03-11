@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export PHPSTORM=1
+/bin/zsh

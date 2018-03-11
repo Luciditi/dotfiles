@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+#Copy ownership from one file to next
+if [ -n "$1" ] && [ -n "$2" ] 
+then
+  if [[ "$OSTYPE" =~ ^darwin ]]; 
+  then 
+    owner=$(ls -al "$1" | head -n2 | awk '{print $3}' | xargs)
+    group=$(ls -al "$1" | head -n2 | awk '{print $4}' | xargs)
+    sudo chown -R $owner:$group "$2"
+  else
+    sudo chown -R --reference="$1" "$2"
+  fi
+else 
+	echo "usage: copy-chown.sh reference_file changed_file"
+	echo "   reference_file: the file to reference for copying ownership"
+	echo "   changed_file  : the file to change ownership of"
+fi

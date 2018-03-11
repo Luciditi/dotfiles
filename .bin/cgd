@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Output the current git base directory
+
+# Get git project dir & other vars
+GIT_DIR=$(git rev-parse --show-toplevel)
+if [[ "$GIT_DIR" == "" ]] #Fallback for finding git root
+then
+  SCRIPT_NAME=$(basename "$0")
+  if [ "$(echo "$0" | cut -c1)" = "/" ]; then
+    SCRIPT_PATH=$(dirname "$0")
+  else
+    SCRIPT_PATH=$(pwd)/$(echo "$0" | sed -e s/"$SCRIPT_NAME"//)
+  fi
+  base_dir=${SCRIPT_PATH}/${SCRIPT_NAME}
+  base_dir=${base_dir/\/\.git\/hooks\/pre-commit/} #Change to script name
+else
+  base_dir=$GIT_DIR
+fi
+echo "$GIT_DIR"

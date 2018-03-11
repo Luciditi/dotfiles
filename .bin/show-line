@@ -1,0 +1,19 @@
+#!/bin/sh
+#Show a specific line of a file
+
+#Display usage
+usage() {
+  echo "usage: show-line.sh <FILE> <LINE_NUMBER>"
+  echo "         <FILE>:  The file to look through"
+  echo "  <LINE_NUMBER>:  The line of a file to outptu"
+}
+
+if [ -n "$1" ] || [ -n "$2" ]; then
+  if [ -f $1 ]; then
+    head -n $2 $1 | tail -n 1
+  else
+    usage
+  fi
+else
+  usage
+fi

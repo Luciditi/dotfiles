@@ -1,0 +1,3 @@
+#!/bin/sh
+#Retrieve the current active logs
+sudo lsof | grep '/var/log' | awk -F " " '{print $9}' | sort | uniq

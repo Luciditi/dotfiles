@@ -1,0 +1,26 @@
+#!/bin/bash
+#Spoof an IP on MacOSX
+ 
+# Your network interface here
+IF=en0
+ 
+ORIGINAL_MAC=`ifconfig $IF | grep ether | cut -d' ' -f2`
+VENDOR_PREFIX=${ORIGINAL_MAC:0:9}
+
+RANDOM_SUFFIX=`openssl rand -hex 3 | sed 's/\(..\)/\1:/g; s/.$//'`
+MAC=$VENDOR_PREFIX$RANDOM_SUFFIX
+ 
+disassociate="sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -z"
+eval $disassociate
+sleep 2
+sudo ifconfig $IF lladdr $MAC
+echo "MAC changed. (use 'sudo ifconfig $IF lladdr $ORIGINAL_MAC && sudo ifconfig $IF down && sudo ifconfig $IF up' to reset)"
+sleep 2
+sudo ifconfig $IF down
+sleep 2
+sudo ifconfig $IF up
+sleep 2
+ 
+echo "Retrieving new network status:"
+sleep 4
+ifconfig $IF

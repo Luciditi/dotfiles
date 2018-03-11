@@ -1,0 +1,22 @@
+#!/bin/sh
+#Remove GPS info from file
+
+#Display usage
+usage() {
+  script=`basename $0`
+  echo "usage: $script <IMAGEFILE>"
+  echo "   <IMAGEFILE>:  The name of the image to remove GPS data from"
+}
+
+#Help
+if [ "$1" == "--help" ]; then
+  usage
+else
+  if [ -f "$1" ]
+  then
+    exiftool -gps:all= -xmp:geotag= $1
+    echo "${1}_original created"
+  else
+    usage
+  fi
+fi

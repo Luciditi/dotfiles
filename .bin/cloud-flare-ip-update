@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Set stop on error / enable debug
+#set -vx
+
+############################################################################
+# UPDATE CLOUDFLARE A RECORD
+############################################################################
+
+##{{{#######################################################################
+############################################################################
+# FUNCTIONS
+############################################################################
+
+# Clean Upon Exit
+cleanup() {
+  :
+}
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+  trap cleanup EXIT
+fi
+
+# Print a string line wrapped in "===" headers
+printline() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  printf "%s\n" "$1"
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+#  Logging functions
+readonly LOG_FILE="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$LOG_FILE" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$LOG_FILE" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
+
+# Accept Message & Error Code
+quit() {
+  if [[ -z $1 ]]; then MESSAGE="An error has occurred"; else MESSAGE=$1; fi
+  if [[ -z $2 ]]; then ERROR_CODE=1; else ERROR_CODE=$2; fi
+  echo "$MESSAGE" 1>&2; exit "$ERROR_CODE";
+}
+
+##}}}#######################################################################
+
+#/ Usage: cloud-flare-ip-update <USER_ID> <API_KEY> <NAME_SERVER> <DOMAIN> <A_RECORD_DOMAIN> <RECORD_ID> [<IP>]
+#/
+#/           <USER_ID>: Cloudflare UserID
+#/           <API_KEY>: Cloudflare API Key
+#/       <NAME_SERVER>: Cloudflare DNS Nameserver
+#/            <DOMAIN>: Cloudflare hosted domain
+#/   <A_RECORD_DOMAIN>: Cloudflare hosted subdomain
+#/         <RECORD_ID>: Cloudflare subdomain record ID
+#/                <IP>: IP address (defaults to localhost IP)
+#/ Examples:
+#/ Options:
+#/   --help: Display this help message
+SCRIPT=$(basename "$0")
+usage() { grep '^#/' "$0" | cut -c4- | sed -e 's/\$SCRIPT/'"$SCRIPT"'/g' ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
+
+############################################################################
+# MAIN
+############################################################################
+
+# Handle options
+# Add options x: - required arg
+while getopts 'h' FLAG; do
+  case "${FLAG}" in
+    h) usage; exit 1 ;;
+    *) : ;;
+  esac
+done
+
+# Validate params
+if [ -n "$1" ] || [ -n "$2" ] || [ -n "$3" ] || [ -n "$4" ] || [ -n "$5" ] || [ -n "$6" ] ; then
+  CF_USER="$1"
+  CF_APIKEY="$2"
+  CF_NS="$3"
+  CF_HOST="$4"
+  CF_NAME="$5"
+  CF_ID="$6"
+
+  # Set to current IP address, if not specified.
+  CF_IP="$7"
+  if [ -z "$CF_IP" ]; then
+    CF_IP=$(curl -s "http://myip.dnsomatic.com/")
+  fi
+
+  # Update if CF IP isn't the same
+  CF_HOSTIP=$(nslookup $(echo "$CF_NAME" | cut -d ',' -f1) "$CF_NS" | grep Address: | tail -1 | cut -d ' ' -f2)
+  if [[ "$CF_IP" != "$CF_HOSTIP" ]]; then
+    curl -k "https://www.cloudflare.com/api_json.html?a=rec_edit&tkn=$CF_APIKEY&id=$CF_ID&email=$CF_USER&z=$CF_HOST&type=A&name=$CF_NAME&content=$CF_IP&service_mode=0&ttl=1" | jq
+  fi
+
+  # CloudFlare Record IDs
+  # curl -k "https://www.cloudflare.com/api_json.html?a=rec_load_all&tkn=$CF_APIKEY&z=$CF_HOST&email=$CF_USER" | jq '.response.recs.objs[] | "\(.rec_id) \(.name)"'
+
+else
+  usage
+fi

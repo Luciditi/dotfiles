@@ -1,0 +1,55 @@
+#!/bin/sh
+
+############################################################################
+# Wipe out any repo changes and set to HEAD master.
+############################################################################
+
+############################################################################
+# FUNCTIONS
+############################################################################
+
+#Print a string line wrapped in "===" headers
+printline() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  printf "$1\n"
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+#Display usage information
+usage() {
+  script=`basename $0`
+  echo "  Wipe out any repo changes and set to HEAD master."
+  echo "usage: $script"
+}
+
+#Wipe out andy pending files, set to HEAD master
+git_wipe() {
+  git clean -f -d
+  git checkout master
+  git reset --hard master
+}
+
+############################################################################
+# MAIN
+############################################################################
+
+# Set Debugging
+#set -vx
+
+for var in "$@"
+do
+  case $var in
+    --help )      #Show Usage
+      usage
+
+      exit
+      ;;
+    * )
+      git_wipe
+
+      exit
+      ;;
+  esac
+done
+
+git_wipe

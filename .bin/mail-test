@@ -1,0 +1,39 @@
+#!/bin/sh
+#Test mail send config for a domain.
+
+#Print Line
+printline() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  printf "$1\n"
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+#Display usage
+usage() {
+  script=`basename $0`
+  echo "Test an email from a specified test domain address to a live email box."
+  echo "usage: $script <FROM_EMAIL> <TO_EMAIL>"
+  echo "  <FROM_EMAIL>: The test email address to send from."
+  echo "  <TO_EMAIL>:   The real email address to send to"
+}
+
+#MAIN:
+for var in "$@"
+do
+  case $var in
+    --help )      #Show Usage
+      usage
+      exit
+      ;;
+    * )
+      if [ ! -z $1 ] && [ ! -z $2 ]; then
+        echo "This is a test email." | mail -s "Hello world" -r $1 $2
+        exit;
+      else
+        usage
+        exit
+      fi
+      ;;
+  esac
+done
+usage

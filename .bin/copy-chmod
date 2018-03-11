@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+#Copy permissions from one file to next
+if [ -n "$1" ] && [ -n "$2" ] 
+then
+  if [[ "$OSTYPE" =~ ^darwin ]]; 
+  then 
+    octals=$(stat -r "$1" | cut -f3 -d' ')
+    sudo chmod -R $octals "$2"
+  else
+    sudo chmod -R --reference="$1" "$2"
+  fi
+else 
+	echo "usage: copy-chmod.sh reference_file changed_file"
+	echo "   reference_file: the file to reference for copying permissions"
+	echo "   changed_file  : the file to change permissions of"
+fi

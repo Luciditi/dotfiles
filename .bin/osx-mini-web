@@ -1,0 +1,36 @@
+#!/bin/sh
+#Open a webserver with cwd as root.
+
+#Print Line
+printline() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  printf "$1\n"
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+#Display usage
+usage() {
+  script=`basename $0`
+  echo "Open a webserver using the current directory as web root."
+  echo "usage: $script "
+}
+
+#MAIN:
+for var in "$@"
+do
+  case $var in
+    --help )      #Show Usage
+      usage
+      exit
+      ;;
+    * )
+      ;;
+  esac
+done
+
+#@TODO: opening app will only work in MacOSX environment
+printline "Opening webserver on http://0.0.0.0:8000/...."
+python -m SimpleHTTPServer &
+webserver_pid=$(ps -axf | grep '\/opt.*MacOS\/Python -m SimpleHTTPServer' | cut -f4 -d ' ')
+open 'http://0.0.0.0:8000/'
+printline "Webserver started as PID#: $webserver_pid"

@@ -1,0 +1,56 @@
+#!/bin/sh
+
+############################################################################
+# Opens files in Vim from a Git commit hash
+############################################################################
+
+############################################################################
+# FUNCTIONS
+############################################################################
+
+#Print a string line wrapped in "===" headers
+printline() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  printf "$1\n"
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+
+#Display usage information
+usage() {
+  script=`basename $0`
+  echo "  Opens files in Vim from a Git commit hash."
+  echo "usage: $script [<COMMIT_HASH>]"
+  echo "  <COMMIT_HASH>: The Git commit hash to open."
+}
+
+############################################################################
+# MAIN
+############################################################################
+
+# Set Debugging
+#set -vx
+
+for var in "$@"
+do
+  case $var in
+    --help )      #Show Usage
+      usage
+
+      exit
+      ;;
+    * )
+      commit_hash=$var
+      commit_files=$(git diff-tree --no-commit-id --name-only -r $commit_hash 2>/dev/null)
+      if [[ ! -z $commit_files ]]; then
+        vim $(git diff-tree --no-commit-id --name-only -r $commit_hash)
+      else
+        echo "$commit_hash not a valid commit or no files found." 1>&2
+        exit 1
+      fi
+      exit
+      ;;
+  esac
+done
+
+usage
+

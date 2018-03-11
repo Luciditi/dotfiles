@@ -1,0 +1,4 @@
+#!/bin/sh
+# Installs/configs various PHP dev tools
+
+phpcbf --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,js,css,info,txt,md $1

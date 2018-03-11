@@ -1,0 +1,29 @@
+#!/bin/sh
+#Toggle the st w
+
+# Set a MySQL to a specified value
+function mysql_set_var() {
+  mysql -e "SET GLOBAL $1 = '$2';"
+}
+
+# Retrieve specified MySQL value
+function mysql_get_var() {
+  mysql -e "SHOW GLOBAL VARIABLES LIKE '$1'" | grep "$1" | cut -f2 | xargs
+}
+
+# Configure Table Logging And Watch Table
+current_log_type=$(mysql_get_var log_output)
+current_log_state=$(mysql_get_var general_log)
+mysql_set_var log_output TABLE
+mysql_set_var general_log ON
+
+watch -n${1:-1} 'mysql -e "SELECT * FROM mysql.general_log ORDER BY event_time DESC LIMIT 10;"'
+
+# Set To Previous State
+mysql_set_var log_output $current_log_type
+mysql_set_var general_log $current_log_state
+current_log_type=$(mysql_get_var log_output)
+current_log_state=$(mysql_get_var general_log)
+
+echo "MYSQL: log_output: $current_log_type"
+echo "MYSQL: general_log: $current_log_state"

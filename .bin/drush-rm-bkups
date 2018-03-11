@@ -1,0 +1,63 @@
+#!/bin/sh
+############################################################################
+# Empty Drush backups from server
+############################################################################
+
+##{{{#######################################################################
+############################################################################
+# FUNCTIONS
+############################################################################
+
+#Exit script with message and error
+error() {
+  if [[ -z $1 ]]; then message="An error has occurred"; else message=$1; fi
+  if [[ -z $2 ]]; then error_code=1; else error_code=$2; fi
+  echo "$message" 1>&2; exit $error_code;
+}
+
+#Print a string line wrapped in "===" headers
+printline() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  printf "$1\n"
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+}
+##}}}#######################################################################
+
+#Display usage information
+usage() {
+  script=`basename $0`
+  echo "  Empty Drush backups from server."
+  echo "usage: $script"
+}
+
+############################################################################
+# MAIN
+############################################################################
+
+# Set Debugging
+#set -vx
+
+for var in "$@"
+do
+  case $var in
+    --help )      #Show Usage
+      usage
+
+      exit
+      ;;
+    * )
+      print "Removing backups from /usr/share/httpd/drush-backups/ & ~/drush-backups/"
+      if [ -d "/usr/share/httpd/drush-backups/" ]; then
+        sudo rm -rf /usr/share/httpd/drush-backups/*
+      fi
+      if [ -d  ~/drush-backups ]; then
+        rm -rf ~/drush-backups/*
+      fi
+
+      exit
+      ;;
+  esac
+done
+
+usage
+

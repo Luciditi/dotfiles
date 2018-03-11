@@ -1,0 +1,16 @@
+#!/bin/sh
+#Copy files with progress bar
+
+command -v pv >/dev/null 2>&1 || { echo >&2 "ERROR: The pv utility is not installed"; exit 1; }
+if [ -n "$1" ] && [ -f "$1" ] && [ -n "$2" ]; then
+  src="$1"
+  dst="$2"
+  if [ -d "$dst" ]; then
+    filename=`basename "$1"`
+    dst="$dst/$filename"
+  fi
+  pv "$src" > "$dst"
+else
+  echo "usage: cpp.sh <SRC> <DST>"
+  echo "   Copy files from SRC to DST with a progress bar"
+fi
