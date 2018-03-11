@@ -1,4 +1,4 @@
-##########ANTIGEN###############################################################
+#######   ANTIGEN   ############################################################
 # @TODO: Determine if we'll lookup source
 source /usr/local/share/antigen/antigen.zsh
 
@@ -58,9 +58,9 @@ antigen theme bhilburn/powerlevel9k powerlevel9k
 
 # APPLY CONFIG
 antigen apply
-##########ANTIGEN###############################################################
+#######   ANTIGEN   ############################################################
 
-##########OMZ###################################################################
+#######   OMZ   ################################################################
 
 # DYNAMIC THEME:
 # Check for ZDOTDIR to detect PHPStorm
@@ -183,19 +183,19 @@ bindkey -M vivis 'L' vi-visual-eol
 
 # Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
 bindkey '^[[Z' reverse-menu-complete
-##########OMZ###################################################################
+#######   OMZ   ################################################################
 
 
-##########ALIASES###############################################################
+#######   ALIASES   ############################################################
 source "$HOME/.sh/alias"
 
-##########FUNCTIONS#############################################################
+#######   FUNCTIONS   ##########################################################
 source $HOME/.sh/functions/macos
 source $HOME/.sh/functions/git-aliases
 source $HOME/.sh/functions/misc
 source $HOME/.zsh/functions/misc
 
-##########COMPLETIONS###########################################################
+#######   COMPLETIONS   ########################################################
 # Add custom ZSH completions
 fpath=("$HOME/.zsh/completions" $fpath)
 autoload -U compinit && compinit -u
@@ -204,4 +204,7 @@ autoload bashcompinit
 bashcompinit
 source "$HOME/.sh/completions/"*
 #source "$HOME/.drush/drush.complete.sh"
-##########SOURCES###############################################################
+#######   SOURCES   ############################################################
+
+
+#######   ZSH   ################################################################
