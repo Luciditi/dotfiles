@@ -190,10 +190,12 @@ bindkey '^[[Z' reverse-menu-complete
 source "$HOME/.sh/alias"
 
 #######   FUNCTIONS   ##########################################################
-source $HOME/.sh/functions/macos
-source $HOME/.sh/functions/git-aliases
-source $HOME/.sh/functions/misc
-source $HOME/.zsh/functions/misc
+source "$HOME/.sh/functions/macos"
+source "$HOME/.sh/functions/git-aliases"
+source "$HOME/.sh/functions/misc"
+source "$HOME/.sh/functions/iterm2"
+source "$HOME/.sh/functions/iterm2-shell-integration"
+source "$HOME/.zsh/functions/misc"
 
 #######   COMPLETIONS   ########################################################
 # Add custom ZSH completions
@@ -207,8 +209,7 @@ source "$HOME/.sh/completions/"*
 #######   SOURCES   ############################################################
 
 # Set custom bin paths
-PATH=$PATH:$HOME/.bin:$HOME/.luciditi/bin
-#$HOME/.nexustools
+PATH=$PATH:$HOME/.bin
 
 # Configure Go Paths
 export GOROOT=/usr/local/opt/go/libexec
@@ -227,7 +228,6 @@ umask 007
 
 
 #######   APP CONFIG   #########################################################
-
 
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"

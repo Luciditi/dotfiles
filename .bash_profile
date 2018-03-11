@@ -6,6 +6,8 @@ source "$HOME/.sh/alias"
 source "$HOME/.sh/functions/macos"
 source "$HOME/.sh/functions/git-aliases"
 source "$HOME/.sh/functions/misc"
+source "$HOME/.sh/functions/iterm2"
+source "$HOME/.sh/functions/iterm2-shell-integration"
 
 #######   COMPLETIONS   ########################################################
 autoload bashcompinit
@@ -15,8 +17,7 @@ source "$HOME/.sh/completions/"*
 
 #######   SOURCES   ############################################################
 # Set custom bin paths
-PATH=$PATH:$HOME/.bin:$HOME/.luciditi/bin
-#$HOME/.nexustools
+PATH=$PATH:$HOME/.bin
 
 # Configure Go Paths
 export GOROOT=/usr/local/opt/go/libexec
