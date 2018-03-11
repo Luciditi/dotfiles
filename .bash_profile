@@ -19,10 +19,9 @@ PATH=$PATH:$HOME/.bin:$HOME/.luciditi/bin
 #$HOME/.nexustools
 
 # Configure Go Paths
-export GOROOT=/usr/local/bin/go
+export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
-export GOBIN=$HOME/.go/bin
-export PATH=$PATH:${GOPATH}/bin:${GOROOT}/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Add Custom Config
 if [ -f "$HOME/.luciditi/config" ]; then
