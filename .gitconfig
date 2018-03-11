@@ -2,8 +2,6 @@
   name = Shawn Conn
   email = shawn@luciditi.io
   useconfigonly = true
-  #gpgsign = true
-  #signingkey = F6B20B16A781816C
 
 [alias]
   # Shorten commit commands
