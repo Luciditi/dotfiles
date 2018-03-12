@@ -9,7 +9,7 @@ silent! unmap <leader>hsf
 silent! vunmap <buffer> {
 
 "Remap interstingwords and use only <leader>+k for window movement
-if (index(pathogen_disabled, 'vim-interestingwords') < 0)
+if !empty(glob("~/.vim/bundle/vim-interestingwords/plugin/interestingwords.vim"))
   nunmap <leader>k
   nunmap <leader>K
   nnoremap <silent> <leader>k <C-W>k
