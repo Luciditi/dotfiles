@@ -21,6 +21,8 @@
   prune-local = remote prune 
   # Stash even unadded files
   stash-all = stash save --include-untracked
+  # Apply saved stash name
+  stash-apply = "!f() { git stash apply \"$(git stash list | grep -E \"$*\" | awk \"{ print $ 1; }\" | sed -n \"s/://;1p\")\"; }; f"
   # Undo commit
   undo = reset --soft HEAD^
 
