@@ -1029,41 +1029,43 @@ augroup END
 
 """""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup SYNTASTIC
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+    if !empty(glob("~/.vim/bundle/vim-interestingwords/plugin/interestingwords.vim"))
+      set statusline+=%#warningmsg#
+      set statusline+=%{SyntasticStatuslineFlag()}
+      set statusline+=%*
 
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
+      let g:syntastic_always_populate_loc_list = 1
+      let g:syntastic_auto_loc_list = 0
+      let g:syntastic_check_on_open = 0
+      let g:syntastic_check_on_wq = 0
 
-    let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
+      let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
 
-    let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-    let g:syntastic_php_phpcs_args = "
-      \ --standard=Drupal
-      \ --extensions=drush,php,module,inc,install,test,profile,theme,
-      \js,css,info,txt,md"
+      let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+      let g:syntastic_php_phpcs_args = "
+        \ --standard=Drupal
+        \ --extensions=drush,php,module,inc,install,test,profile,theme,
+        \js,css,info,txt,md"
 
-    "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
-    let g:syntastic_javascript_checkers = ['standard']
-    let g:syntastic_sh_checkers = ['shellcheck', 'sh']
-    let g:syntastic_yaml_checkers = ['pyyaml']
+      "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
+      let g:syntastic_javascript_checkers = ['standard']
+      let g:syntastic_sh_checkers = ['shellcheck', 'sh']
+      let g:syntastic_yaml_checkers = ['pyyaml']
 
-    "More Significant Symbols
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = '!'
-    let g:syntastic_style_error_symbol = '✗§'
-    let g:syntastic_style_warning_symbol = '!§'
-    "let g:syntastic_debug = 1
+      "More Significant Symbols
+      let g:syntastic_error_symbol = '✗'
+      let g:syntastic_warning_symbol = '!'
+      let g:syntastic_style_error_symbol = '✗§'
+      let g:syntastic_style_warning_symbol = '!§'
+      "let g:syntastic_debug = 1
 
-    "Scroll through errors with ^ & v
-    nm <silent> <UP> :lprev<CR>
-    nm <silent> <DOWN> :lnext<CR>
+      "Scroll through errors with ^ & v
+      nm <silent> <UP> :lprev<CR>
+      nm <silent> <DOWN> :lnext<CR>
 
-    "Toggle display of Syntastic error window
-    nn <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
+      "Toggle display of Syntastic error window
+      nn <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
+    endif
   augroup END
 
 """""""TAGBAR"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
