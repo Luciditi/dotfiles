@@ -42,13 +42,11 @@ antigen bundle web-search
 antigen bundle yum
 antigen bundle zsh-autosuggestion
 
-# COMLETIONS
-# TODO: https://github.com/github/hub/blob/master/etc/hub.zsh_completion
-# Syntax highlighting bundle.
+# Other ZSH plugins
 antigen bundle https://github.com/hchbaw/opp.zsh.git
+antigen bundle https://github.com/b4b4r07/zsh-vimode-visual.git
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle https://github.com/b4b4r07/zsh-vimode-visual.git
 
 # THEMES
 antigen theme crunch
@@ -180,6 +178,9 @@ zle -N history-beginning-search-backward-then-append
 # Bind L in normal/visual mode to EOL
 bindkey -M vicmd 'L' end-of-line
 bindkey -M vivis 'L' vi-visual-eol
+
+# 'i' will switch back to insert mode
+bindkey -M vivis 'i' vi-visual-exit-to-insert
 
 # Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
 bindkey '^[[Z' reverse-menu-complete
