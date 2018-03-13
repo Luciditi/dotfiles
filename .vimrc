@@ -29,7 +29,7 @@ augroup VUNDLE
   Plugin 'groenewege/vim-less'
   Plugin 'itchyny/vim-cursorword'
   Plugin 'joonty/vdebug'
-  Plugin 'joonty/vim-phpunitqf'
+  "Plugin 'joonty/vim-phpunitqf'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
