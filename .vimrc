@@ -29,6 +29,7 @@ augroup VUNDLE
   Plugin 'groenewege/vim-less'
   Plugin 'itchyny/vim-cursorword'
   Plugin 'joonty/vdebug'
+  "Doesn't work w/ +python3 vim
   "Plugin 'joonty/vim-phpunitqf'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
@@ -61,8 +62,7 @@ augroup VUNDLE
   Plugin 'vim-scripts/ShowMarks'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
-
-  "url = git://git.drupal.org/project/vimrc.git
+  Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
 
   "" The following are examples of different formats supported.
   "" Keep Plugin commands between vundle#begin/end.
