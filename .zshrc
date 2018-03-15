@@ -51,6 +51,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # THEMES
 antigen theme crunch
 POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+POWERLEVEL9K_MODE='awesome-fontconfig'
 # https://github.com/Luciditi/powerlevel9k
 antigen theme bhilburn/powerlevel9k powerlevel9k
 
@@ -94,7 +95,6 @@ if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]]
   POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=10
   #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load ram disk_usage swap custom_wifi_signal ip public_ip battery newline)
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_wifi_signal context root_indicator dir dir_writable vcs vi_mode)
-  #POWERLEVEL9K_MODE='awesome-fontconfig'
   POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs history time)
   POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
   POWERLEVEL9K_SHOW_CHANGESET=true
