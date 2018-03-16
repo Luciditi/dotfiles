@@ -90,3 +90,7 @@ function git-aliases-clean {
   fi
 }
 git-aliases
+
+# EXAMPLE .ALIASES FILE:
+# alias my-command='my-in-git-repo-command'
+# alias my-command-2='my-in-git-repo-command-2'
