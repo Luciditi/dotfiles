@@ -81,6 +81,9 @@ if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
 fi
 ########## VIM #################################################################
 
+#Run vim w/ vundle config and plugin install & quit flags
+alias vundle-install=vim -u "$HOME/.vundle.vimrc" +PluginInstall +qall
+
 #Use MacVim In Terminal
 #Get external IP
 alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
