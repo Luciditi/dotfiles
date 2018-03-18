@@ -82,7 +82,7 @@ fi
 ########## VIM #################################################################
 
 #Run vim w/ vundle config and plugin install & quit flags
-alias vundle-install=vim -u "$HOME/.vundle.vimrc" +PluginInstall +qall
+alias vundle-install='vim -u "$HOME/.vundle.vimrc" +PluginInstall +qall'
 
 #Use MacVim In Terminal
 #Get external IP
