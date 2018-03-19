@@ -1,7 +1,7 @@
 # Dotfiles
 
 A collection of various config files used in conjunction with 
-[DevBook installer](https://jig.io/devbook), the repo is intended to be 
+[DevBook](https://jig.io/devbook), the repo is intended to be 
 symlinked into the user's `$HOME` directory.
 
 ## Files
