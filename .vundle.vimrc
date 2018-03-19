@@ -15,6 +15,7 @@ augroup VUNDLE
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   Plugin 'beanworks/vim-phpfmt'
   Plugin 'bling/vim-airline'
+  Plugin 'bootleq/ShowMarks'
   Plugin 'chr4/nginx.vim'
   Plugin 'chrisbra/NrrwRgn'
   Plugin 'ctrlpvim/ctrlp.vim'
@@ -56,7 +57,6 @@ augroup VUNDLE
   Plugin 'vim-php/tagbar-phpctags.vim'
   Plugin 'vim-scripts/sql.vim'
   Plugin 'vim-scripts/repmo.vim'
-  Plugin 'vim-scripts/ShowMarks'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
