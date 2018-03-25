@@ -3,6 +3,19 @@
 ## misc: Various functions
 ##
 
+#0x0 Upload
+function 0x0-up-file() {
+  FILE="$1"
+  curl -F'file=@'"$FILE" https://0x0.st
+
+}
+
+#0x0 TinyURL
+function 0x0-tinyurl() {
+  URL="$1"
+  curl -F'shorten='"$URL" https://0x0.st
+}
+
 #Countdown function
 function countdown() {
   local now=$(date +%s)
