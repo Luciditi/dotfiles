@@ -79,12 +79,61 @@ function printline() {
 
 #SSH without public key
 function ssh-nokey() {
-  ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no $@
+  ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no "$@"
 }
 
 #Retrieve SSH RSA fingerprint
 function ssh-fingerprint-rsa() {
   ssh-keyscan -t rsa "$@" 2>/dev/null | cut -f3 -d' '
+}
+
+#transfer.sh transport.
+transfer-sh() {
+    # check arguments
+    if [ $# -ne 1 ];
+    then
+        echo -e "Wrong arguments specified. Usage:\ntransfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+        return 1
+    fi
+
+    # get temporary filename, output is written to this file so show progress can be showed
+    TMPFILE="$( mktemp -t transferXXX )"
+
+    # upload stdin or file
+    FILE="$1"
+
+    if tty -s;
+    then
+        BASEFILE="$( basename "$FILE" | sed -e 's/[^a-zA-Z0-9._-]/-/g' )"
+
+        if [ ! -e "$FILE" ];
+        then
+            echo "File $FILE doesn't exists."
+            return 1
+        fi
+
+        if [ -d "$FILE" ];
+        then
+            # zip directory and transfer
+            ZIPFILE="$( mktemp -t transferXXX.zip )"
+            cd "$(dirname "$FILE")" && zip -r -q - "$(basename "$FILE")" >> "$ZIPFILE"
+            curl --progress-bar --upload-file "$ZIPFILE" "https://transfer.sh/$BASEFILE.zip" >> "$TMPFILE"
+            rm -f "$ZIPFILE"
+        else
+            # transfer file
+            curl --progress-bar --upload-file "$FILE" "https://transfer.sh/$BASEFILE" >> "$TMPFILE"
+        fi
+    else
+        # transfer pipe
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$FILE" >> "$TMPFILE"
+    fi
+
+    # cat output link
+    cat "$TMPFILE"
+    echo
+
+    # cleanup
+    rm -f "$TMPFILE"
 }
 
 #Shortcut to open URL
