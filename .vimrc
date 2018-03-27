@@ -969,6 +969,9 @@ augroup END
       let g:syntastic_style_warning_symbol = '!§'
       "let g:syntastic_debug = 1
 
+      "Toggle off checkers by default.
+      let g:loaded_syntastic_ansible_ansible_lint_checker = 0
+
       "Scroll through errors with ^ & v
       nm <silent> <UP> :lprev<CR>
       nm <silent> <DOWN> :lnext<CR>
