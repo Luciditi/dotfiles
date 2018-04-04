@@ -780,7 +780,6 @@ augroup END
 
 """""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup GUTENTAGS
-    "@TODO: Vim Checkup: 4/1
     "Specify cache dir in vim folder
     let g:gutentags_cache_dir = '~/.vim/gutentags'
 
