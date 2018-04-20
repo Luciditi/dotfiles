@@ -802,9 +802,6 @@ augroup END
     nn <silent> <Leader>i :call InterestingWords('n')<CR>
     nn <silent> <Leader>I :call UncolorAllWords()<CR>
 
-    nn <silent> n :call WordNavigation('forward')<CR>
-    nn <silent> N :call WordNavigation('backward')<CR>
-
     let g:interestingWordsGUIColors = [
       \'134', '101', '211', '137', '214', '222']
   augroup END
