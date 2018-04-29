@@ -814,10 +814,12 @@ defaults write com.operasoftware.OperaDeveloper PMPrintingExpandedStateForPrint2
 ################################################################################
 ## Spectacle.app                                                               #
 ################################################################################
-#
+
 ## Set up my preferred keyboard shortcuts
 #cp -r init/spectacle.json ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
-#
+
+## Start w/ booting
+defaults write com.divisiblebyzero.Spectacle StartAtLogin -bool true
 ################################################################################
 ## Transmission.app                                                            #
 ################################################################################
