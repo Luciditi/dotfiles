@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+NEW_HOSTNAME=${1:-DEVBOOK}
 # ~/.macos — FORKED FROM: https://mths.be/macos
 
 # Close any open System Preferences panes, to prevent them from overriding
@@ -17,10 +18,10 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 ###############################################################################
 
 # Set computer name (as done via System Preferences → Sharing)
-sudo scutil --set ComputerName "MBP"
-sudo scutil --set HostName "MBP"
-sudo scutil --set LocalHostName "MBP"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "MBP"
+sudo scutil --set ComputerName "$NEW_HOSTNAME"
+sudo scutil --set HostName "$NEW_HOSTNAME"
+sudo scutil --set LocalHostName "$NEW_HOSTNAME"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$NEW_HOSTNAME"
 
 # POWER SETTINGS
 pmset -a acwake 0
