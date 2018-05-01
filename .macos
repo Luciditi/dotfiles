@@ -482,6 +482,13 @@ defaults write com.apple.dock wvous-bl-corner -int 10
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ################################################################################
+## Menu bar
+################################################################################
+
+# Wipeout extra menu bar items
+defaults write com.apple.systemuiserver menuExtras -array
+
+################################################################################
 ## Safari & WebKit                                                             #
 ################################################################################
 
