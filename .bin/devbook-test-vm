@@ -69,6 +69,7 @@ DEVBOOK_VM_SNAPSHOTS[Init]="An initialized macOS High Sierra install with a conf
 DEVBOOK_VM_SNAPSHOTS[Ansibled]="A macOS High Sierra install with ansible & XCode CLI tools installed."
 DEVBOOK_VM_SNAPSHOTS[SIPOff]="A macOS High Sierra install ready for DevBook w/ SIP Off."
 DEVBOOK_VM_SNAPSHOTS[Packaged]="A macOS High Sierra install with DevBook installed."
+DEVBOOK_VM_SSH_HOST="macos"
 
 ##}}}#######################################################################
 
@@ -96,6 +97,10 @@ DEVBOOK_VM_SNAPSHOTS[Packaged]="A macOS High Sierra install with DevBook install
 #/                          list:                                      List all VM snapshots.
 #/
 #/            image:
+#/              <COMMAND>:  [mount|umount]
+#/                 <ARGS>:
+#/                          mount IMAGE:                               Mount the IMAGE iso into the VM.
+#/                          umount IMAGE:                              Unmount the IMAGE name out of the VM.
 #/
 #/            backup:                                                  Backup up the VM dir to $DEVBOOK_VM_BACKUP_DIR
 #/
@@ -140,6 +145,7 @@ else
     # STARTING/CONTROL DEVBOOK VM
     control)
       COMMAND=${2-""}
+
       case $COMMAND in
         on)
           VBoxManage startvm "$DEVBOOK_VM_NAME" --type gui
@@ -171,9 +177,9 @@ else
         exit 1
       fi
       if [[ "$SNAPSHOT_ITEM" != "" ]]; then
-        UUID=$(VBoxManage snapshot "macOS" list | grep "$SNAPSHOT" | sed -e 's/\ *Name\ *:\ *[[:alpha:]]*\ (UUID:\ \(.*\)).*/\1/g' | sed -n "$SNAPSHOT_ITEM"p)
+        UUID=$(VBoxManage snapshot "$DEVBOOK_VM_NAME" list | grep "$SNAPSHOT" | sed -e 's/\ *Name\ *:\ *[[:alpha:]]*\ (UUID:\ \(.*\)).*/\1/g' | sed -n "$SNAPSHOT_ITEM"p)
       else
-        UUID=$(VBoxManage snapshot "macOS" list | grep "$SNAPSHOT" | sed -e 's/\ *Name\ *:\ *[[:alpha:]]*\ (UUID:\ \(.*\)).*/\1/g')
+        UUID=$(VBoxManage snapshot "$DEVBOOK_VM_NAME" list | grep "$SNAPSHOT" | sed -e 's/\ *Name\ *:\ *[[:alpha:]]*\ (UUID:\ \(.*\)).*/\1/g')
       fi
 
       case $COMMAND in
@@ -200,7 +206,29 @@ else
 
     # IMAGE-MOUNT DEVBOOK
     image)
+      COMMAND=${2-""}
+      IMAGE=${3-""}
+      if [[ -z "$IMAGE" ]]; then
+        echo "${C_ERR}Need an iso to mount or the image name (to unmount).${C_RES}"
+        exit 1
+      fi
+
+      case $COMMAND in
+        mount)
+          VBoxManage storageattach "$DEVBOOK_VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$IMAGE"
+          ;;
+        umount)
+          ssh -t "$DEVBOOK_VM_SSH_HOST" "diskutil eject \"$IMAGE\""
+          VBoxManage storageattach "$DEVBOOK_VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
+          ;;
+        *) usage;;
+      esac
       ;;
+      ### Make ISO
+      #  hdiutil makehybrid -o ~/Downloads/Devbook-Test.iso ~/Downloads/Devbook -iso -joliet
+      ### Local manage
+      #  hdiutil attach ~/Downloads/Devbook.dmg
+      #  diskutil eject Devbook
 
     # BACKUP DEVBOOK
     backup)
@@ -212,6 +240,7 @@ else
 
     # RESYNC DEVBOOK CLOCK
     time-sync)
+      ssh -t "$DEVBOOK_VM_SSH_HOST" "sudo ntpdate -u time.apple.com"
       ;;
 
     # BUILD DEVBOOK
