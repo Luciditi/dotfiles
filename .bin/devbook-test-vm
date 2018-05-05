@@ -5,7 +5,7 @@ set -euo pipefail
 #set -vx
 
 ############################################################################
-# ADD DEVBOOK CONFIG
+# DEVBOOK TEST VM FUNCTIONS
 ############################################################################
 
 ##{{{#######################################################################
@@ -60,13 +60,35 @@ C_SUC="\033[32m"
 C_ERR="\033[31m"
 C_RES="\033[0m"
 
-REPO="https://github.com/Luciditi/devbook-config.git"
-
+# Defaults
+DEVBOOK_VM_NAME="macOS"
 ##}}}#######################################################################
 
-#/ Usage: $SCRIPT [CONFIG_DIR]
+#/ Usage: $SCRIPT OP [ARGS]
 #/
-#/   <CONFIG_URL>: Create a new config in $CONFIG_DIR under the .devbook dir.
+#/     <OP>:  [config|control|snapshot|image|backup|time-sync|build]
+#/   <ARGS>:  On OP:
+#/
+#/            config:
+#/
+#/            control COMMAND:                                         Control the VM:
+#/              <COMMAND>:  [on|state|manage|off]
+#/                 <ARGS>:
+#/                          on:                                        Turn on the VM.
+#/                          state [poweroff|savestate|pause|resume]:   Set the VM to specified state.
+#/                          manage:                                    Open Virtualbox App
+#/                          off:                                       Turn off the VM.
+#/
+#/            snapshot:
+#/
+#/            image:
+#/
+#/            backup:
+#/
+#/            time-sync:
+#/
+#/            build:
+#/
 #/ Examples:
 #/ Options:
 #/   --help: Display this help message
@@ -87,20 +109,65 @@ while getopts 'h' FLAG; do
   esac
 done
 
-# Check for .devbook config dir.
-PWD=$(pwd)
-if [[ ! -d "$PWD/.devbook" ]]; then
-  mkdir "$PWD/.devbook"
-  echo "${C_HIL}Created ${C_WAR}.devbook${C_RES}${C_HIL}...${C_RES}"
-fi
+# Verify client
+if (! which VBoxManage > /dev/null 2>&1 ); then
+  echo "${C_ERR}VirtualBox/VBoxManage is needed. Run ${C_WAR}brew cask install virtualbox${C_RES}${C_ERR} to install.${C_RES}"
+  exit 1
+else
 
+  # Retrieve & route command
+  OP=${1-""}
+  case $OP in
 
-# Create new devbook config
-CONFIG_NAME=${1:-devbook-config}
-if [[ ! -d "$PWD/.devbook/$CONFIG_NAME" ]]; then
-  git clone "$REPO" ".devbook/$CONFIG_NAME"
-  rm -rf "$PWD/.devbook/$CONFIG_NAME/.git"
-  echo "${C_HIL}Created new devbook config ${C_WAR}.devbook/$CONFIG_NAME${C_RES}${C_HIL}...${C_RES}"
+    # DEFAULT DEVBOOK VM CONFIG
+    config)
+      ;;
+
+    # STARTING/CONTROL DEVBOOK VM
+    control)
+      COMMAND=${2-""}
+      case $COMMAND in
+        on)
+          VBoxManage startvm "$DEVBOOK_VM_NAME" --type gui
+          ;;
+        state)
+          STATE=${3-""}
+          VBoxManage controlvm "$DEVBOOK_VM_NAME" $STATE
+          ;;
+        manage)
+          open -a "VirtualBox"
+          ;;
+        off)
+          osascript -e 'quit app "VirtualBox"'
+          VBoxManage controlvm "$DEVBOOK_VM_NAME" savestate
+          osascript -e 'quit app "VirtualBox"'
+          ;;
+        *) usage;;
+      esac
+      ;;
+
+    # SNAPSHOT DEVBOOK VM
+    snapshot)
+      ;;
+
+    # IMAGE-MOUNT DEVBOOK
+    image)
+      ;;
+
+    # BACKUP DEVBOOK
+    backup)
+      ;;
+
+    # RESYNC DEVBOOK CLOCK
+    time-sync)
+      ;;
+
+    # BUILD DEVBOOK
+    build)
+      ;;
+
+    *) usage;;
+  esac
 fi
 
 exit 0
