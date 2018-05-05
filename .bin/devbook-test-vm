@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 
 # Set stop on error / enable debug
 set -euo pipefail
@@ -17,7 +17,7 @@ set -euo pipefail
 cleanup() {
   :
 }
-if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+if [[ "${(%):-%x}" = "$0" ]]; then
   trap cleanup EXIT
 fi
 
@@ -62,6 +62,14 @@ C_RES="\033[0m"
 
 # Defaults
 DEVBOOK_VM_NAME="macOS"
+DEVBOOK_VM_DIR="$HOME/Documents/VirtualBox/$DEVBOOK_VM_NAME"
+DEVBOOK_VM_BACKUP_DIR=""
+typeset -A DEVBOOK_VM_SNAPSHOTS
+DEVBOOK_VM_SNAPSHOTS[Init]="An initialized macOS High Sierra install with a configured admin user."
+DEVBOOK_VM_SNAPSHOTS[Ansibled]="A macOS High Sierra install with ansible & XCode CLI tools installed."
+DEVBOOK_VM_SNAPSHOTS[SIPOff]="A macOS High Sierra install ready for DevBook w/ SIP Off."
+DEVBOOK_VM_SNAPSHOTS[Packaged]="A macOS High Sierra install with DevBook installed."
+
 ##}}}#######################################################################
 
 #/ Usage: $SCRIPT OP [ARGS]
@@ -76,14 +84,20 @@ DEVBOOK_VM_NAME="macOS"
 #/                 <ARGS>:
 #/                          on:                                        Turn on the VM.
 #/                          state [poweroff|savestate|pause|resume]:   Set the VM to specified state.
-#/                          manage:                                    Open Virtualbox App
+#/                          manage:                                    Open Virtualbox App.
 #/                          off:                                       Turn off the VM.
 #/
-#/            snapshot:
+#/            snapshot COMMAND:                                        Control VM snapshot:
+#/              <COMMAND>:  [take|delete|restore|list]
+#/                 <ARGS>:
+#/                          take NAME:                                 Take a snapshot named NAME.
+#/                          delete NAME INDEX:                         Delete the INDEX-th snapshot named NAME.
+#/                          restore NAME:                              Restore the snapshot named NAME.
+#/                          list:                                      List all VM snapshots.
 #/
 #/            image:
 #/
-#/            backup:
+#/            backup:                                                  Backup up the VM dir to $DEVBOOK_VM_BACKUP_DIR
 #/
 #/            time-sync:
 #/
@@ -148,6 +162,40 @@ else
 
     # SNAPSHOT DEVBOOK VM
     snapshot)
+      COMMAND=${2-""}
+      SNAPSHOT=${3-""}
+      SNAPSHOT_ITEM=${4-""}
+      SNAPSHOT_DESC=${DEVBOOK_VM_SNAPSHOTS[$SNAPSHOT]-}
+      if [[ "$COMMAND" != "list" && -z "$SNAPSHOT_DESC" ]]; then
+        echo "${C_ERR}${C_WAR}$SNAPSHOT${C_RES}${C_ERR} is not a valid snapshot.${C_RES}"
+        exit 1
+      fi
+      if [[ "$SNAPSHOT_ITEM" != "" ]]; then
+        UUID=$(VBoxManage snapshot "macOS" list | grep "$SNAPSHOT" | sed -e 's/\ *Name\ *:\ *[[:alpha:]]*\ (UUID:\ \(.*\)).*/\1/g' | sed -n "$SNAPSHOT_ITEM"p)
+      else
+        UUID=$(VBoxManage snapshot "macOS" list | grep "$SNAPSHOT" | sed -e 's/\ *Name\ *:\ *[[:alpha:]]*\ (UUID:\ \(.*\)).*/\1/g')
+      fi
+
+      case $COMMAND in
+        take)
+          VBoxManage snapshot "$DEVBOOK_VM_NAME" take "$SNAPSHOT" --description "$SNAPSHOT_DESC"
+          ;;
+        delete)
+          #VBoxManage snapshot "$DEVBOOK_VM_NAME" delete "$SNAPSHOT"
+          VBoxManage snapshot "$DEVBOOK_VM_NAME" delete "$UUID"
+          ;;
+        restore)
+          VBoxManage controlvm "$DEVBOOK_VM_NAME" poweroff || true
+          VBoxManage snapshot "$DEVBOOK_VM_NAME" restore "$SNAPSHOT"
+          echo "${C_HIL}Waiting for snapshot restoration...${C_RES}"
+          sleep 5
+          VBoxManage startvm "$DEVBOOK_VM_NAME" --type gui || true
+          ;;
+        list)
+          VBoxManage snapshot "$DEVBOOK_VM_NAME" list
+          ;;
+        *) usage;;
+      esac
       ;;
 
     # IMAGE-MOUNT DEVBOOK
@@ -156,6 +204,10 @@ else
 
     # BACKUP DEVBOOK
     backup)
+      if [[ -d "${DEVBOOK_VM_BACKUP_DIR:?}/${DEVBOOK_VM_NAME:?}" ]]; then
+        rm -rf "${DEVBOOK_VM_BACKUP_DIR:?}/${DEVBOOK_VM_NAME:?}"
+      fi
+      cp -R "${DEVBOOK_VM_DIR:?}" "${DEVBOOK_VM_BACKUP_DIR:?}"
       ;;
 
     # RESYNC DEVBOOK CLOCK
