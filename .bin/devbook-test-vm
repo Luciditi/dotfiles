@@ -102,9 +102,9 @@ DEVBOOK_VM_SSH_HOST="macos"
 #/                          mount IMAGE:                               Mount the IMAGE iso into the VM.
 #/                          umount IMAGE:                              Unmount the IMAGE name out of the VM.
 #/
-#/            backup:                                                  Backup up the VM dir to $DEVBOOK_VM_BACKUP_DIR
+#/            backup:                                                  Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
 #/
-#/            time-sync:
+#/            time-sync:                                               Sync the VM clock to the current time.
 #/
 #/            build:
 #/
