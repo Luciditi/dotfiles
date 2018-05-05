@@ -4,9 +4,9 @@
 source $HOME/.vundle.vimrc
 
 """""""SOURCES""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-for vimfile in split(glob($HOME + "/.vimrc.d/*.vimrc"), '\n')
-  source vimfile
-endfor
+augroup SOURCES
+
+augroup END
 
 """""""TEMPLATE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TEMPLATE
