@@ -32,6 +32,16 @@ if exists percol; then
     bindkey '^R' percol_select_history
 fi
 
+# Set the ZSH theme then touch .zshrc to have antigen pick it up.
+function zsh-theme() {
+  if [ -z "$1" ]; then
+    rm ~/.zshrc.theme 2> /dev/null || true
+  else
+    echo "$1" > "$HOME/.zshrc.theme" 
+  fi
+  touch "$HOME/.zshrc"
+}
+
 ########## OMZ/NVM #################################################################
 export NVM_DIR="$HOME/.nvm"
 

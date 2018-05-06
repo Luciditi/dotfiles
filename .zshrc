@@ -50,10 +50,15 @@ antigen bundle https://github.com/b4b4r07/zsh-vimode-visual.git
 
 # THEMES
 antigen theme crunch
-POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-POWERLEVEL9K_MODE='awesome-fontconfig'
-# https://github.com/Luciditi/powerlevel9k
-antigen theme bhilburn/powerlevel9k powerlevel9k
+if [[ -f "$HOME/.zshrc.theme" ]]; then
+  THEME=$(cat "$HOME/.zshrc.theme")
+  antigen theme "$THEME"
+else
+  POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+  POWERLEVEL9K_MODE='awesome-fontconfig'
+  # https://github.com/Luciditi/powerlevel9k
+  antigen theme bhilburn/powerlevel9k powerlevel9k
+fi
 
 # APPLY CONFIG
 antigen apply

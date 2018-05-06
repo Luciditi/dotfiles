@@ -1,8 +1,14 @@
 # vim:ft=zsh ts=2 sw=2 sts=2
 #
 
+# If set_default not defined, we must be on a different theme so don't continue.
+if ( ! typeset -f set_default > /dev/null); then
+  return 0
+fi
+
 #CUSTOM DIR PROMPT
 prompt_dir() {
+
   local current_path="$(print -P "%~")"
   if [[ -n "$POWERLEVEL9K_SHORTEN_DIR_LENGTH" || "$POWERLEVEL9K_SHORTEN_STRATEGY" == "truncate_with_folder_marker" ]]; then
     set_default POWERLEVEL9K_SHORTEN_DELIMITER $'\U2026'
