@@ -16,8 +16,8 @@ set -euo pipefail
 # Clean Upon Exit
 cleanup() {
   if [[ "$OP" == "build" && "$?" != "0" ]]; then
-    echo "${C_HIL}An error occurred during a devbook build. Would you like to ssh into the VM? (y|n)${C_RES}"
-    read INPUT
+    echo "${C_HIL}Devbook build process ended. Would you like to ssh into the VM? (y|n)${C_RES}"
+    read -t 5 INPUT
     if [[ "$INPUT" == "y" ]]; then
       ssh -t "$DEVBOOK_VM_SSH_HOST"
     fi
@@ -71,7 +71,7 @@ C_RES="\033[0m"
 DEVBOOK_VM_NAME="macOS"
 DEVBOOK_VM_SSH_HOST="macos"
 DEVBOOK_VM_DIR="$HOME/Documents/VirtualBox/$DEVBOOK_VM_NAME"
-DEVBOOK_VM_BACKUP_DIR=""
+DEVBOOK_VM_BACKUP_DIR="/nas/v1/Programs/VMs"
 
 typeset -A DEVBOOK_VM_SNAPSHOTS
 typeset -A DEVBOOK_VM_B_SCRIPTS
