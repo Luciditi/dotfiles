@@ -15,9 +15,16 @@ set -euo pipefail
 
 # Clean Upon Exit
 cleanup() {
-  :
+  if [[ "$OP" == "build" && "$?" != "0" ]]; then
+    echo "${C_HIL}An error occurred during a devbook build. Would you like to ssh into the VM? (y|n)${C_RES}"
+    read INPUT
+    if [[ "$INPUT" == "y" ]]; then
+      ssh -t "$DEVBOOK_VM_SSH_HOST"
+    fi
+  fi
+  exit 0
 }
-if [[ "${(%):-%x}" = "$0" ]]; then
+if [[ "${(%):-%x}" == "$0" ]]; then
   trap cleanup EXIT
 fi
 
@@ -62,14 +69,19 @@ C_RES="\033[0m"
 
 # Defaults
 DEVBOOK_VM_NAME="macOS"
+DEVBOOK_VM_SSH_HOST="macos"
 DEVBOOK_VM_DIR="$HOME/Documents/VirtualBox/$DEVBOOK_VM_NAME"
 DEVBOOK_VM_BACKUP_DIR=""
+
 typeset -A DEVBOOK_VM_SNAPSHOTS
+typeset -A DEVBOOK_VM_B_SCRIPTS
 DEVBOOK_VM_SNAPSHOTS[Init]="An initialized macOS High Sierra install with a configured admin user."
 DEVBOOK_VM_SNAPSHOTS[Ansibled]="A macOS High Sierra install with ansible & XCode CLI tools installed."
+DEVBOOK_VM_B_SCRIPTS[Ansibled]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"time sh <(curl -sL https://jig.io/devbook-boot)\""
 DEVBOOK_VM_SNAPSHOTS[SIPOff]="A macOS High Sierra install ready for DevBook w/ SIP Off."
+DEVBOOK_VM_B_SCRIPTS[SIPOff]="sleep 0"
 DEVBOOK_VM_SNAPSHOTS[Packaged]="A macOS High Sierra install with DevBook installed."
-DEVBOOK_VM_SSH_HOST="macos"
+DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/local/bin:\$PATH"; time sh <(curl -sL https://jig.io/devbook-init) \""
 
 ##}}}#######################################################################
 
@@ -80,33 +92,35 @@ DEVBOOK_VM_SSH_HOST="macos"
 #/
 #/            config:
 #/
-#/            control COMMAND:                                         Control the VM:
-#/              <COMMAND>:  [on|state|manage|off]
+#/            control COMMAND:                                            Control the VM:
+#/              <COMMAND>:     [on|state|manage|off]
 #/                 <ARGS>:
-#/                          on:                                        Turn on the VM.
-#/                          state [poweroff|savestate|pause|resume]:   Set the VM to specified state.
-#/                          manage:                                    Open Virtualbox App.
-#/                          off:                                       Turn off the VM.
+#/                             on:                                        Turn on the VM.
+#/                             state [poweroff|savestate|pause|resume]:   Set the VM to specified state.
+#/                             manage:                                    Open Virtualbox App.
+#/                             off:                                       Turn off the VM.
 #/
-#/            snapshot COMMAND:                                        Control VM snapshot:
-#/              <COMMAND>:  [take|delete|restore|list]
+#/            snapshot COMMAND:                                           Control VM snapshot:
+#/              <COMMAND>:     [take|delete|restore|list]
 #/                 <ARGS>:
-#/                          take NAME:                                 Take a snapshot named NAME.
-#/                          delete NAME INDEX:                         Delete the INDEX-th snapshot named NAME.
-#/                          restore NAME:                              Restore the snapshot named NAME.
-#/                          list:                                      List all VM snapshots.
+#/                             take NAME:                                 Take a snapshot named NAME.
+#/                             delete NAME INDEX:                         Delete the INDEX-th snapshot named NAME.
+#/                             restore NAME:                              Restore the snapshot named NAME.
+#/                             list:                                      List all VM snapshots.
 #/
 #/            image:
-#/              <COMMAND>:  [mount|umount]
+#/              <COMMAND>:     [mount|umount]
 #/                 <ARGS>:
-#/                          mount IMAGE:                               Mount the IMAGE iso into the VM.
-#/                          umount IMAGE:                              Unmount the IMAGE name out of the VM.
+#/                             mount IMAGE:                               Mount the IMAGE iso into the VM.
+#/                             umount IMAGE:                              Unmount the IMAGE name out of the VM.
 #/
-#/            backup:                                                  Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
+#/            backup:                                                     Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
 #/
-#/            time-sync:                                               Sync the VM clock to the current time.
+#/            time-sync:                                                  Sync the VM clock to the current time.
 #/
-#/            build:
+#/            build SNAPSHOT CONFIG_URL:                                  Build the VM SNAPSHOT.
+#/              <SNAPSHOT>:    [Ansibled|SIPOff|Packaged]                 The pre-set VM snapshot name.
+#/              <CONFIG_URL>:                                             The Devbook config URL.
 #/
 #/ Examples:
 #/ Options:
@@ -140,6 +154,7 @@ else
 
     # DEFAULT DEVBOOK VM CONFIG
     config)
+      #@TODO: Add customization.
       ;;
 
     # STARTING/CONTROL DEVBOOK VM
@@ -245,10 +260,45 @@ else
 
     # BUILD DEVBOOK
     build)
+      SNAPSHOT=${2-""}
+      SNAPSHOT_SCRIPT=${DEVBOOK_VM_B_SCRIPTS[$SNAPSHOT]-}
+      if [[ -z "$SNAPSHOT" || -z "$SNAPSHOT_SCRIPT" ]]; then
+        echo "${C_ERR}Need a valid snapshot to build.${C_RES}"
+        exit 1
+      fi
+
+      # Send instructions for SIPOff testing
+      if [[ "$SNAPSHOT" == "SIPOff" ]]; then
+        VBoxManage controlvm "$DEVBOOK_VM_NAME" poweroff || true
+        echo "${C_HIL}Running build for ${C_WAR}$SNAPSHOT${C_RES}.${C_RES}"
+        echo "${C_WAR}In order to disable SIP, do the following: .${C_RES}"
+        echo "${C_SUC}    1. Press Enter to restart VM.${C_RES}"
+        echo "${C_SUC}    2. ${C_WAR}PRESS SPACE/F12 QUICKLY WHEN VM SCREEN APPEARS${C_RES}${C_SUC} -> VirtualBox EFI BIOS${C_RES}"
+        echo "${C_SUC}    3. Boot Manager > EFI Internal Shell${C_RES}"
+        echo "${C_SUC}    4. Enter FS2:${C_RES}"
+        echo "${C_SUC}    5. cd com.apple.recovery.boot${C_RES}"
+        echo "${C_SUC}    6. boot.efi${C_RES}"
+        echo "${C_SUC}    7. Goto: Utilities > Terminal${C_RES}"
+        echo "${C_SUC}    8. csrutil disable|enable; reboot;${C_RES}"
+        echo "${C_SUC}    9. devbook-test-vm snapshot take \"$SNAPSHOT\"${C_RES}"
+        read INPUT
+        open -a "VirtualBox"
+        VBoxManage startvm "$DEVBOOK_VM_NAME" --type gui
+      fi
+
+      # Run Devbook w/ config
+      # [1H]: time sh <(curl -sL https://jig.io/devbook-init) https://jig.io/devbook-config-mini
+      # [2H]: time sh <(curl -sL https://jig.io/devbook-init)
+      # [8H]: time sh <(curl -sL https://jig.io/devbook-init) https://jig.io/devbook-config-luciditi
+      if [[ "$SNAPSHOT" == "Packaged" ]]; then
+        DEVBOOK_CONFIG=${3-""}
+        #SNAPSHOT_SCRIPT="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"ls\""
+        SNAPSHOT_SCRIPT="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/local/bin:\$PATH"; time sh <(curl -sL https://jig.io/devbook-init) $DEVBOOK_CONFIG\""
+      fi
+
+      eval "$SNAPSHOT_SCRIPT"
       ;;
 
     *) usage;;
   esac
 fi
-
-exit 0
