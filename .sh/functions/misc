@@ -44,6 +44,21 @@ function countdown() {
   say "$message"
 }
 
+CALENDAR="$1"
+if [[ -z "$CALENDAR" ]]; then
+  CALENDAR="ATTN"
+fi
+
+# Parse through calendar to get next Google Hangout link
+function gcal-next-hangout() {
+  CALENDAR="$1"
+  if [[ -z "$CALENDAR" ]]; then
+    CALENDAR=$(gcalcli list | grep '@gmail' | sed -e 's/.*owner\([^\s]*\)/\1/g' | xargs)
+  fi
+
+  gcalcli agenda $(date -u +"%Y-%m-%dT%H:%M:%SZ") $(date -v'+24H' -u +"%Y-%m-%dT%H:%M:%SZ") --details 'url' --defaultCalendar "$CALENDAR" | grep 'Hangout Link' | grep -o 'http.*' | head -n1
+}
+
 # GitDiff function to use vim.
 function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -

@@ -31,6 +31,9 @@ command -v colordiff >/dev/null 2>&1 && { alias diff="colordiff"; }
 #Shortcut Drush
 alias dr='drush'
 
+#Today's GCal events
+alias gcal-today='gcalcli agenda $(date -u +"%Y-%m-%dT%H:%M:%SZ") $(date -v'+24H' -u +"%Y-%m-%dT%H:%M:%SZ") --refresh --details 'url' --defaultCalendar'
+
 #Colorize grep
 alias grep='grep --color=auto'
 
