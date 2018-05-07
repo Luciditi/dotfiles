@@ -70,6 +70,7 @@ C_RES="\033[0m"
 # Defaults
 DEVBOOK_VM_NAME="macOS"
 DEVBOOK_VM_SSH_HOST="macos"
+DEVBOOK_VM_SSH_USER="admin"
 DEVBOOK_VM_DIR="$HOME/Documents/VirtualBox/$DEVBOOK_VM_NAME"
 DEVBOOK_VM_BACKUP_DIR="/nas/v1/Programs/VMs"
 
@@ -117,6 +118,10 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/            backup:                                                     Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
 #/
 #/            time-sync:                                                  Sync the VM clock to the current time.
+#/
+#/            sync-files REMOTE_PATH [LOCAL_PATH]:                        Sync files between local and VM.
+#/                 <REMOTE_PATH>:                                         The remote path to sync to. 
+#/                  <LOCAL_PATH>:                                         The local path to sync from (defaults to cwd)
 #/
 #/            build SNAPSHOT CONFIG_URL:                                  Build the VM SNAPSHOT.
 #/              <SNAPSHOT>:    [Ansibled|SIPOff|Packaged]                 The pre-set VM snapshot name.
@@ -244,6 +249,14 @@ else
       ### Local manage
       #  hdiutil attach ~/Downloads/Devbook.dmg
       #  diskutil eject Devbook
+
+    # SYNC FILES WITH DEVBOOK
+    sync-files)
+      DEVBOOK_VM_SSH_PATH=${2-""}
+      LOCAL_PATH=${3-"."}
+
+      rsync -r -a -v -e ssh --delete  --exclude '.git' "$LOCAL_PATH" $DEVBOOK_VM_SSH_USER@$DEVBOOK_VM_SSH_HOST:$DEVBOOK_VM_SSH_PATH
+      ;;
 
     # BACKUP DEVBOOK
     backup)
