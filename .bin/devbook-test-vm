@@ -255,7 +255,7 @@ else
       DEVBOOK_VM_SSH_PATH=${2-""}
       LOCAL_PATH=${3-"."}
 
-      rsync -r -a -v -e ssh --delete  --exclude '.git' "$LOCAL_PATH" $DEVBOOK_VM_SSH_USER@$DEVBOOK_VM_SSH_HOST:$DEVBOOK_VM_SSH_PATH
+      rsync -r -a -v -e ssh --delete  "$LOCAL_PATH" $DEVBOOK_VM_SSH_USER@$DEVBOOK_VM_SSH_HOST:$DEVBOOK_VM_SSH_PATH
       ;;
 
     # BACKUP DEVBOOK
