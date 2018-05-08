@@ -115,7 +115,7 @@ defaults write com.apple.helpviewer DevMode -bool true
 
 # Fix for the ancient UTF-8 bug in QuickLook (https://mths.be/bbo)
 # Commented out, as this is known to cause problems in various Adobe apps :(
-# See https://github.com/mathiasbynens/dotfiles/issues/237
+# See https://github.com/mathiasbynens/dotiles/issues/237
 #echo "0x08000100:0" > ~/.CFUserTextEncoding
 
 # Reveal IP address, hostname, OS version, etc. when clicking the clock
@@ -578,6 +578,16 @@ defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
 # Update extensions automatically
 defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+
+################################################################################
+## Services
+################################################################################
+
+# Enable SMB sharing.
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.AppleFileServer.plist
+
+# Enable SSH login.
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 
 ################################################################################
 ## Spotlight                                                                   #
