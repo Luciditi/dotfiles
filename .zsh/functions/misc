@@ -45,12 +45,18 @@ function zsh-theme() {
 ########## OMZ/NVM #################################################################
 export NVM_DIR="$HOME/.nvm"
 
-#@TODO: OMZ has an issue with booting NVM, use wrapper function until resolved.
+# Bootstrap nvm if it hasn't been setup yet.
 function nvm() {
+  # Ensure NVM dir exists
+  if [ ! -d "$NVM_DIR" ]; then
+    mkdir "$NVM_DIR"
+  fi
+
+  # Bootstrap NVM and destroy this wrapper
   if [ -z "$NVM_BOOTED" ]; then
     export NVM_BOOTED="1"
     unset -f nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    . "$(brew --prefix nvm)/nvm.sh"
     nvm "$@"
   fi
 }
