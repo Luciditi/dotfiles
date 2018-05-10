@@ -72,6 +72,29 @@ return
 EOF
 }
 
+#Set the DNS for all net services
+function osx-switch-dns() {
+  # Select DNS option
+  if [[ "$1" == "CF" ]]; then
+    DNS=("1.1.1.1" "1.0.0.1")
+  elif [[ "$1" == "GOOG" ]]; then
+    DNS=("8.8.8.8" "8.8.4.4")
+  else
+    DNS="empty"
+  fi
+
+  # Assume only one Net location
+  NET=$(networksetup -listlocations | head -n1)
+  SERVICES=$(networksetup -listallnetworkservices | tail -n +2)
+  #ROUTER_IP=$(networksetup -getinfo "$SERVICE" | grep '^Router: ' | cut -f2 -d' ' | xargs)
+
+  echo "$SERVICES" | while read SERVICE ; do
+    networksetup -setdnsservers "$SERVICE" $DNS
+  done
+
+  echo "The DNS has been set to $DNS"
+}
+
 #Attempt WiFi Relogin
 function osx-wifi-relogin {
   echo "GATEWAY: http://"$(netstat -rn | grep default | awk '{print $2}')/
