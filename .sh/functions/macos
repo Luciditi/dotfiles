@@ -3,6 +3,21 @@
 ## macos: macOS-env specific functions.
 ##
 
+#Empty the OSX icon cache
+function osx-empty-icon-cache {
+  sudo rm -rfv /Library/Caches/com.apple.iconservices.store &> /dev/null
+  sudo find /private/var/folders/ \( -name com.apple.dock.iconcache -or -name com.apple.iconservices \) -exec rm -rfv {} \; &> /dev/null
+  sleep 3
+  sudo touch /Applications/* &> /dev/null
+
+  for app in "Dock" \
+    "Finder"; do
+    killall "${app}" &> /dev/null
+  done
+
+  echo "macOS icon cache emptied."
+}
+
 #Open a specfied OSX PrefPane
 function osx-pref {
   if [[ ! -z "$1" ]]; then
