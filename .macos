@@ -491,6 +491,11 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 # Wipeout extra menu bar items
 defaults write com.apple.systemuiserver menuExtras -array
 
+# Wipeout default clock display
+defaults delete com.apple.systemuiserver "NSStatusItem Visible com.apple.menuextra.clock"
+defaults delete com.apple.systemuiserver "NSStatusItem Preferred Position com.apple.menuextra.clock"
+defaults write com.apple.MenuBarClock ClockEnabled -bool false
+
 ################################################################################
 ## Safari & WebKit                                                             #
 ################################################################################
