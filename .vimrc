@@ -540,6 +540,10 @@ augroup END
 
 """""""SEARCH"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SEARCH
+  "Ignore certain files
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+  set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
   "Highlight Search
   set hlsearch
 
@@ -606,7 +610,7 @@ augroup SETTINGS
 
   "Split below/right
   set splitbelow
-  set splitright     
+  set splitright
 
   "Setting timeout length
   set ttimeout
@@ -701,38 +705,6 @@ augroup END
     vn ! :ClamVisual<space>
   "augroup END
 
-"""""""CTRL-P"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup CTRL-P
-    "Ignore certain files
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-    set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-
-    "Ignore SRC control / show hidden files
-    let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-    let g:ctrlp_show_hidden = 1
-
-    "No Limit Files / 40 Depths / Show More Results
-    let g:ctrlp_max_files = 0
-    let g:ctrlp_max_depth = 40
-    let g:ctrlp_match_window = 'bottom,order:tbb,min:1,max:50,results:100'
-
-    "Use silver searchrer for searching
-    if executable('ag')
-      let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-      let g:ctrlp_use_caching = 0
-    endif
-
-    "Use ripgrep for searching
-    if executable('rg')
-      let g:ctrlp_user_command = 'rg %s -uu --files --color=never --glob ""'
-      let g:ctrlp_use_caching = 0
-    endif
-
-    "Open Ctrl-P w/ Leader+o & Reopen w/ Leader+O
-    nn <Leader>o :CtrlP<CR>
-    nn <Leader>O :copen<CR>
-  augroup END
-
 """""""DRUPAL VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup DRUPALVIM
     "Get selected variable val in Drush
@@ -776,6 +748,21 @@ augroup END
   augroup EDITORCONFIG
     let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
+  augroup END
+
+"""""""FZF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup FZF
+    "Set filename search
+    nn <Leader>o :Files<CR>
+
+    "Set filebody search
+    nn <Leader>O :F<CR>
+    let g:rg_command = '
+      \ rg --column --line-number --no-heading --fixed-strings --ignore-case 
+      \ --no-ignore --hidden --follow --color "always"
+      \ -g "!{.git,node_modules,vendor}/*" '
+    command! -bang -nargs=* F 
+      \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
   augroup END
 
 """""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

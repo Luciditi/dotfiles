@@ -5,6 +5,8 @@ augroup VUNDLE
 
   " set the runtime path to include Vundle and initialize
   set rtp+=~/.vim/bundle/Vundle.vim
+  " add fzf to runtime
+  set rtp+=/usr/local/opt/fzf
   call vundle#begin()
   " alternatively, pass a path where Vundle should install plugins
   "call vundle#begin('~/some/path/here')
@@ -18,7 +20,6 @@ augroup VUNDLE
   Plugin 'bootleq/ShowMarks'
   Plugin 'chr4/nginx.vim'
   Plugin 'chrisbra/NrrwRgn'
-  Plugin 'ctrlpvim/ctrlp.vim'
   Plugin 'editorconfig/editorconfig-vim'
   Plugin 'ervandew/supertab'
   Plugin 'evidens/vim-twig'
@@ -27,6 +28,7 @@ augroup VUNDLE
   Plugin 'groenewege/vim-less'
   Plugin 'itchyny/vim-cursorword'
   Plugin 'joonty/vdebug'
+  Plugin 'junegunn/fzf.vim'
   "Doesn't work w/ +python3 vim
   "Plugin 'joonty/vim-phpunitqf'
   Plugin 'leafgarland/typescript-vim'

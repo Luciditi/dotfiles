@@ -239,6 +239,9 @@ umask 007
 export CHEAT_EDITOR="vim"
 export CHEATCOLORS=true
 
+#######   FZF   ################################################################
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+
 #######   ORACLE   #############################################################
 # Setup Oracle Environment If Installed
 if [ -d /usr/lib/oracle/instantclient ]; then
