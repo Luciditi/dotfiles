@@ -302,10 +302,8 @@ else
       # Run Devbook w/ config
       # [1H]: time sh <(curl -sL https://jig.io/devbook-init) https://jig.io/devbook-config-mini
       # [2H]: time sh <(curl -sL https://jig.io/devbook-init)
-      # [8H]: time sh <(curl -sL https://jig.io/devbook-init) https://jig.io/devbook-config-luciditi
       if [[ "$SNAPSHOT" == "Packaged" ]]; then
         DEVBOOK_CONFIG=${3-""}
-        #SNAPSHOT_SCRIPT="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"ls\""
         SNAPSHOT_SCRIPT="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/local/bin:\$PATH"; time sh <(curl -sL https://jig.io/devbook-init) $DEVBOOK_CONFIG\""
       fi
 
