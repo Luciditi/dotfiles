@@ -94,6 +94,8 @@ function osx-switch-dns() {
     DNS=("1.1.1.1" "1.0.0.1")
   elif [[ "$1" == "GOOG" ]]; then
     DNS=("8.8.8.8" "8.8.4.4")
+  elif [[ "$1" == "OPEN" ]]; then
+    DNS=("208.67.222.222" "208.67.220.220")
   else
     DNS="empty"
   fi
