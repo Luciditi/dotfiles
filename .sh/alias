@@ -56,9 +56,6 @@ alias osx-file-show='defaults write com.apple.finder AppleShowAllFiles YES; kill
 #Network setup
 alias osx-net-change='networksetup -switchtolocation'
 
-#Adjust alias for pup
-alias pup='$HOME/.bin/go/bin/pup'
-
 #OS-dependant aliases
 case "$OSTYPE" in
   "darwin"* )
