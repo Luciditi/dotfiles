@@ -258,6 +258,14 @@ augroup COMMANDS
   nn <Leader>; A;<ESC>
   """"" PHP/Drupal """""
 
+  """"" Markdown """""
+  " <Leader>+k = Wrap clipboard link
+  au FileType markdown vmap <buffer><silent><Leader>l :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>]%a(<C-R>+)<ESC>
+  " <Leader>+k = Wrap bold
+  au FileType markdown vmap <buffer><silent><Leader>b :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>*vf*:<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>*
+  " <Leader>+k = Wrap italic
+  au FileType markdown vmap <buffer><silent><Leader>i :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>_
+  """"" Markdown """""
 augroup END
 
 """""""FORMATTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -456,6 +464,7 @@ augroup HIGHLIGHTING
   "Set PHP function folding
   nn <Leader>zp :EnablePHPFolds<CR>zM
   nn <Leader>zf :EnableFastPHPFolds<CR>zM
+
 augroup END
 
 """"""""BINARY""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
