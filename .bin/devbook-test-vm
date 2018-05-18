@@ -13,6 +13,7 @@ set -euo pipefail
 # FUNCTIONS
 ############################################################################
 
+
 # Clean Upon Exit
 cleanup() {
   if [[ "$OP" == "build" && "$?" != "0" ]]; then
@@ -118,6 +119,8 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/            backup:                                                     Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
 #/
 #/            time-sync:                                                  Sync the VM clock to the current time.
+#/
+#/            test-tag TAG                                                Test the devbook TAG in the VM.
 #/
 #/            sync-files REMOTE_PATH [LOCAL_PATH]:                        Sync files between local and VM.
 #/                 <REMOTE_PATH>:                                         The remote path to sync to. 
@@ -269,6 +272,47 @@ else
     # RESYNC DEVBOOK CLOCK
     time-sync)
       ssh -t "$DEVBOOK_VM_SSH_HOST" "sudo ntpdate -u time.apple.com"
+      ;;
+
+    # TEST TAG
+    test-tag)
+      # Confirm arg
+      TAG=${2-""}
+      if [[ -z "$TAG" ]]; then
+        echo "${C_ERR}Need a tag to test.${C_RES}"
+        exit 1
+      fi
+
+      # Setup Devbook code
+      VM_TMP=$(ssh "$DEVBOOK_VM_SSH_HOST" "echo \$TMPDIR" | xargs)
+      ssh "$DEVBOOK_VM_SSH_HOST" "if [[ ! -d \"\$TMPDIR/devbook\" ]]; then mkdir \"\$TMPDIR/devbook\"; fi" 
+      if [[ -f "init.sh" ]]; then
+        echo ""
+        echo "${C_HIL}Deploying Devbook code...${C_RES}"
+        scp -qr . "$DEVBOOK_VM_SSH_HOST:${VM_TMP}devbook" 2> /dev/null || true
+      fi
+
+      # Get all tags minus always
+      echo ""
+      echo "${C_HIL}Executing Devbook code...${C_RES}"
+      ssh -t "$DEVBOOK_VM_SSH_HOST" "
+        PATH=\"/usr/local/bin:\$PATH\"
+        export ANSIBLE_DEPRECATION_WARNINGS=0
+        cd \"${VM_TMP}devbook\"
+
+        ansible-galaxy install -r requirements.yml
+        ansible-playbook --list-tags main.yml -i inventory | grep 'TASK TAGS' | sed -e 's/.*TASK TAGS: \[\(.*\)\]/\1/g' | sed -e ' s/always[,| ]*//g' | sed -e ' s/ //g' | tr ',' '\n' | grep -v \"$TAG\" 2> /dev/null > .devbook.skip
+        
+        for DEVBOOK in \$(find \"\$HOME/.devbook/\" -maxdepth 2 -type f -path \"\$HOME/.devbook/*/main.yml\")
+        do
+          DEVBOOK_DIR=\$(dirname \$DEVBOOK)
+          ansible-playbook --list-tags \"\$DEVBOOK\" -i inventory | grep 'TASK TAGS' | sed -e 's/.*TASK TAGS: \[\(.*\)\]/\1/g' | sed -e ' s/always[,| ]*//g' | sed -e ' s/ //g' | tr ',' '\n'  2> /dev/null > \"\$DEVBOOK_DIR/.devbook.skip\"
+          cat \"\$DEVBOOK_DIR/.devbook.skip\"
+        done
+
+        ./init.sh
+        rm .devbook.skip
+      " 
       ;;
 
     # BUILD DEVBOOK
