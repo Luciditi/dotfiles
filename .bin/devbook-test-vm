@@ -16,6 +16,7 @@ set -euo pipefail
 
 # Clean Upon Exit
 cleanup() {
+  OP=${OP-""}
   if [[ "$OP" == "build" && "$?" != "0" ]]; then
     echo "${C_HIL}Devbook build process ended. Would you like to ssh into the VM? (y|n)${C_RES}"
     read -t 5 INPUT
@@ -134,7 +135,8 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/ Options:
 #/   --help: Display this help message
 SCRIPT=$(basename "$0")
-usage() { grep '^#/' "$0" | cut -c4- | sed -e 's/\$SCRIPT/'"$SCRIPT"'/g' ; exit 0 ; }
+SCRIPT_PATH=$0:A
+usage() { grep '^#/' "$SCRIPT_PATH" | cut -c4- | sed -e 's/\$SCRIPT/'"$SCRIPT"'/g' ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && usage
 
 ############################################################################
@@ -288,7 +290,7 @@ else
       ssh "$DEVBOOK_VM_SSH_HOST" "if [[ ! -d \"\$TMPDIR/devbook\" ]]; then mkdir \"\$TMPDIR/devbook\"; fi" 
       if [[ -f "init.sh" ]]; then
         echo ""
-        echo "${C_HIL}Deploying Devbook code...${C_RES}"
+        echo "${C_HIL}Copying local Devbook code...${C_RES}"
         scp -qr . "$DEVBOOK_VM_SSH_HOST:${VM_TMP}devbook" 2> /dev/null || true
       fi
 
@@ -307,11 +309,17 @@ else
         do
           DEVBOOK_DIR=\$(dirname \$DEVBOOK)
           ansible-playbook --list-tags \"\$DEVBOOK\" -i inventory | grep 'TASK TAGS' | sed -e 's/.*TASK TAGS: \[\(.*\)\]/\1/g' | sed -e ' s/always[,| ]*//g' | sed -e ' s/ //g' | tr ',' '\n'  2> /dev/null > \"\$DEVBOOK_DIR/.devbook.skip\"
-          cat \"\$DEVBOOK_DIR/.devbook.skip\"
         done
 
         ./init.sh
+
         rm .devbook.skip
+        for DEVBOOK in \$(find \"\$HOME/.devbook/\" -maxdepth 2 -type f -path \"\$HOME/.devbook/*/main.yml\")
+        do
+          DEVBOOK_DIR=\$(dirname \$DEVBOOK)
+          rm \"\$DEVBOOK_DIR/.devbook.skip\"
+        done
+
       " 
       ;;
 
