@@ -69,13 +69,27 @@ C_SUC="\033[32m"
 C_ERR="\033[31m"
 C_RES="\033[0m"
 
-# Defaults
-DEVBOOK_VM_NAME="macOS"
-DEVBOOK_VM_SSH_HOST="macos"
-DEVBOOK_VM_SSH_USER="admin"
-DEVBOOK_VM_DIR="$HOME/Documents/VirtualBox/$DEVBOOK_VM_NAME"
-DEVBOOK_VM_BACKUP_DIR="/nas/v1/Programs/VMs"
+# Set defaults
+DEVBOOK_CONFIG_VARS=("DEVBOOK_VM_NAME" "DEVBOOK_VM_SSH_HOST" "DEVBOOK_VM_SSH_USER" "DEVBOOK_VM_DIR" "DEVBOOK_VM_BACKUP_DIR" "DEVBOOK_REMOTE_CONFIG")
+DEVBOOK_CONFIG_FILENAME=".devbook.env"
+if [[ -f "$HOME/$DEVBOOK_CONFIG_FILENAME" ]]; then
+  source "$HOME/$DEVBOOK_CONFIG_FILENAME"
+fi
+typeset -A DEVBOOK_CONFIG_DEFAULTS
+# The VBox guest VM name
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_NAME]="macOS"
+# The VBox guest VM host name
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_SSH_HOST]="macos"
+# The VBox guest VM user name
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_SSH_USER]="admin"
+# The home-relative path to VBox VMs
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_DIR]="Documents/VirtualBox"
+# The absolute local dir to backup VM to
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_BACKUP_DIR]=""
+# The URL of the config file used to config devboook
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_REMOTE_CONFIG]=""
 
+# Snapshots / Build Code
 typeset -A DEVBOOK_VM_SNAPSHOTS
 typeset -A DEVBOOK_VM_B_SCRIPTS
 DEVBOOK_VM_SNAPSHOTS[Init]="An initialized macOS High Sierra install with a configured admin user."
@@ -93,7 +107,7 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/     <OP>:  [config|control|snapshot|image|backup|time-sync|build]
 #/   <ARGS>:  On OP:
 #/
-#/            config:
+#/            config:                                                     Config devbook-test-vm app.
 #/
 #/            control COMMAND:                                            Control the VM:
 #/              <COMMAND>:     [on|state|manage|off]
@@ -158,13 +172,39 @@ if (! which VBoxManage > /dev/null 2>&1 ); then
   exit 1
 else
 
+  # Look for VM and register.
+  if [[ ! $(VBoxManage list vms | grep "\"$DEVBOOK_VM_NAME\"") ]]; then 
+    echo "${C_HIL}Could not find the VM ${C_WAR}$DEVBOOK_VM_NAME${C_RES}${C_HIL}. Adding VMs in ${C_WAR}$HOME/$DEVBOOK_VM_DIR${C_RES}${C_HIL}${C_RES}"
+    for VM in $(find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox"); do
+      VBoxManage registervm "$VM" 2> /dev/null || true
+    done
+  fi
+
   # Retrieve & route command
   OP=${1-""}
   case $OP in
 
     # DEFAULT DEVBOOK VM CONFIG
     config)
-      #@TODO: Add customization.
+      # Show current config
+      if [[ -f "$HOME/$DEVBOOK_CONFIG_FILENAME" ]]; then
+        echo "${C_WAR}CURRENT CONFIG: ${C_RES}"
+        cat "$HOME/$DEVBOOK_CONFIG_FILENAME"
+        echo ""
+      fi
+
+      # Add new config
+      CONFIG_VARS=""
+      for CONFIG in "${DEVBOOK_CONFIG_VARS[@]}"
+      do
+        echo "${C_SUC}Enter value for ${C_WAR}$CONFIG${C_RES}${C_SUC}:${C_RES}"
+        read INPUT
+        CONFIG_VARS="$CONFIG_VARS$CONFIG=$INPUT\n"
+        echo ""
+      done
+      echo "$CONFIG_VARS"| head -n$(expr $(echo "$CONFIG_VARS" | wc -l | xargs) - 1) > "$HOME/$DEVBOOK_CONFIG_FILENAME"
+      echo "${C_SUC}Config saved to ${C_WAR}$HOME/$DEVBOOK_CONFIG_FILENAME${C_RES}${C_RES}"
+
       ;;
 
     # STARTING/CONTROL DEVBOOK VM
@@ -268,7 +308,12 @@ else
       if [[ -d "${DEVBOOK_VM_BACKUP_DIR:?}/${DEVBOOK_VM_NAME:?}" ]]; then
         rm -rf "${DEVBOOK_VM_BACKUP_DIR:?}/${DEVBOOK_VM_NAME:?}"
       fi
-      cp -R "${DEVBOOK_VM_DIR:?}" "${DEVBOOK_VM_BACKUP_DIR:?}"
+      if [[ -d "$HOME/${DEVBOOK_VM_DIR:?}/${DEVBOOK_VM_NAME:?}" ]]; then
+        cp -R "$HOME/${DEVBOOK_VM_DIR:?}/${DEVBOOK_VM_NAME:?}" "${DEVBOOK_VM_BACKUP_DIR:?}"
+        echo "${C_HIL}${C_WAR}$HOME/${DEVBOOK_VM_DIR:?}/${DEVBOOK_VM_NAME:?}${C_RES}${C_HIL} backed up.${C_RES}"
+      else
+        echo "${C_ERR}Could not find ${C_WAR}$HOME/${DEVBOOK_VM_DIR:?}/${DEVBOOK_VM_NAME:?}${C_RES}${C_ERR}.${C_RES}"
+      fi
       ;;
 
     # RESYNC DEVBOOK CLOCK
@@ -335,7 +380,7 @@ else
       # Send instructions for SIPOff testing
       if [[ "$SNAPSHOT" == "SIPOff" ]]; then
         VBoxManage controlvm "$DEVBOOK_VM_NAME" poweroff || true
-        echo "${C_HIL}Running build for ${C_WAR}$SNAPSHOT${C_RES}.${C_RES}"
+        echo "${C_HIL}Running build for ${C_WAR}$SNAPSHOT${C_RES}${C_HIL}.${C_RES}"
         echo "${C_WAR}In order to disable SIP, do the following: .${C_RES}"
         echo "${C_SUC}    1. Press Enter to restart VM.${C_RES}"
         echo "${C_SUC}    2. ${C_WAR}PRESS SPACE/F12 QUICKLY WHEN VM SCREEN APPEARS${C_RES}${C_SUC} -> VirtualBox EFI BIOS${C_RES}"
@@ -352,8 +397,6 @@ else
       fi
 
       # Run Devbook w/ config
-      # [1H]: time sh <(curl -sL https://jig.io/devbook-init) https://jig.io/devbook-config-mini
-      # [2H]: time sh <(curl -sL https://jig.io/devbook-init)
       if [[ "$SNAPSHOT" == "Packaged" ]]; then
         DEVBOOK_CONFIG=${3-""}
         SNAPSHOT_SCRIPT="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/local/bin:\$PATH"; time sh <(curl -sL https://jig.io/devbook-init) $DEVBOOK_CONFIG\""
