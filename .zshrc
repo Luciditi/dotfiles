@@ -210,7 +210,7 @@ autoload -U compinit && compinit -u
 
 autoload bashcompinit
 bashcompinit
-source "$HOME/.sh/completions/"*
+for SCRIPT in "$HOME"/.sh/completions/*.bash; do source "$SCRIPT"; done
 #source "$HOME/.drush/drush.complete.sh"
 #######   SOURCES   ############################################################
 
