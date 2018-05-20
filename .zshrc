@@ -1,4 +1,7 @@
 #######   ANTIGEN   ############################################################
+# UNCOMMENT TO PROFILE:
+#zmodload zsh/zprof
+
 # @TODO: Determine if we'll lookup source
 source /usr/local/share/antigen/antigen.zsh
 
@@ -252,3 +255,6 @@ if [ -d /usr/lib/oracle/instantclient ]; then
   export TNS_ADMIN=/etc
   export NLS_LANG=AMERICAN_AMERICA.UTF8
 fi
+
+# UNCOMMENT TO PROFILE:
+#zprof
