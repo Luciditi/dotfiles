@@ -28,6 +28,9 @@ alias ctagit='ctags -R -f ./.git/tags .'
 command -v colordiff >/dev/null 2>&1 && { alias diff="colordiff"; }
 ########## DIFF ################################################################
 
+##Silver search w/ hidden & Git dirs excluded
+alias ag='ag --hidden --ignore-dir .git'
+
 #Shortcut Drush
 alias dr='drush'
 
@@ -72,6 +75,9 @@ esac
 
 #Setup Toggl
 alias toggl='nvm use 5.0 && toggl'
+
+#Use Tree w/ hidden & Git dirs excluded
+alias tree='tree -a -I .git'
 
 ########## VIM #################################################################
 #Use MacVim In Terminal

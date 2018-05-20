@@ -12,10 +12,11 @@ source "$HOME/.sh/functions/iterm2-shell-integration"
 #######   COMPLETIONS   ########################################################
 autoload bashcompinit
 bashcompinit
-source "$HOME/.sh/completions/"*
+for SCRIPT in "$HOME"/.sh/completions/*.bash; do source "$SCRIPT"; done
 #source "$HOME/.drush/drush.complete.sh"
 
 #######   SOURCES   ############################################################
+
 # Set custom bin paths
 PATH=$PATH:$HOME/.bin
 
@@ -47,6 +48,9 @@ export CLICOLOR=1
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"
 export CHEATCOLORS=true
+
+#######   FZF   ################################################################
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 
 #######   ORACLE   #############################################################
 # Setup Oracle Environment If Installed

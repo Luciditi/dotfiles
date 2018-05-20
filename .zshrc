@@ -212,6 +212,7 @@ autoload bashcompinit
 bashcompinit
 for SCRIPT in "$HOME"/.sh/completions/*.bash; do source "$SCRIPT"; done
 #source "$HOME/.drush/drush.complete.sh"
+
 #######   SOURCES   ############################################################
 
 # Set custom bin paths
@@ -235,6 +236,7 @@ umask 007
 
 #######   APP CONFIG   #########################################################
 
+
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"
 export CHEATCOLORS=true
@@ -250,4 +252,3 @@ if [ -d /usr/lib/oracle/instantclient ]; then
   export TNS_ADMIN=/etc
   export NLS_LANG=AMERICAN_AMERICA.UTF8
 fi
-

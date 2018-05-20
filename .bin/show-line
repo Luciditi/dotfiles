@@ -3,17 +3,15 @@
 
 #Display usage
 usage() {
-  echo "usage: show-line.sh <FILE> <LINE_NUMBER>"
-  echo "         <FILE>:  The file to look through"
-  echo "  <LINE_NUMBER>:  The line of a file to outptu"
+  echo "usage: show-line <FILE> [<LINE_NUMBER>]"
+  echo "         <FILE>:  The file to show lines"
+  echo "  <LINE_NUMBER>:  The line of a file to output"
 }
 
-if [ -n "$1" ] || [ -n "$2" ]; then
-  if [ -f $1 ]; then
-    head -n $2 $1 | tail -n 1
-  else
-    usage
-  fi
+if [ -f "$1" ] ; then
+  NUM="$2"
+  nl -ba  -nrz < "$1" | grep --color=never "^0*$NUM\s*.*"
 else
   usage
 fi
+
