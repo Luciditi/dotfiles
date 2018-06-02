@@ -390,7 +390,7 @@ augroup HIGHLIGHTING
   vm > >gv
 
   "Highlight cursor & line
-  nm <Leader>ct :set cursorcolumn!<Bar>set cursorline!<CR>
+  nm <Leader>ch :set cursorcolumn!<Bar>set cursorline!<CR>
 
   "Highlight redundant whitespaces and tabs.
   highlight RedundantSpaces ctermbg=red guibg=red
@@ -995,6 +995,12 @@ augroup END
 
 """""""VIM-REPEAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-REPEAT
+  augroup END
+
+"""""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup VIM-STICKY
+    let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
+ 
   augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

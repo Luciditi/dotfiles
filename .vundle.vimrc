@@ -21,6 +21,7 @@ augroup VUNDLE
   Plugin 'chr4/nginx.vim'
   Plugin 'chrisbra/NrrwRgn'
   Plugin 'editorconfig/editorconfig-vim'
+  Plugin 'ernstwi/vim-sticky'
   Plugin 'ervandew/supertab'
   Plugin 'evidens/vim-twig'
   Plugin 'Glench/Vim-Jinja2-Syntax'
