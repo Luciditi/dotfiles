@@ -73,6 +73,9 @@ case "$OSTYPE" in
     ;;
 esac
 
+#Use QR service
+alias qr='curl -F-=\<- qrenco.de'
+
 #Setup Toggl
 alias toggl='nvm use 5.0 && toggl'
 
