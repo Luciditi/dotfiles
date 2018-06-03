@@ -18,30 +18,28 @@ function 0x0-tinyurl() {
 
 #Countdown function
 function countdown() {
-  local now=$(date +%s)
-  local end=$((now + $1))
-  title_default="Countdown"
-  title=${2:-$title_default}
-  message_default="The countdown of $1 seconds is finished."
-  message=${3:-$message_default}
-  while (( now < end )); do
+  local NOW
+  NOW=$(date +%s)
+  local END
+  END=$((NOW + $1))
+  TITLE=${2:-🕒 Countdown}
+  MESSAGE=${3:-The countdown of $1 seconds is finished.}
+  while (( NOW < END )); do
     case "$OSTYPE" in
       "darwin"* )
-        printf "%s\r" "$(date -u -j -f %s $((end - now)) +%T)"
+        printf "%s\r" "$(date -u -j -f %s $((END - NOW)) +%T)"
         ;;
       "linux-gnu" )
-        printf "%s\r" "$(date -u -d @$((end - now)) +%T)"
+        printf "%s\r" "$(date -u -d @$((END - NOW)) +%T)"
         ;;
       * )
         ;;
     esac
     sleep 0.25
-    now=$(date +%s)
+    NOW=$(date +%s)
   done
-  echo
-  mac-notify.sh "$title" "$message"
-  tput bel
-  say "$message"
+  terminal-notifier -title "$TITLE" -subtitle "" -message "$MESSAGE" -activate com.googlecode.iterm2
+  say "$MESSAGE"
 }
 
 CALENDAR="$1"
