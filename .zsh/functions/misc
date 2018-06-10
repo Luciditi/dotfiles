@@ -7,7 +7,6 @@
 function chpwd() {
   emulate -L zsh
 
-  git-aliases
 }
 
 # Execute on ZSH exit

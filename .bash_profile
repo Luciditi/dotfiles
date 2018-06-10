@@ -4,7 +4,6 @@ source "$HOME/.sh/alias"
 
 #######   FUNCTIONS   ##########################################################
 source "$HOME/.sh/functions/macos"
-source "$HOME/.sh/functions/git-aliases"
 source "$HOME/.sh/functions/misc"
 source "$HOME/.sh/functions/iterm2"
 source "$HOME/.sh/functions/iterm2-shell-integration"
@@ -48,6 +47,9 @@ export CLICOLOR=1
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"
 export CHEATCOLORS=true
+
+#######   DIRENV   #############################################################
+eval "$(direnv hook bash)"
 
 #######   FZF   ################################################################
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'

@@ -7,8 +7,9 @@ symlinked into the user's `$HOME` directory.
 ## Files
 - [`.bin`](.bin): Misc. Bash/Zsh scripts.
 - [`.cheat`](.cheat): [Cheat](https://github.com/chrisallenlane/cheat) config.
+- [`.direnvrc`](.direnvrc): [DirEnv](https://github.com/direnv/direnv) config.
 - [`.git_template`](.git_template): Scaffolding for git hooks.
-- [`.gitignore_global`](.gitignore_global): Global config for [git-aliases](.sh/functions/git-aliases) functions.
+- [`.gitignore_global`](.gitignore_global): Global config for Git ignore
 - [`.macos`](.macos): MacOS config.
 - [`.notags`](.notags): Ctags flag.
 - [`.sh`](.sh): Misc shell alias, completions, & functions.
