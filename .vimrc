@@ -259,16 +259,19 @@ augroup COMMANDS
   """"" PHP/Drupal """""
 
   """"" Markdown """""
+  "  :<C-U>call <SID>opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+  "  :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+
   " <Leader>+b = Wrap bold
-  au FileType markdown vmap <buffer><silent><Leader>b :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>*vf*:<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>*
+  au FileType markdown vmap <buffer><silent><Leader>b S*vf*S*
   " <Leader>+c = Wrap code
-  au FileType markdown vmap <buffer><silent><Leader>c :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>`
+  au FileType markdown vmap <buffer><silent><Leader>c S`
   " <Leader>+i = Wrap italic
-  au FileType markdown vmap <buffer><silent><Leader>i :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>_
+  au FileType markdown vmap <buffer><silent><Leader>i S_
   " <Leader>+l = Wrap clipboard link
-  au FileType markdown vmap <buffer><silent><Leader>l :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>]%a(<C-R>+)<ESC>
+  au FileType markdown vmap <buffer><silent><Leader>l S]%a(<C-R>+)<ESC>
   " <Leader>+s = Wrap strikethrough
-  au FileType markdown vmap <buffer><silent><Leader>s :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>~vf~:<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>~
+  au FileType markdown vmap <buffer><silent><Leader>s S~vf~S~
   """"" Markdown """""
 augroup END
 
