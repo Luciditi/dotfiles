@@ -14,7 +14,7 @@ export_alias() {
 }
 
 
-# Example: export_alias zz "ls -la"
+# Example:
 # woot() {
 #   echo woot
 # }
@@ -28,7 +28,8 @@ export_function() {
   if declare -f "$name" >/dev/null; then
     echo "#!/usr/bin/env bash" > "$target"
     declare -f "$name" >> "$target" 2>/dev/null
-    echo "$name" >> "$target"
+    # Notice that we add shell variables to the function trigger.
+    echo "$name \$*" >> "$target"
     chmod +x "$target"
   fi
 }
