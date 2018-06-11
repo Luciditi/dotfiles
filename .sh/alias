@@ -59,6 +59,9 @@ alias osx-file-show='defaults write com.apple.finder AppleShowAllFiles YES; kill
 #Network setup
 alias osx-net-change='networksetup -switchtolocation'
 
+#Previous dir
+alias pd='cd -'
+
 #OS-dependant aliases
 case "$OSTYPE" in
   "darwin"* )
