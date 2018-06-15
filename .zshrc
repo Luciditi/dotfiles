@@ -154,6 +154,9 @@ bindkey "^z" sudo-command-line
 #ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command
 bindkey '^ ' autosuggest-accept
 
+#HELP: K to load man page for command
+bindkey -M vicmd 'K' run-help
+
 #VI MODE: Ctrl+Space to auto complete history command
 #10 ms key sequence for VI mode
 KEYTIMEOUT=1
