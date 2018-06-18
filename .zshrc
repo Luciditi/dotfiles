@@ -47,6 +47,7 @@ antigen bundle zsh-autosuggestion
 
 # Other ZSH plugins
 antigen bundle https://github.com/hchbaw/opp.zsh.git
+antigen bundle supercrabtree/k
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle https://github.com/b4b4r07/zsh-vimode-visual.git
