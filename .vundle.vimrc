@@ -38,6 +38,7 @@ augroup VUNDLE
   Plugin 'mbbill/undotree'
   Plugin 'myint/syntastic-extras'
   Plugin 'nathanaelkane/vim-indent-guides'
+  Plugin 'osyo-manga/vim-hopping'
   Plugin 'osyo-manga/vim-over'
   Plugin 'pearofducks/ansible-vim'
   Plugin 'pangloss/vim-javascript'

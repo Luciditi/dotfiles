@@ -591,13 +591,6 @@ augroup SEARCH
   no <Leader>#
     \ :execute "grep -r '" . expand("<cword>") . "' . " <Bar> cw<CR><CR>
 
-  "Search directory for a given word.
-  if !exists(":Ag")
-    command -nargs=+ -complete=file -bar Ag
-      \ silent! grep! <args>|cwindow|redraw!
-  endif
-  nn <Leader>/ :Ag<SPACE>
-
   "Use Silver Searcher instead of grep
   if executable('ag')
     " Note we extract the column as well as the file and line number
@@ -774,10 +767,10 @@ augroup END
     "Set filebody search
     nn <Leader>O :F<CR>
     let g:rg_command = '
-      \ rg --column --line-number --no-heading --fixed-strings --ignore-case 
+      \ rg --column --line-number --no-heading --fixed-strings --ignore-case
       \ --no-ignore --hidden --follow --color "always"
       \ -g "!{.git,node_modules,vendor}/*" '
-    command! -bang -nargs=* F 
+    command! -bang -nargs=* F
       \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
   augroup END
 
@@ -797,6 +790,21 @@ augroup END
 
     "Leader+jd will jump to Gutentagged defintion
     map <silent> <Leader>jd :CtrlPTag<CR><C-\>w
+
+  augroup END
+
+"""""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup HOPPING.VIM
+    " Map to Leader+/
+    nm <Space>/ <Plug>(hopping-start)
+
+    " Keymapping
+    let g:hopping#keymapping = {
+    \	"\<C-n>" : "<Over>(hopping-next)",
+    \	"\<C-p>" : "<Over>(hopping-prev)",
+    \	"\<C-u>" : "<Over>(scroll-u)",
+    \	"\<C-d>" : "<Over>(scroll-d)",
+    \}
 
   augroup END
 
@@ -1003,7 +1011,7 @@ augroup END
 """""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-STICKY
     let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
- 
+
   augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
