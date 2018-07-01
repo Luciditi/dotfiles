@@ -837,12 +837,6 @@ augroup END
     " AutoComplPop like behavior.
     "let g:neocomplcache_enable_auto_select = 1
 
-    " Shell like behavior(not recommended).
-    "set completeopt+=longest
-    "let g:neocomplcache_enable_auto_select = 1
-    "let g:neocomplcache_disable_auto_complete = 1
-    "ino <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
     " Enable heavy omni completion.
     if !exists('g:neocomplcache_force_omni_patterns')
       let g:neocomplcache_force_omni_patterns = {}
