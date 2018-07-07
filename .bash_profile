@@ -3,6 +3,7 @@
 source "$HOME/.sh/alias"
 
 #######   FUNCTIONS   ##########################################################
+source "$HOME/.sh/functions/cpv"
 source "$HOME/.sh/functions/macos"
 source "$HOME/.sh/functions/misc"
 source "$HOME/.sh/functions/iterm2"
