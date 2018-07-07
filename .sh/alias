@@ -80,7 +80,7 @@ esac
 alias qr='curl -F-=\<- qrenco.de'
 
 #Repeat last command as root
-alias resu='sudo !!'
+alias resu='sudo $(fc -ln -1)'
 
 #Setup Toggl
 alias toggl='nvm use 5.0 && toggl'
