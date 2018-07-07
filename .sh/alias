@@ -79,6 +79,9 @@ esac
 #Use QR service
 alias qr='curl -F-=\<- qrenco.de'
 
+#Repeat last command as root
+alias resu='sudo !!'
+
 #Setup Toggl
 alias toggl='nvm use 5.0 && toggl'
 
