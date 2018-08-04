@@ -150,8 +150,8 @@ else
 fi
 
 ##########PLUGINS CONFIGURATION#################################################
-#SUDO: Ctrl+z to sudo command
-bindkey "^z" sudo-command-line
+#SUDO: !! to sudo command
+bindkey -M vicmd '!!' sudo-command-line
 
 #ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command
 bindkey '^ ' autosuggest-accept
