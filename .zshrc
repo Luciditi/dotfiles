@@ -43,9 +43,11 @@ antigen bundle vundl
 antigen bundle wd
 antigen bundle web-search
 antigen bundle yum
+antigen bundle z
 antigen bundle zsh-autosuggestion
 
 # Other ZSH plugins
+antigen bundle changyuheng/fz
 antigen bundle https://github.com/hchbaw/opp.zsh.git
 antigen bundle supercrabtree/k
 antigen bundle unixorn/git-extra-commands
