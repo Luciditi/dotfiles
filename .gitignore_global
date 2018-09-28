@@ -1,3 +1,4 @@
 .envrc
 .direnv
 .slack
+.gh-pr.json
