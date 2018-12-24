@@ -109,6 +109,16 @@ function printline() {
 }
 
 
+#Print CSV
+function print-csv {
+  column -t -s, "$@" | less -F -S -X -K
+}
+
+#Print TSV
+function print-tsv {
+  column -t -s $'\t' "$@" | less -F -S -X -K
+}
+
 #SSH without public key
 function ssh-nokey() {
   ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no "$@"
