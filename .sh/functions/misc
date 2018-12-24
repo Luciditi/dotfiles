@@ -119,6 +119,11 @@ function ssh-fingerprint-rsa() {
   ssh-keyscan -t rsa "$@" 2>/dev/null | cut -f3 -d' '
 }
 
+#Create dir / file in one cms
+function touchd() {
+  mkdir -p "$(dirname "$1")" && touch "$1"
+}
+
 #transfer.sh transport.
 transfer-sh() {
     # check arguments
