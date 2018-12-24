@@ -105,9 +105,9 @@ alias vundle-install='vim -u "$HOME/.vundle.vimrc" +PluginInstall +qall'
 #Run vim w/ vundle config and plugin update & quit flags
 alias vundle-update='vim -u "$HOME/.vundle.vimrc" +PluginUpdate +qall'
 
-#Use MacVim In Terminal
 #Get external IP
-alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias wanip="dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'"
+alias wanipv6="dig -6 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'"
 
 #WGet to StdOut
 alias wgetout='wget -qO- '
