@@ -96,8 +96,14 @@ if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
 fi
 ########## VIM #################################################################
 
+#Run vim w/ vundle config and plugin clean & quit flags
+alias vundle-clean='vim -u "$HOME/.vundle.vimrc" +PluginClean! +qall'
+
 #Run vim w/ vundle config and plugin install & quit flags
 alias vundle-install='vim -u "$HOME/.vundle.vimrc" +PluginInstall +qall'
+
+#Run vim w/ vundle config and plugin update & quit flags
+alias vundle-update='vim -u "$HOME/.vundle.vimrc" +PluginUpdate +qall'
 
 #Use MacVim In Terminal
 #Get external IP
