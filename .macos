@@ -437,6 +437,9 @@ defaults write com.apple.dock show-process-indicators -bool true
 # Show transparent for hidden apps
 defaults write com.apple.Dock showhidden -bool yes
 
+# Don’t show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
 # Wipe all (default) app icons from the Dock
 # This is only really useful when setting up a new Mac, or if you don’t use
 # the Dock to launch apps.
