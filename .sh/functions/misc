@@ -119,6 +119,16 @@ function print-tsv {
   column -t -s $'\t' "$@" | less -F -S -X -K
 }
 
+#Edit compressed JSON w/
+function json_pedit() {
+
+  if [ -f "$1" ]; then
+    # @TODO: Figure out how to syntax highlight
+    jq -r < "$1" | vipe -c 'set syntax=json' | jq -c > tmpfile && mv tmpfile "$1"
+    echo "Saved $1"
+  fi
+}
+
 #SSH without public key
 function ssh-nokey() {
   ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no "$@"
