@@ -155,6 +155,17 @@ fi
 #SUDO: !! to sudo command
 bindkey -M vicmd '!!' sudo-command-line
 
+#ZSH-AUTOSUGGESTIONS: Set highlight color
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
+
+#ZSH-AUTOSUGGESTIONS: Ctrl+\ to remove auto complete suggestion
+# Requires iterm2 ^⌫  to be mapped to ESC sequence: "[[CD"
+bindkey '^[[[CD' autosuggest-clear
+
+#ZSH-AUTOSUGGESTIONS: Ctrl+Enter to auto complete history command & execute
+# Requires iterm2 ^⏎  to be mapped to ESC sequence: "[[CE"
+bindkey '^[[[CE' autosuggest-execute
+
 #ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command
 bindkey '^ ' autosuggest-accept
 
