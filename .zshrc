@@ -176,6 +176,10 @@ bindkey -M vicmd 'K' run-help
 #10 ms key sequence for VI mode
 KEYTIMEOUT=1
 
+# Use v in cmd mode for editing buffer in vim
+zle -N edit-command-line
+bindkey -M vicmd 'v' edit-command-line
+
 #Set custom cursor for vi mode
 function zle-keymap-select zle-line-init {
   # change cursor shape in iTerm2
