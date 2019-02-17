@@ -95,6 +95,17 @@ function man() {
     man "$@"
 }
 
+#Search OUT for MAC address
+oui() {
+  # Normalize for OUI then search
+  MAC="$1"
+  MAC=$(echo "$MAC" | awk '{print toupper($0)}')
+  MAC="${MAC//:/-}"
+  MAC="${MAC:0:8}"
+
+  grep -i "$MAC" <(cat '/tmp/out.txt' 2> /dev/null || curl -s 'http://standards-oui.ieee.org/oui.txt' | tee '/tmp/out.txt')
+}
+
 #print out a line w/ title
 function printline() {
   if [ "$1" ]; then
