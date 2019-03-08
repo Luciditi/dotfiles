@@ -38,7 +38,7 @@ alias dr='drush'
 alias gcal-today='gcalcli agenda $(date -u +"%Y-%m-%dT%H:%M:%SZ") $(date -v'+24H' -u +"%Y-%m-%dT%H:%M:%SZ") --refresh --details 'url' --defaultCalendar'
 
 #Colorize grep
-alias grep='grep --color=auto'
+alias grep='grep --color=always'
 
 #Retrieve git remote
 alias git-remote-current="git branch -vv | grep '\* ' | sed 's/.*\[\(.*\)\].*/\1/g; s/.*(HEAD detached at \(.*\)).*/\1/g; s/\* \(.*\)                           .*/\1/g; s/\*\ \([^ ]*\)\ .*/\1/g'"
@@ -108,6 +108,9 @@ alias vundle-update='vim -u "$HOME/.vundle.vimrc" +PluginUpdate +qall'
 #Get external IP
 alias wanip="dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'"
 alias wanipv6="dig -6 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'"
+
+#Colorize watch
+alias watch='watch -c '
 
 #WGet to StdOut
 alias wgetout='wget -qO- '
