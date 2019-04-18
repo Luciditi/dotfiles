@@ -959,7 +959,7 @@ augroup END
         \js,css,info,txt,md"
 
       "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
-      let g:syntastic_javascript_checkers = ['standard']
+      let g:syntastic_javascript_checkers = ['standard', 'jsonlint']
       let g:syntastic_sh_checkers = ['shellcheck', 'sh']
       let g:syntastic_yaml_checkers = ['pyyaml']
 
