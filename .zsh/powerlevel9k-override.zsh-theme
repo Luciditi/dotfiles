@@ -267,3 +267,44 @@ prompt_vi_mode() {
     "$1_prompt_segment" "$0_${current_state}" "$2" "214" "black" "$MODE"
   fi
 }
+
+
+#CUSTOM KUBE PROMPT
+prompt_kubecontext() {
+  local kubectl_version="$(kubectl version --client 2>/dev/null)"
+
+  if [[ -n "$kubectl_version" ]]; then
+    # Get the current Kuberenetes context
+    local cur_ctx=$(kubectl config view -o=jsonpath='{.current-context}')
+    cur_namespace="$(kubectl config view -o=jsonpath="{.contexts[?(@.name==\"${cur_ctx}\")].context.namespace}")"
+    # If the namespace comes back empty set it default.
+    if [[ -z "${cur_namespace}" ]]; then
+      cur_namespace="default"
+    fi
+
+    local k8s_final_text=""
+
+    if [[ "$cur_ctx" == "$cur_namespace" ]]; then
+      # No reason to print out the same identificator twice
+      k8s_final_text="$cur_ctx"
+    else
+      k8s_final_text="$cur_ctx/$cur_namespace"
+    fi
+
+    "$1_prompt_segment" "$0" "$2" "033" "black" "$k8s_final_text" "KUBERNETES_ICON"
+  fi
+}
+
+
+#CUSTOM AWS PROMPT
+prompt_aws() {
+  local aws_profile="${AWS_PROFILE:-$AWS_DEFAULT_PROFILE}"
+
+  if [[ -n "$aws_profile" ]]; then
+    "$1_prompt_segment" "$0" "$2" "208" "black" "$aws_profile" 'AWS_ICON'
+  fi
+}
+
+
+#CUSTOM GCP PROMPT
+#gcloud config list --format 'value(core.project)' 2> /dev/null
