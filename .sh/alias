@@ -67,6 +67,7 @@ case "$OSTYPE" in
   "darwin"* )
     #SVIM = root edit w/ .vimrc config
     alias svim='sudo vim'
+    alias shuf='gshuf'
     ;;
   "linux-gnu" )
     #SVIM = root edit w/ .vimrc config

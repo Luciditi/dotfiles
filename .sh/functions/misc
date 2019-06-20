@@ -125,6 +125,11 @@ function print-csv {
   column -t -s, "$@" | less -F -S -X -K
 }
 
+#Gen PW
+pw-gen() {
+  echo $(grep "^[^']\{3,5\}$" /usr/share/dict/words|shuf -n4 |  tr '[:upper:]' '[:lower:]' | tr '\n' '-' | sed 's/.$//')
+}
+
 #Print TSV
 function print-tsv {
   column -t -s $'\t' "$@" | less -F -S -X -K
