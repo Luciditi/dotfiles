@@ -88,19 +88,19 @@ while getopts 'h' FLAG; do
 done
 
 # Check for .devbook config dir.
-PWD=$(pwd)
-if [[ ! -d "$PWD/.devbook" ]]; then
-  mkdir "$PWD/.devbook"
-  echo "${C_HIL}Created ${C_WAR}.devbook${C_RES}${C_HIL}...${C_RES}"
+DEVBOOK_DIR="$HOME/.devbook"
+if [[ ! -d "$DEVBOOK_DIR" ]]; then
+  mkdir "$DEVBOOK_DIR"
+  echo "${C_HIL}Created ${C_WAR}$DEVBOOK_DIR${C_RES}${C_HIL} dir...${C_RES}"
 fi
 
 
 # Create new devbook config
 CONFIG_NAME=${1:-devbook-config}
-if [[ ! -d "$PWD/.devbook/$CONFIG_NAME" ]]; then
-  git clone "$REPO" ".devbook/$CONFIG_NAME"
-  rm -rf "$PWD/.devbook/$CONFIG_NAME/.git"
-  echo "${C_HIL}Created new devbook config ${C_WAR}.devbook/$CONFIG_NAME${C_RES}${C_HIL}...${C_RES}"
+if [[ ! -d "$DEVBOOK_DIR/$CONFIG_NAME" ]]; then
+  git clone "$REPO" "$DEVBOOK_DIR/$CONFIG_NAME"
+  rm -rf "$DEVBOOK_DIR/$CONFIG_NAME/.git"
+  echo "${C_HIL}Created new devbook config ${C_WAR}$DEVBOOK_DIR/$CONFIG_NAME${C_RES}${C_HIL}...${C_RES}"
 fi
 
 exit 0
