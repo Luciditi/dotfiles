@@ -223,7 +223,7 @@ function +vi-vcs-detect-changes() {
         fi
       done <<< "$CHANGED_FILES"
 
-      # Confirm dirty on non-submodules changes 
+      # Confirm dirty on non-submodules changes
       if [[ ! -z "$NON_SUBMODULE_CHANGES" ]]; then
         VCS_WORKDIR_DIRTY=true
       else
@@ -232,7 +232,7 @@ function +vi-vcs-detect-changes() {
       fi
 
     # Otherwise, assume true
-    else 
+    else
       VCS_WORKDIR_DIRTY=true
     fi
 
@@ -256,15 +256,15 @@ prompt_vi_mode() {
   MODE=${MODE/visual/$VISUAL_MODE}
   MODE=${MODE/vivli/$VISUAL_MODE}
 
-  # #N: 9FDD2D ~ AFFF00
+  #N: 9FDD2D ~ AFFF00 | 64C44A
   if [[ "$MODE" == "$MODE_INDICATOR" ]]; then
-    "$1_prompt_segment" "$0_${current_state}" "$2" "154" "black" "$MODE"
-  #I: 1D9EE1 ~ 0087FF
+    "$1_prompt_segment" "$0_${current_state}" "$2" "83" "black" "$MODE"
+  #I: 1D9EE1 ~ 0087FF | CCC951
   elif [[ "$MODE" == "$INSERT_MODE" ]]; then
-    "$1_prompt_segment" "$0_${current_state}" "$2" "33" "black" "$MODE"
-  #V: E39C26 ~ FFAF00
+    "$1_prompt_segment" "$0_${current_state}" "$2" "185" "black" "$MODE"
+  #V: E39C26 ~ FFAF00 | 1942C6
   elif [[ "$MODE" == "$VISUAL_MODE" ]]; then
-    "$1_prompt_segment" "$0_${current_state}" "$2" "214" "black" "$MODE"
+    "$1_prompt_segment" "$0_${current_state}" "$2" "26" "black" "$MODE"
   fi
 }
 
