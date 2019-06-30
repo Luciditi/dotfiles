@@ -41,7 +41,7 @@ augroup VUNDLE
   Plugin 'osyo-manga/vim-hopping'
   Plugin 'osyo-manga/vim-over'
   Plugin 'pearofducks/ansible-vim'
-  "Plugin 'pangloss/vim-javascript'
+  Plugin 'pangloss/vim-javascript'
   Plugin 'ryanoasis/vim-devicons'
   Plugin 'scrooloose/nerdcommenter'
   Plugin 'scrooloose/nerdtree'

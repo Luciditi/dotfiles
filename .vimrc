@@ -642,6 +642,7 @@ augroup END
 
 """""""TABULARIZE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TABULARIZE
+  " https://devhints.io/tabular
   no <Leader>a= :Tabularize /=
   no <Leader>a: :Tabularize /:
   no <Leader>a:: :Tabularize /:\zs
@@ -958,6 +959,7 @@ augroup END
         \ --extensions=drush,php,module,inc,install,test,profile,theme,
         \js,css,info,txt,md"
 
+      let g:syntastic_gitcommit_checkers = ['proselint']
       "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
       let g:syntastic_javascript_checkers = ['standard', 'jsonlint']
       let g:syntastic_sh_checkers = ['shellcheck', 'sh']
