@@ -126,19 +126,22 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/                             list:                                      List all VM snapshots.
 #/
 #/            image:
-#/              <COMMAND>:     [mount|umount]
+#/              <COMMAND>:     [create|mount|unmount]
 #/                 <ARGS>:
+#/                             create IMAGE:                              Create the macOS IMAGE from the installer app.
 #/                             mount IMAGE:                               Mount the IMAGE iso into the VM.
-#/                             umount IMAGE:                              Unmount the IMAGE name out of the VM.
+#/                             unmount IMAGE:                             Unmount the IMAGE name out of the VM.
 #/
 #/            backup:                                                     Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
+#/
+#/            new-vm NAME IMAGE:                                          Create a new Virtualbox VM, NAME, with IMAGE.
 #/
 #/            time-sync:                                                  Sync the VM clock to the current time.
 #/
 #/            test-tag TAG                                                Test the devbook TAG in the VM.
 #/
 #/            sync-files REMOTE_PATH [LOCAL_PATH]:                        Sync files between local and VM.
-#/                 <REMOTE_PATH>:                                         The remote path to sync to. 
+#/                 <REMOTE_PATH>:                                         The remote path to sync to.
 #/                  <LOCAL_PATH>:                                         The local path to sync from (defaults to cwd)
 #/
 #/            build SNAPSHOT CONFIG_URL:                                  Build the VM SNAPSHOT.
@@ -173,9 +176,11 @@ if (! which VBoxManage > /dev/null 2>&1 ); then
 else
 
   # Look for VM and register.
-  if [[ ! $(VBoxManage list vms | grep "\"$DEVBOOK_VM_NAME\"") ]]; then 
+  if [[ ! $(VBoxManage list vms | grep "\"$DEVBOOK_VM_NAME\"") ]]; then
     echo "${C_HIL}Could not find the VM ${C_WAR}$DEVBOOK_VM_NAME${C_RES}${C_HIL}. Adding VMs in ${C_WAR}$HOME/$DEVBOOK_VM_DIR${C_RES}${C_HIL}${C_RES}"
-    for VM in $(find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox"); do
+    VMS=$(find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox" -print)
+    find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox" -print0 | while read -d $'\0' VM; do
+      echo "${C_HIL}Registering ${C_WAR}$VM${C_RES}${C_HIL}...${C_RES}"
       VBoxManage registervm "$VM" 2> /dev/null || true
     done
   fi
@@ -273,16 +278,42 @@ else
     image)
       COMMAND=${2-""}
       IMAGE=${3-""}
-      if [[ -z "$IMAGE" ]]; then
-        echo "${C_ERR}Need an iso to mount or the image name (to unmount).${C_RES}"
-        exit 1
-      fi
 
       case $COMMAND in
+        create)
+          if [[ -z "$IMAGE" ]]; then
+            echo "${C_ERR}Need an OS name to create iso from installer. Found these: ${C_RES}"
+            OS_DMGS=$(ls /Applications/Install\ macOS*.app/Contents/Resources/createinstallmedia | sed "s/\/Applications\/Install macOS//g" | sed "s/.app\/Contents\/Resources\/createinstallmedia//g" || true)
+            if [[ -n "$OS_DMGS" ]]; then
+              echo "$OS_DMGS"
+            else
+              echo "${C_ERR}Go to AppStore to download installers..${C_RES}"
+            fi
+            exit 1
+          fi
+
+          echo "${C_HIL}Creating ISO for ${C_WAR}$IMAGE${C_RES}${C_HIL}...${C_RES}"
+          hdiutil create -o "/tmp/$IMAGE" -size 8000m -layout SPUD -fs HFS+J
+          hdiutil attach "/tmp/$IMAGE.dmg" -noverify -nobrowse -mountpoint /Volumes/install_build
+          asr restore -source "/Applications/Install macOS $IMAGE.app/Contents/SharedSupport/BaseSystem.dmg" -target /Volumes/install_build -noprompt -noverify -erase
+          hdiutil detach "/Volumes/macOS Base System"
+          sleep 10
+          hdiutil convert "/tmp/$IMAGE.dmg" -format UDTO -o "/tmp/$IMAGE"
+          rm "/tmp/$IMAGE.dmg"
+          mv "/tmp/$IMAGE.cdr" "$IMAGE.iso"
+          ;;
         mount)
+          if [[ -z "$IMAGE" ]]; then
+            echo "${C_ERR}Need an iso to mount.${C_RES}"
+            exit 1
+          fi
           VBoxManage storageattach "$DEVBOOK_VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$IMAGE"
           ;;
-        umount)
+        unmount)
+          if [[ -z "$IMAGE" ]]; then
+            echo "${C_ERR}Need the image name to unmount.${C_RES}"
+            exit 1
+          fi
           ssh -t "$DEVBOOK_VM_SSH_HOST" "diskutil eject \"$IMAGE\""
           VBoxManage storageattach "$DEVBOOK_VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
           ;;
@@ -301,6 +332,56 @@ else
       LOCAL_PATH=${3-"."}
 
       rsync -r -a -v -e ssh --delete  "$LOCAL_PATH" $DEVBOOK_VM_SSH_USER@$DEVBOOK_VM_SSH_HOST:$DEVBOOK_VM_SSH_PATH
+      ;;
+
+    # Create new VM
+    new-vm)
+      VM_NAME=${2-"devbook"}
+      BOOT_IMAGE=${3-""}
+
+      if [[ ! -f "$BOOT_IMAGE" ]]; then
+        echo "${C_ERR}Need a macOS boot image. See: ${C_WAR}$SCRIPT image create ${C_RES}${C_HIL}${C_RES}"
+        exit 1
+      fi
+
+
+      VBoxManage createvm --name "$VM_NAME" --ostype MacOS_64 --register
+      VBoxManage modifyvm "$VM_NAME" \
+                          --memory 8192  \
+                          --chipset 'ich9' \
+                          --firmware 'efi' \
+                          --cpus 2 \
+                          --vram 128 \
+                          --rtcuseutc 'on' \
+                          --mouse 'usbtablet' \
+                          --usb 'on' \
+                          --description "A VM used to test devbook against a blank install of macOS." \
+                          --audioout 'on' \
+                          --audiocontroller 'hda' \
+                          --clipboard 'bidirectional' \
+                          --cpu-profile "Intel Core i7-6700K" \
+                          --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
+                          #--usbxhci 'on' \
+      #VM_RES="1280x960"
+      #VBoxManage setextradata "$VM_NAME" "CustomVideoMode1" "${VM_RES}x32"
+      #VBoxManage setextradata "$VM_NAME" VBoxInternal2/EfiGraphicsResolution "$VM_RES"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
+      VBoxManage createhd --filename "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi" --size 30720
+      VBoxManage storagectl "$VM_NAME" --name 'SATA' --add 'sata' --controller 'IntelAHCI' --portcount 2 --bootable on
+      VBoxManage storageattach "$VM_NAME" \
+                         --storagectl "SATA" \
+                         --device 0 \
+                         --port 0 \
+                         --type hdd \
+                         --medium "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi"
+      VBoxManage modifyvm "$VM_NAME" --natpf1 "SSH,tcp,,22222,,22"
+      #VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
+      VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$BOOT_IMAGE"
+      echo "${C_HIL}Created ${C_WAR}$VM_NAME${C_RES}${C_HIL} in VirtualBox.${C_RES}"
       ;;
 
     # BACKUP DEVBOOK
@@ -332,7 +413,7 @@ else
 
       # Setup Devbook code
       VM_TMP=$(ssh "$DEVBOOK_VM_SSH_HOST" "echo \$TMPDIR" | xargs)
-      ssh "$DEVBOOK_VM_SSH_HOST" "if [[ ! -d \"\$TMPDIR/devbook\" ]]; then mkdir \"\$TMPDIR/devbook\"; fi" 
+      ssh "$DEVBOOK_VM_SSH_HOST" "if [[ ! -d \"\$TMPDIR/devbook\" ]]; then mkdir \"\$TMPDIR/devbook\"; fi"
       if [[ -f "init.sh" ]]; then
         echo ""
         echo "${C_HIL}Copying local Devbook code...${C_RES}"
@@ -349,7 +430,7 @@ else
 
         ansible-galaxy install -r requirements.yml
         ansible-playbook --list-tags main.yml -i inventory | grep 'TASK TAGS' | sed -e 's/.*TASK TAGS: \[\(.*\)\]/\1/g' | sed -e ' s/always[,| ]*//g' | sed -e ' s/ //g' | tr ',' '\n' | grep -v \"$TAG\" 2> /dev/null > .devbook.skip
-        
+
         for DEVBOOK in \$(find \"\$HOME/.devbook/\" -maxdepth 2 -type f -path \"\$HOME/.devbook/*/main.yml\")
         do
           DEVBOOK_DIR=\$(dirname \$DEVBOOK)
@@ -363,9 +444,7 @@ else
         do
           DEVBOOK_DIR=\$(dirname \$DEVBOOK)
           rm \"\$DEVBOOK_DIR/.devbook.skip\"
-        done
-
-      " 
+        done"
       ;;
 
     # BUILD DEVBOOK
