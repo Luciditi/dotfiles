@@ -301,6 +301,7 @@ else
           hdiutil convert "/tmp/$IMAGE.dmg" -format UDTO -o "/tmp/$IMAGE"
           rm "/tmp/$IMAGE.dmg"
           mv "/tmp/$IMAGE.cdr" "$IMAGE.iso"
+          echo "${C_HIL}Created ${C_WAR}$IMAGE.iso${C_RES}${C_HIL}.${C_RES}"
           ;;
         mount)
           if [[ -z "$IMAGE" ]]; then
