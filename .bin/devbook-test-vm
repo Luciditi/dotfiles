@@ -338,6 +338,7 @@ else
     new-vm)
       VM_NAME=${2-"devbook"}
       BOOT_IMAGE=${3-""}
+      STATE=${4-""}
 
       if [[ ! -f "$BOOT_IMAGE" ]]; then
         echo "${C_ERR}Need a macOS boot image. See: ${C_WAR}$SCRIPT image create ${C_RES}${C_HIL}${C_RES}"
@@ -380,17 +381,21 @@ else
                          --type hdd \
                          --medium "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi"
       VBoxManage modifyvm "$VM_NAME" --natpf1 "SSH,tcp,,22222,,22"
-      VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$BOOT_IMAGE"
+      #VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$BOOT_IMAGE"
+      VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
       #VBoxManage unregistervm --delete 'devbook'
       echo "${C_HIL}Created ${C_WAR}$VM_NAME${C_RES}${C_HIL} in VirtualBox.${C_RES}"
-      sleep 7
-      VBoxManage startvm "$VM_NAME" --type gui
-      echo "Format with non APFS"
-      echo "Follow Steps: "
-      echo "- \`VBoxManage controlvm \"$VM_NAME\" poweroff\`"
-      echo "- \`VBoxManage storageattach "$VM_NAME" --storagectl \"SATA\" --port 1 --device 0 --type dvddrive --medium \"emptydrive\"\`"
-      echo "- \`VBoxManage startvm \"$VM_NAME\" --type gui\`"
-      echo "Boot from File: FS1://macOS Install Data/Locked Files/Boot Files/boot.efi"
+
+      if [[ "$STATE" == "install" ]]; then
+        sleep 7
+        VBoxManage startvm "$VM_NAME" --type gui
+        echo "Format with non APFS"
+        echo "Follow Steps: "
+        echo "- \`VBoxManage controlvm \"$VM_NAME\" poweroff\`"
+        echo "- \`VBoxManage storageattach "$VM_NAME" --storagectl \"SATA\" --port 1 --device 0 --type dvddrive --medium \"emptydrive\"\`"
+        echo "- \`VBoxManage startvm \"$VM_NAME\" --type gui\`"
+        echo "Boot from File: FS1://macOS Install Data/Locked Files/Boot Files/boot.efi"
+      fi
       ;;
 
     # BACKUP DEVBOOK
