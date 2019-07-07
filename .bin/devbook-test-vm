@@ -344,7 +344,6 @@ else
         exit 1
       fi
 
-
       VBoxManage createvm --name "$VM_NAME" --ostype MacOS_64 --register
       VBoxManage modifyvm "$VM_NAME" \
                           --memory 8192  \
@@ -354,7 +353,9 @@ else
                           --vram 128 \
                           --rtcuseutc 'on' \
                           --mouse 'usbtablet' \
+                          --keyboard 'usb' \
                           --usb 'on' \
+                          --hpet 'on' \
                           --description "A VM used to test devbook against a blank install of macOS." \
                           --audioout 'on' \
                           --audiocontroller 'hda' \
@@ -379,9 +380,17 @@ else
                          --type hdd \
                          --medium "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi"
       VBoxManage modifyvm "$VM_NAME" --natpf1 "SSH,tcp,,22222,,22"
-      #VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
       VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$BOOT_IMAGE"
+      #VBoxManage unregistervm --delete 'devbook'
       echo "${C_HIL}Created ${C_WAR}$VM_NAME${C_RES}${C_HIL} in VirtualBox.${C_RES}"
+      sleep 7
+      VBoxManage startvm "$VM_NAME" --type gui
+      echo "Format with non APFS"
+      echo "Follow Steps: "
+      echo "- \`VBoxManage controlvm \"$VM_NAME\" poweroff\`"
+      echo "- \`VBoxManage storageattach "$VM_NAME" --storagectl \"SATA\" --port 1 --device 0 --type dvddrive --medium \"emptydrive\"\`"
+      echo "- \`VBoxManage startvm \"$VM_NAME\" --type gui\`"
+      echo "Boot from File: FS1://macOS Install Data/Locked Files/Boot Files/boot.efi"
       ;;
 
     # BACKUP DEVBOOK
