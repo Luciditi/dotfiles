@@ -231,8 +231,8 @@ source "$HOME/.sh/functions/cpv"
 source "$HOME/.sh/functions/macos"
 source "$HOME/.sh/functions/misc"
 source "$HOME/.sh/functions/iterm2"
-source "$HOME/.sh/functions/iterm2-shell-integration"
 source "$HOME/.zsh/functions/misc"
+source "$HOME/.zsh/functions/iterm2-shell-integration"
 
 #######   COMPLETIONS   ########################################################
 # Add custom ZSH completions
