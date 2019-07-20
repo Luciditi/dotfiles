@@ -37,7 +37,6 @@ augroup VUNDLE
   Plugin 'majutsushi/tagbar'
   Plugin 'mbbill/undotree'
   Plugin 'myint/syntastic-extras'
-  Plugin 'nathanaelkane/vim-indent-guides'
   Plugin 'osyo-manga/vim-hopping'
   Plugin 'osyo-manga/vim-over'
   Plugin 'pearofducks/ansible-vim'
@@ -65,6 +64,7 @@ augroup VUNDLE
   Plugin 'vim-scripts/repmo.vim'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
+  Plugin 'Yggdroot/indentLine'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
 
   "" The following are examples of different formats supported.
