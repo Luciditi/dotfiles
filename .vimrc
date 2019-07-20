@@ -888,21 +888,6 @@ augroup END
 
   augroup END
 
-"""""""PHPFMT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup PHPFMT
-    "Set parameters
-    let g:phpfmt_command = '~/.composer/vendor/bin/phpcbf'
-    let g:phpfmt_standard = 'Drupal,DrupalPractice'
-    let g:phpfmt_options = '--standard=Drupal,DrupalPractice
-      \--extensions=php,module,inc,install,test,profile,theme,css,info,txt,md'
-
-    "Set Leader+B to PHPCBF format
-    nm <Leader>b :PhpFmt<CR>:w<CR>
-
-    let g:phpfmt_autosave = 0
-
-  augroup END
-
 """""""PHPUnitQF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PHPUnitQF
     "<Leader>+tr fires PHPUnit test runner
