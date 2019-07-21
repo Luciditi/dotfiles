@@ -278,6 +278,11 @@ export CHEATCOLORS=true
 #######   DIRENV   #############################################################
 eval "$(direnv hook zsh)"
 
+#######   HH   #################################################################
+alias hh=hstr
+export HISTFILE="$HOME/.zsh_history"
+export HSTR_CONFIG=hicolor,raw-history-view
+
 #######   FZF   ################################################################
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 
