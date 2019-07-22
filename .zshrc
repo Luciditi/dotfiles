@@ -172,8 +172,17 @@ bindkey '^[[[CD' autosuggest-clear
 # Requires iterm2 ^⏎  to be mapped to ESC sequence: "[[CE"
 bindkey '^[[[CE' autosuggest-execute
 
-#ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command
-bindkey '^ ' autosuggest-accept
+#ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command | (or hh if empty)
+function _zle-autosuggest-accept {
+  if [ -z "$BUFFER" ]; then
+    BUFFER="hh"
+    zle accept-line
+  else
+    zle autosuggest-accept
+  fi
+}
+zle -N _zle-autosuggest-accept
+bindkey '^ ' _zle-autosuggest-accept
 
 #HELP: K to load man page for command
 bindkey -M vicmd 'K' run-help
