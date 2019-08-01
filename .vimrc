@@ -633,8 +633,8 @@ augroup SETTINGS
   "Show leader command active
   set showcmd
 
-  "500 Lines of History
-  set history=500
+  "History length
+  set history=5000
 
   "Keep buffer in memory after close.
   set hidden

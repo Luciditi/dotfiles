@@ -273,9 +273,9 @@ export PATH
 umask 007
 #######   ZSH   ################################################################
 
-# Expand history size to 100K
-HISTSIZE=100000
-SAVEHIST=100000
+# Expand history length
+HISTSIZE=200000
+SAVEHIST=200000
 
 #######   APP CONFIG   #########################################################
 
