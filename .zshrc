@@ -184,6 +184,16 @@ function _zle-autosuggest-accept {
 zle -N _zle-autosuggest-accept
 bindkey '^ ' _zle-autosuggest-accept
 
+#ZSH-AUTOSUGGESTIONS: Ctrl+h to hh current buffer
+function hh-start-search() {
+  TMP=$BUFFER
+  zle push-input
+  BUFFER="hh $TMP"
+  zle accept-line
+}
+zle -N hh-start-search
+bindkey "\C-h" hh-start-search
+
 #HELP: K to load man page for command
 bindkey -M vicmd 'K' run-help
 
