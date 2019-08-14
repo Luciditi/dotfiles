@@ -51,7 +51,7 @@ antigen bundle changyuheng/fz
 antigen bundle https://github.com/hchbaw/opp.zsh.git
 antigen bundle supercrabtree/k
 antigen bundle unixorn/git-extra-commands
-antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-autosuggestions@v0.5.0
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle https://github.com/b4b4r07/zsh-vimode-visual.git
 
