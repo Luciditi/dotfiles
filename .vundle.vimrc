@@ -15,6 +15,7 @@ augroup VUNDLE
   Plugin 'VundleVim/Vundle.vim'
 
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  Plugin 'ajh17/VimCompletesMe'
   Plugin 'bling/vim-airline'
   Plugin 'bootleq/ShowMarks'
   Plugin 'chr4/nginx.vim'
@@ -67,6 +68,7 @@ augroup VUNDLE
   Plugin 'wilywampa/vim-easymotion'
   Plugin 'Yggdroot/indentLine'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
+
 
   "" The following are examples of different formats supported.
   "" Keep Plugin commands between vundle#begin/end.

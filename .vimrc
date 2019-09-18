@@ -57,6 +57,9 @@ augroup AUTOCOMPLETE
   "Autocomplete from dictionary as well
   set complete+=k
 
+  "Omni complete for VimCompletesMe
+  autocmd FileType vim let b:vcm_tab_complete = 'omni'
+
   "Personal Dictionary complete with C-d
   silent! set dict +=~/.vim/dictionaries/personal.dict
 augroup END
