@@ -27,6 +27,7 @@ augroup VUNDLE
   Plugin 'Glench/Vim-Jinja2-Syntax'
   Plugin 'godlygeek/tabular'
   Plugin 'groenewege/vim-less'
+  Plugin 'hashivim/vim-hashicorp-tools'
   Plugin 'itchyny/vim-cursorword'
   Plugin 'joonty/vdebug'
   Plugin 'junegunn/fzf.vim'
