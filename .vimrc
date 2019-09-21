@@ -57,9 +57,6 @@ augroup AUTOCOMPLETE
   "Autocomplete from dictionary as well
   set complete+=k
 
-  "Omni complete for VimCompletesMe
-  autocmd FileType vim let b:vcm_tab_complete = 'omni'
-
   "Personal Dictionary complete with C-d
   silent! set dict +=~/.vim/dictionaries/personal.dict
 augroup END
@@ -405,43 +402,40 @@ augroup HIGHLIGHTING
   "Incremental search/nopaste/comment block
   set comments=sr:/*,mb:*,ex:*/
 
-  if has("au")
+  "HTML/PHP/JS/CSS autocomplete
+  au FileType css set omnifunc=csscomplete#CompleteCSS
+  au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  au FileType js set omnifunc=javascriptcomplete#CompleteJS
+  au FileType javascript
+  \ setlocal omnifunc=javascriptcomplete#CompleteJS
+  au FileType php setlocal omnifunc=phpcomplete#CompletePHP
+  au FileType module setlocal omnifunc=phpcomplete#CompletePHP
+  au FileType drush setlocal omnifunc=phpcomplete#CompletePHP
+  au FileType theme setlocal omnifunc=phpcomplete#CompletePHP
+  au FileType python setlocal omnifunc=pythoncomplete#Complete
+  au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-    "HTML/PHP/JS/CSS autocomplete
-    au FileType css set omnifunc=csscomplete#CompleteCSS
-    au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    au FileType js set omnifunc=javascriptcomplete#CompleteJS
-    au FileType javascript
-    \ setlocal omnifunc=javascriptcomplete#CompleteJS
-    au FileType php setlocal omnifunc=phpcomplete#CompletePHP
-    au FileType module setlocal omnifunc=phpcomplete#CompletePHP
-    au FileType drush setlocal omnifunc=phpcomplete#CompletePHP
-    au FileType theme setlocal omnifunc=phpcomplete#CompletePHP
-    au FileType python setlocal omnifunc=pythoncomplete#Complete
-    au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  "Drupal *.module and *.install files.
+  au BufRead,BufNewFile *.module set filetype=php
+  au BufRead,BufNewFile *.drush set filetype=php
+  au BufRead,BufNewFile *.install set filetype=php
+  au BufRead,BufNewFile *.theme set filetype=php
+  au BufRead,BufNewFile *.test set filetype=php
+  au BufRead,BufNewFile *.inc set filetype=php
+  au BufRead,BufNewFile *.view set filetype=php
 
-    "Drupal *.module and *.install files.
-    au BufRead,BufNewFile *.module set filetype=php
-    au BufRead,BufNewFile *.drush set filetype=php
-    au BufRead,BufNewFile *.install set filetype=php
-    au BufRead,BufNewFile *.theme set filetype=php
-    au BufRead,BufNewFile *.test set filetype=php
-    au BufRead,BufNewFile *.inc set filetype=php
-    au BufRead,BufNewFile *.view set filetype=php
+  "Highlight log messages
+  au BufNewFile,BufReadPost *.log :set filetype=messages
+  au BufNewFile,BufReadPost /var/log/* :set filetype=messages
 
-    "Highlight log messages
-    au BufNewFile,BufReadPost *.log :set filetype=messages
-    au BufNewFile,BufReadPost /var/log/* :set filetype=messages
+  "Markdown Highlighting
+  au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md
+    \,README.txt
+    \ :set filetype=markdown
 
-    "Markdown Highlighting
-    au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md
-      \,README.txt
-      \ :set filetype=markdown
-
-    "Supresss errors
-    au CursorMovedI * if pumvisible() == 0|pclose|endif
-    au InsertLeave * if pumvisible() == 0|pclose|endif
-  endif
+  "Supresss errors
+  au CursorMovedI * if pumvisible() == 0|pclose|endif
+  au InsertLeave * if pumvisible() == 0|pclose|endif
 
   "Function Folding (Disable Autocomplete Performance)
   set nofoldenable
