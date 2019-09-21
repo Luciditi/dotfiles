@@ -7,23 +7,21 @@ augroup VUNDLE
   set rtp+=~/.vim/bundle/Vundle.vim
   " add fzf to runtime
   set rtp+=/usr/local/opt/fzf
-  call vundle#begin()
-  " alternatively, pass a path where Vundle should install plugins
-  "call vundle#begin('~/some/path/here')
 
+  call vundle#begin()
   " let Vundle manage Vundle, required
   Plugin 'VundleVim/Vundle.vim'
 
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   Plugin 'bling/vim-airline'
-  Plugin 'bootleq/ShowMarks'
+  Plugin 'bootleq/showmarks'
   Plugin 'chr4/nginx.vim'
-  Plugin 'chrisbra/NrrwRgn'
+  Plugin 'chrisbra/nrrwrgn'
   Plugin 'editorconfig/editorconfig-vim'
   Plugin 'ernstwi/vim-sticky'
   Plugin 'ervandew/supertab'
   Plugin 'evidens/vim-twig'
-  Plugin 'Glench/Vim-Jinja2-Syntax'
+  Plugin 'glench/vim-jinja2-syntax'
   Plugin 'godlygeek/tabular'
   Plugin 'groenewege/vim-less'
   Plugin 'hashivim/vim-hashicorp-tools'
@@ -53,11 +51,11 @@ augroup VUNDLE
   Plugin 'scrooloose/syntastic'
   Plugin 'shougo/deoplete.nvim'
   Plugin 'sjl/clam.vim'
-  Plugin 'spf13/PIV'
-  Plugin 'ShawnConn/vim-colorschemes'
-  Plugin 'StanAngeloff/php.vim'
+  Plugin 'spf13/piv'
+  Plugin 'shawnconn/vim-colorschemes'
+  Plugin 'stanangeloff/php.vim'
   Plugin 'tmhedberg/matchit'
-  Plugin 'Townk/vim-autoclose'
+  Plugin 'townk/vim-autoclose'
   Plugin 'tpope/vim-abolish'
   Plugin 'tpope/vim-fugitive'
   Plugin 'elzr/vim-json'
@@ -66,44 +64,16 @@ augroup VUNDLE
   Plugin 'vasconcelloslf/vim-interestingwords'
   Plugin 'vim-airline/vim-airline-themes'
   Plugin 'vim-php/tagbar-phpctags.vim'
+  Plugin 'vim-scripts/autocomplpop'
   Plugin 'vim-scripts/sql.vim'
   Plugin 'vim-scripts/repmo.vim'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
-  Plugin 'Yggdroot/indentLine'
+  Plugin 'yggdroot/indentline'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
 
-
-  "" The following are examples of different formats supported.
-  "" Keep Plugin commands between vundle#begin/end.
-  "" plugin on GitHub repo
-  "Plugin 'tpope/vim-fugitive'
-  "" plugin from http://vim-scripts.org/vim/scripts.html
-  "" Plugin 'L9'
-  "" Git plugin not hosted on GitHub
-  "Plugin 'git://git.wincent.com/command-t.git'
-  "" git repos on your local machine (i.e. when working on your own plugin)
-  "Plugin 'file:///home/gmarik/path/to/plugin'
-  "" The sparkup vim script is in a subdirectory of this repo called vim.
-  "" Pass the path to set the runtimepath properly.
-  "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-  "" Install L9 and avoid a Naming conflict if you've already installed a
-  "" different version somewhere else.
-  "" Plugin 'ascenator/L9', {'name': 'newL9'}
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
   " All of your Plugins must be added before the following line
   call vundle#end()            " required
   filetype plugin indent on    " required
-  " To ignore plugin indent changes, instead use:
-  "filetype plugin on
-  "
-  " Brief help
-  " :PluginList       - lists configured plugins
-  " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-  " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-  " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-  "
-  " see :h vundle for more details or wiki for FAQ
-  " Put your non-Plugin stuff after this line
 augroup END
