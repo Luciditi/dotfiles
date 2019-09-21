@@ -29,7 +29,9 @@ augroup VUNDLE
   Plugin 'hashivim/vim-hashicorp-tools'
   Plugin 'itchyny/vim-cursorword'
   Plugin 'jelera/vim-javascript-syntax'
-  Plugin 'joonty/vdebug'
+  if !has('nvim')
+    Plugin 'joonty/vdebug'
+  endif
   Plugin 'junegunn/fzf.vim'
   "Doesn't work w/ +python3 vim
   "Plugin 'joonty/vim-phpunitqf'
