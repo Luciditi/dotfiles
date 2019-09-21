@@ -29,6 +29,7 @@ augroup VUNDLE
   Plugin 'groenewege/vim-less'
   Plugin 'hashivim/vim-hashicorp-tools'
   Plugin 'itchyny/vim-cursorword'
+  Plugin 'jelera/vim-javascript-syntax'
   Plugin 'joonty/vdebug'
   Plugin 'junegunn/fzf.vim'
   "Doesn't work w/ +python3 vim
@@ -37,6 +38,7 @@ augroup VUNDLE
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
   Plugin 'mbbill/undotree'
+  Plugin 'mxw/vim-jsx'
   Plugin 'myint/syntastic-extras'
   Plugin 'osyo-manga/vim-hopping'
   Plugin 'osyo-manga/vim-over'
