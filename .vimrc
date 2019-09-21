@@ -15,7 +15,16 @@ augroup END
 
 """""""DEBUGGING""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup DEBUGGING
-"set verbose=9
+  " Use :call ToggleVerbose() to dump a verbose log
+  function! ToggleVerbose()
+      if !&verbose
+          set verbosefile=~/.vim/verbose.log
+          set verbose=15
+      else
+          set verbose=0
+          set verbosefile=
+      endif
+  endfunction
 
 augroup END
 
