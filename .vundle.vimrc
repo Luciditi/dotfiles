@@ -15,7 +15,6 @@ augroup VUNDLE
   Plugin 'VundleVim/Vundle.vim'
 
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  Plugin 'ajh17/VimCompletesMe'
   Plugin 'bling/vim-airline'
   Plugin 'bootleq/ShowMarks'
   Plugin 'chr4/nginx.vim'
