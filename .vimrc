@@ -911,7 +911,7 @@ augroup END
 """""""PIV""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PIV
     "Disable { for selected code
-    au! VimEnter * :vn <buffer> { {
+    "au! VimEnter * :vn <buffer> { {
 
     "Disable autofolding
     let g:DisableAutoPHPFolding = 1
@@ -1004,6 +1004,13 @@ augroup END
   augroup VIM-STICKY
     let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
 
+  augroup END
+
+"""""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup VIM-TERRAFORM
+    " FMT / Align TF files automatically
+    let g:terraform_fmt_on_save=1
+    let g:terraform_align=1
   augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
