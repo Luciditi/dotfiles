@@ -31,8 +31,6 @@ augroup VUNDLE
     Plugin 'joonty/vdebug'
   endif
   Plugin 'junegunn/fzf.vim'
-  "Doesn't work w/ +python3 vim
-  "Plugin 'joonty/vim-phpunitqf'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
