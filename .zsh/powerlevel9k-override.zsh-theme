@@ -246,26 +246,22 @@ function +vi-vcs-detect-changes() {
 set_default POWERLEVEL9K_VI_INSERT_MODE_STRING "INSERT"
 set_default POWERLEVEL9K_VI_COMMAND_MODE_STRING "NORMAL"
 prompt_vi_mode() {
-  MODE_INDICATOR="ː"
+  COMMAND_MODE="ː"
   INSERT_MODE="↳"
   VISUAL_MODE="Ꮖ"
-  MODE=$(vi_mode_prompt_info)
-  MODE=${MODE:-$INSERT_MODE}
-  MODE=${MODE/opp/$MODE_INDICATOR}
-  MODE=${MODE/vivis/$VISUAL_MODE}
-  MODE=${MODE/visual/$VISUAL_MODE}
-  MODE=${MODE/vivli/$VISUAL_MODE}
 
-  #N: 9FDD2D ~ AFFF00 | 64C44A
-  if [[ "$MODE" == "$MODE_INDICATOR" ]]; then
-    "$1_prompt_segment" "$0_${current_state}" "$2" "83" "black" "$MODE"
-  #I: 1D9EE1 ~ 0087FF | CCC951
-  elif [[ "$MODE" == "$INSERT_MODE" ]]; then
-    "$1_prompt_segment" "$0_${current_state}" "$2" "185" "black" "$MODE"
-  #V: E39C26 ~ FFAF00 | 1942C6
-  elif [[ "$MODE" == "$VISUAL_MODE" ]]; then
-    "$1_prompt_segment" "$0_${current_state}" "$2" "26" "black" "$MODE"
-  fi
+  case ${KEYMAP} in
+    ##N: 9FDD2D ~ AFFF00 | 64C44A
+    (vicmd) "$1_prompt_segment" "$0_${current_state}" "$2" "83" "black" "$COMMAND_MODE";;
+    ##V: E39C26 ~ FFAF00 | 1942C6
+    (vivis) "$1_prompt_segment" "$0_${current_state}" "$2" "26" "black" "$VISUAL_MODE";;
+    (main | viins | *) if [[ -z $POWERLEVEL9K_VI_INSERT_MODE_STRING ]]
+      then
+        return
+      fi
+      ##I: 1D9EE1 ~ 0087FF | CCC951
+      "$1_prompt_segment" "$0_${current_state}" "$2" "185" "black" "$INSERT_MODE" ;;
+  esac
 }
 
 
