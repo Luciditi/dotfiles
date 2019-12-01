@@ -303,4 +303,13 @@ prompt_aws() {
 
 
 #CUSTOM GCP PROMPT
-#gcloud config list --format 'value(core.project)' 2> /dev/null
+prompt_gcp() {
+  GCP_USER=$(gcloud config list --format 'value(core.account)' 2> /dev/null)
+  GCP_PROJ=$(gcloud config list --format 'value(core.project)' 2> /dev/null)
+  GCP_INFO=" $GCP_USER | $GCP_PROJ"
+
+  if [[ -n "$GCP_INFO" ]]; then
+    "$1_prompt_segment" "$0" "$2" "22" "black" "$GCP_INFO" 
+  fi
+}
+
