@@ -304,6 +304,8 @@ prompt_aws() {
 
 #CUSTOM GCP PROMPT
 prompt_gcp() {
+  #CLOUDSDK_CORE_ACCOUNT
+  #CLOUDSDK_CORE_PROJECT
   GCP_USER=$(gcloud config list --format 'value(core.account)' 2> /dev/null)
   GCP_PROJ=$(gcloud config list --format 'value(core.project)' 2> /dev/null)
   GCP_INFO=" $GCP_USER | $GCP_PROJ"

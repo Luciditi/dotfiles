@@ -959,6 +959,8 @@ augroup END
     let g:syntastic_gitcommit_checkers = ['proselint']
     "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
     let g:syntastic_javascript_checkers = ['standard', 'jsonlint']
+    let g:syntastic_python_checkers = ['pylint']
+    let g:syntastic_python_python_exec = '/usr/local/bin/python3'
     let g:syntastic_sh_checkers = ['shellcheck', 'sh']
     let g:syntastic_yaml_checkers = ['pyyaml']
 

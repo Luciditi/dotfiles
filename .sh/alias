@@ -80,9 +80,6 @@ esac
 #Repeat last command as root
 alias resu='sudo $(fc -ln -1)'
 
-#Setup Toggl
-alias toggl='nvm use 5.0 && toggl'
-
 #Use Tree w/ hidden & Git dirs excluded
 alias tree='tree -a -I .git'
 
