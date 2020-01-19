@@ -127,7 +127,7 @@ augroup COMMANDS
   nn <silent> <Leader>l <C-W>l
 
   "When you press <Leader>r you can search and replace the selected text
-  vn <silent> <Leader>r :call VisualSelection('replace')<CR>
+  vn <leader>r y:<C-u>%s/<C-R>"//gc<left><left><left>
 
   "Leader+r to do interactive find/replace regex
   nm <Leader>r :OverCommandLine <CR> %s/
@@ -584,8 +584,8 @@ augroup SEARCH
   vn / /\v\c
 
   " Visual mode pressing * or # searches for the current selection
-  vn <silent> * :call VisualSelection('f')<CR>
-  vn <silent> # :call VisualSelection('b')<CR>
+  vn <silent> * y:/<C-R>"<CR>
+  vn <silent> # y:?<C-R>"<CR>
 
   "ESC will toggle off search highlightig
   nm <silent> <ESC> :nohlsearch<CR>
@@ -1075,28 +1075,6 @@ augroup END
     if pos == getpos('.')
       execute "normal! 0"
     endif
-  endfunction
-
-"""""""REPLACE PATTERN WHILE SELECTING""""""""""""""""""""""""""""""""""""""""
-  function! VisualSelection(direction) range
-      let l:saved_reg = @"
-      execute "normal! vgvy"
-
-      let l:pattern = escape(@", '\\/.*$^~[]')
-      let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-      if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-      elseif a:direction == 'gv'
-        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-      elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-      elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-      endif
-
-      let @/ = l:pattern
-      let @" = l:saved_reg
   endfunction
 
 """""""VISUAL SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
