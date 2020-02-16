@@ -101,7 +101,7 @@ if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]]
         [[ $SIGNAL -lt -80 ]] && COLOR='%F{red}'
         [[ $SIGNAL -gt -60 ]] && COLOR='%F{green}'
         [[ ! "$SIGNAL" =~ "^-?[0-9]+([0-9]+)?$" ]] && COLOR='%F{red}'
-        echo -n "%{$COLOR%} $SIGNAL%{%f%}"
+        echo -n "%{$COLOR%}\uf1eb $SIGNAL%{%f%}"
       fi
     fi
   }
@@ -111,9 +111,9 @@ if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]]
   # Set PL9K Segment options
   POWERLEVEL9K_CHANGESET_HASH_LENGTH=7
   POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=10
-  #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load ram disk_usage swap custom_wifi_signal ip public_ip battery newline)
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(custom_wifi_signal context root_indicator dir dir_writable vcs aws kubecontext vi_mode)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs history time)
+  #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load ram disk_usage swap custom_wifi_signal ip public_ip battery newline gcp)
+  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context root_indicator dir dir_writable aws gcp kubecontext vcs vi_mode)
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time custom_wifi_signal background_jobs history time)
   POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
   POWERLEVEL9K_SHOW_CHANGESET=true
   POWERLEVEL9K_VCS_SHOW_SUBMODULE_DIRTY=false
