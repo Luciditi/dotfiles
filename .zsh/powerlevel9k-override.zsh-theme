@@ -306,10 +306,13 @@ prompt_aws() {
 prompt_gcp() {
   #CLOUDSDK_CORE_ACCOUNT
   #CLOUDSDK_CORE_PROJECT
-  GCP_USER=$(gcloud config list --format 'value(core.account)' 2> /dev/null)
-  GCP_PROJ=$(gcloud config list --format 'value(core.project)' 2> /dev/null)
-  GCP_CONFIG=$(gcloud config configurations list | grep True | cut -f1  -d' ')
-  GCP_INFO=" $GCP_CONFIG"
+  #GCP_USER=$(gcloud config list --format 'value(core.account)' 2> /dev/null)
+  #GCP_PROJ=$(gcloud config list --format 'value(core.project)' 2> /dev/null)
+  #GCP_CONFIG=$(gcloud config configurations list | grep True | cut -f1  -d' ')
+  if [[ -f "$HOME/.config/gcloud/active_config" ]]; then
+    GCP_CONFIG=$(cat "$HOME/.config/gcloud/active_config")
+    GCP_INFO=" $GCP_CONFIG"
+  fi
 
   if [[ -n "$GCP_INFO" ]]; then
     "$1_prompt_segment" "$0" "$2" "22" "black" "$GCP_INFO" 
