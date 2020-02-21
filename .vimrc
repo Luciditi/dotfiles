@@ -998,6 +998,13 @@ augroup END
     nn <Leader>U :UndotreeToggle<CR>
   augroup END
 
+"""""""VIM-AUTOFORMAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup VIM-AUTOFORMAT
+    "let g:formatterpath = ['/some/path/to/a/folder']
+    "let g:autoformat_verbosemode=1
+    nn <Leader>F :Autoformat<CR>
+  augroup END
+
 """""""VIM-REPEAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-REPEAT
   augroup END

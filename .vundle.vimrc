@@ -15,6 +15,7 @@ augroup VUNDLE
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   Plugin 'bling/vim-airline'
   Plugin 'bootleq/showmarks'
+  Plugin 'chiel92/vim-autoformat'
   Plugin 'chr4/nginx.vim'
   Plugin 'chrisbra/nrrwrgn'
   Plugin 'editorconfig/editorconfig-vim'
