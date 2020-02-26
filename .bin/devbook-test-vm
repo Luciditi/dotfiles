@@ -414,7 +414,7 @@ else
 
     # RESYNC DEVBOOK CLOCK
     time-sync)
-      ssh -t "$DEVBOOK_VM_SSH_HOST" "sudo ntpdate -u time.apple.com"
+      ssh -t "$DEVBOOK_VM_SSH_HOST" "sudo ntpdate -u time.apple.com || sudo sntp -sS time.apple.com"
       ;;
 
     # TEST TAG
