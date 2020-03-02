@@ -273,9 +273,14 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
-# Add Custom Config
-if [ -f "$HOME/.luciditi/config" ]; then
-  source "$HOME/.luciditi/config"
+# Add Custom Project Config in "$HOME/.projects/*/config"
+if [ -d "$HOME/.projects/" ]; then
+  PROJECTS=$(find "$HOME/.projects/" -type d -maxdepth 1 -mindepth 1)
+  while IFS= read -r PROJECT; do
+    if [ -f "$PROJECT/config" ]; then
+      source "$PROJECT/config"
+    fi
+  done <<< "$PROJECTS"
 fi
 
 # Export / File Mask
