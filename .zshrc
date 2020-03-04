@@ -275,7 +275,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Add Custom Project Config in "$HOME/.projects/*/config"
 if [ -d "$HOME/.projects/" ]; then
-  PROJECTS=$(find "$HOME/.projects/" -type d -maxdepth 1 -mindepth 1)
+  PROJECTS=$(find "$HOME/.projects/" -type d -maxdepth 1 -mindepth 1 | sort)
   while IFS= read -r PROJECT; do
     if [ -f "$PROJECT/config" ]; then
       source "$PROJECT/config"
