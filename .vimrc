@@ -960,7 +960,8 @@ augroup END
     "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
     let g:syntastic_javascript_checkers = ['standard', 'jsonlint']
     let g:syntastic_python_checkers = ['pylint']
-    let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+    "let g:syntastic_python_pylint_args = '-s n'
+    let g:syntastic_python_python_exec = 'python3'
     let g:syntastic_sh_checkers = ['shellcheck', 'sh']
     let g:syntastic_yaml_checkers = ['pyyaml']
 
@@ -969,7 +970,10 @@ augroup END
     let g:syntastic_warning_symbol = '!'
     let g:syntastic_style_error_symbol = '✗§'
     let g:syntastic_style_warning_symbol = '!§'
-    "let g:syntastic_debug = 1
+
+    "Error options
+    "let g:syntastic_debug = 3
+    let g:syntastic_exit_checks = 0
 
     "Toggle off checkers by default.
     let g:loaded_syntastic_ansible_ansible_lint_checker = 0
