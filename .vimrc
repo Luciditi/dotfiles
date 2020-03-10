@@ -82,10 +82,6 @@ augroup COMMANDS
   let g:mapleader = "\<Space>"
   let g:maplocalleader = "\<Space>"
 
-  "Ctrl-p(or P) for pasting in insert mode
-  ino <C-p> <C-R>"<BS>
-  ino <C-P> <C-R>"
-
   "Map g+j/k to move down to the first no blank character
   no gj +
   no gk -
@@ -802,9 +798,6 @@ augroup END
       call writefile([], s:notags)
     endif
 
-    "Leader+jd will jump to Gutentagged defintion
-    map <silent> <Leader>jd :CtrlPTag<CR><C-\>w
-
   augroup END
 
 """""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -991,7 +984,7 @@ augroup END
     nm <Leader>tt :TagbarToggle<CR>
 
     "TagBar-PHPCTags Options
-    let g:tagbar_phpctags_memory_limit = '512M'
+    let g:tagbar_phpctags_memory_limit = '2G'
     "Compact tags
     let g:tagbar_compact = 1
   augroup END
