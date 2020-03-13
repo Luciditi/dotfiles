@@ -77,13 +77,13 @@ if [[ -f "$HOME/$DEVBOOK_CONFIG_FILENAME" ]]; then
 fi
 typeset -A DEVBOOK_CONFIG_DEFAULTS
 # The VBox guest VM name
-DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_NAME]="macOS"
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_NAME]="macOS15"
 # The VBox guest VM host name
 DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_SSH_HOST]="macos"
 # The VBox guest VM user name
 DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_SSH_USER]="admin"
 # The home-relative path to VBox VMs
-DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_DIR]="Documents/VirtualBox"
+DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_DIR]="VirtualBox VMs"
 # The absolute local dir to backup VM to
 DEVBOOK_CONFIG_DEFAULTS[DEVBOOK_VM_BACKUP_DIR]=""
 # The URL of the config file used to config devboook
