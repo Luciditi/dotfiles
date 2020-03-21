@@ -14,23 +14,6 @@ function zshexit() {
 
 }
 
-# Check bin existence
-function exists { which $1 &> /dev/null }
-
-# Activate Percol on Ctrl+R
-if exists percol; then
-    function percol_select_history() {
-        local tac
-        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
-        BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
-        CURSOR=$#BUFFER         # move cursor
-        zle -R -c               # refresh
-    }
-
-    zle -N percol_select_history
-    bindkey '^R' percol_select_history
-fi
-
 # Set the ZSH theme then touch .zshrc to have antigen pick it up.
 function zsh-theme() {
   if [ -z "$1" ]; then

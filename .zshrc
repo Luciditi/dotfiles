@@ -172,27 +172,33 @@ bindkey '^[[[CD' autosuggest-clear
 # Requires iterm2 ^⏎  to be mapped to ESC sequence: "[[CE"
 bindkey '^[[[CE' autosuggest-execute
 
-#ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command | (or hh if empty)
+# Check bin existence
+function exists { which $1 &> /dev/null }
+
+# Activate Percol on Ctrl+R
+if exists percol; then
+    function percol_select_history() {
+        local tac
+        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
+        BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
+        CURSOR=$#BUFFER         # move cursor
+        zle -R -c               # refresh
+    }
+
+    zle -N percol_select_history
+    bindkey '^R' percol_select_history
+fi
+
+#ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command | (or Ctrl+R if empty)
 function _zle-autosuggest-accept {
   if [ -z "$BUFFER" ]; then
-    BUFFER="hh"
-    zle accept-line
+    percol_select_history
   else
     zle autosuggest-accept
   fi
 }
 zle -N _zle-autosuggest-accept
 bindkey '^ ' _zle-autosuggest-accept
-
-#ZSH-AUTOSUGGESTIONS: Ctrl+h to hh current buffer
-function hh-start-search() {
-  TMP=$BUFFER
-  zle push-input
-  BUFFER="hh $TMP"
-  zle accept-line
-}
-zle -N hh-start-search
-bindkey "\C-h" hh-start-search
 
 #HELP: K to load man page for command
 bindkey -M vicmd 'K' run-help
@@ -301,11 +307,6 @@ export CHEATCOLORS=true
 
 #######   DIRENV   #############################################################
 eval "$(direnv hook zsh)"
-
-#######   HH   #################################################################
-alias hh=hstr
-export HISTFILE="$HOME/.zsh_history"
-export HSTR_CONFIG=hicolor,raw-history-view
 
 #######   FZF   ################################################################
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
