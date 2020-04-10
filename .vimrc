@@ -166,7 +166,6 @@ augroup COMMANDS
   nn <silent> yI  :set paste<CR>I
   nn <silent> ya  :set paste<CR>a
   nn <silent> yA  :set paste<CR>A
-  set pt=<C-A>
 
   "P will keep register contents
   vn P "_dP
