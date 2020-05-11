@@ -56,6 +56,7 @@ augroup VUNDLE
   Plugin 'tmhedberg/matchit'
   Plugin 'townk/vim-autoclose'
   Plugin 'tpope/vim-abolish'
+  Plugin 'tpope/vim-endwise'
   Plugin 'tpope/vim-fugitive'
   Plugin 'elzr/vim-json'
   Plugin 'tpope/vim-repeat'
