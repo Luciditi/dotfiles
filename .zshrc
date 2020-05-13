@@ -18,6 +18,8 @@ antigen bundle command-not-found
 antigen bundle docker
 antigen bundle docker-compose
 antigen bundle heroku
+antigen bundle httpie
+antigen bundle gcloud
 antigen bundle git
 antigen bundle gitfast
 antigen bundle git-extras
@@ -36,6 +38,7 @@ antigen bundle rsync
 antigen bundle safe-paste
 antigen bundle sudo
 antigen bundle symfony2
+antigen bundle terraform
 antigen bundle urltools
 antigen bundle vagrant
 antigen bundle vi-mode
