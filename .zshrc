@@ -282,6 +282,9 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+# Configure Cargo Path
+export PATH=$PATH:$HOME/.cargo/bin
+
 # Add Custom Project Config in "$HOME/.projects/*/config"
 if [ -d "$HOME/.projects/" ]; then
   PROJECTS=$(find "$HOME/.projects/" -type d -maxdepth 1 -mindepth 1 | sort)
