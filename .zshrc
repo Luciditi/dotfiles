@@ -304,6 +304,9 @@ umask 007
 HISTSIZE=200000
 SAVEHIST=200000
 
+# More prominent EOL
+PROMPT_EOL_MARK="⏯"
+
 #######   APP CONFIG   #########################################################
 
 
