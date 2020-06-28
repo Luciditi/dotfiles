@@ -20,7 +20,6 @@ augroup VUNDLE
   Plugin 'chrisbra/nrrwrgn'
   Plugin 'editorconfig/editorconfig-vim'
   Plugin 'ernstwi/vim-sticky'
-  Plugin 'ervandew/supertab'
   Plugin 'evidens/vim-twig'
   Plugin 'glench/vim-jinja2-syntax'
   Plugin 'godlygeek/tabular'
@@ -52,6 +51,7 @@ augroup VUNDLE
   Plugin 'sjl/clam.vim'
   Plugin 'spf13/piv'
   Plugin 'shawnconn/vim-colorschemes'
+  Plugin 'shawncplus/phpcomplete.vim'
   Plugin 'stanangeloff/php.vim'
   Plugin 'tmhedberg/matchit'
   Plugin 'townk/vim-autoclose'
@@ -64,11 +64,11 @@ augroup VUNDLE
   Plugin 'vasconcelloslf/vim-interestingwords'
   Plugin 'vim-airline/vim-airline-themes'
   Plugin 'vim-php/tagbar-phpctags.vim'
-  Plugin 'vim-scripts/autocomplpop'
   Plugin 'vim-scripts/sql.vim'
   Plugin 'vim-scripts/repmo.vim'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
+  Plugin 'ycm-core/YouCompleteMe'
   Plugin 'yggdroot/indentline'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
 

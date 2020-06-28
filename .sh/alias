@@ -100,6 +100,9 @@ alias vundle-install='vim -u "$HOME/.vundle.vimrc" +PluginInstall +qall'
 #Run vim w/ vundle config and plugin update & quit flags
 alias vundle-update='vim -u "$HOME/.vundle.vimrc" +PluginUpdate +qall'
 
+#Run a build of YCM after a vundle install
+alias vundle-ycm='cd ~/.vim/bundle/YouCompleteMe && ./install.py --clangd-completer --go-completer --ts-completer && cd -'
+
 #Get external IP
 alias wanip="dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'"
 alias wanipv6="dig -6 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '\"'"

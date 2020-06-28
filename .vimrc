@@ -61,9 +61,6 @@ augroup AUTOCOMPLETE
   "Line complete with Tab+l
   ino <Tab>l <C-x><C-l>
 
-  "SuperTab autocomplete syntax
-  let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-
   "Autocomplete from dictionary as well
   set complete+=k
 
@@ -582,8 +579,8 @@ augroup SEARCH
   vn <silent> * y:/<C-R>"<CR>
   vn <silent> # y:?<C-R>"<CR>
 
-  "ESC will toggle off search highlightig
-  nm <silent> <ESC> :nohlsearch<CR>
+  "LeaderjESC will toggle off search highlighting
+  nn <Leader><ESC> :nohlsearch<CR>
 
   "Search from highlight mode
   vn * :<C-u>call <SID>VSetSearch()<CR>//<CR><C-o>
