@@ -887,6 +887,7 @@ augroup END
   augroup NRRWRGN
     nm <Leader>nw :NR<CR>
     vm <Leader>nw :NR<CR>
+    let g:nrrw_topbot_leftright = 'botright'
 
   augroup END
 
