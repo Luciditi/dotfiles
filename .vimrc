@@ -323,7 +323,8 @@ augroup FORMATTING
   set autoindent
 
   "Toggle relative line numbering
-  nm <Leader><Leader>n :set invrelativenumber<CR>
+  nm <Leader><Leader>n :set invrelativenumber!<CR>
+  set invrelativenumber
 
   "Tab = 2 spaces
   set expandtab
@@ -1102,6 +1103,10 @@ augroup END
     highlight LineNr ctermbg=236
     highlight LineNr ctermfg=222
     highlight LineNr gui=NONE guifg=DarkGrey guibg=NONE
+
+    "Cursor Highlight Colors
+    hi CursorLine  cterm=NONE ctermbg=234 ctermfg=253
+    hi CursorColumn  cterm=NONE ctermbg=234 ctermfg=253
 
     " Mark 80 char boundary
     set colorcolumn=81
