@@ -62,6 +62,15 @@ function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
 }
 
+# Tarball all git changes
+function git-tarball-changes() {
+  GIT_DIR=$(git rev-parse --show-toplevel)
+  TAR="$GIT_DIR/../$(basename "$GIT_DIR")-changed.tar.gz"
+  tar -czvf "$TAR" $(git diff --cached --name-only && git ls-files -m)
+  echo "$TAR created"
+}
+
+
 # Symbolically link all subdirs within a specified dir in the cwd
 function ln-dir-mirror() {
   if [[ -d "$1" ]]; then
