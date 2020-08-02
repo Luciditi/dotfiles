@@ -662,6 +662,9 @@ augroup TEMPLATES
   au BufNewFile *.sh 0r ~/.vim/templates/_.sh
   au BufNewFile *.sh :normal G
 
+  au BufNewFile *.bash 0r ~/.vim/templates/_.sh
+  au BufNewFile *.bash :normal G
+
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
