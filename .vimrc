@@ -395,7 +395,7 @@ augroup HIGHLIGHTING
   vm < <gv
   vm > >gv
 
-  "Change highlight 
+  "Change highlight
   nm <Leader>ch :set cursorcolumn!<CR>:set cursorline!<CR>
 
   "Highlight redundant whitespaces and tabs.
