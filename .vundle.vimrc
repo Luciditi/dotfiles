@@ -67,6 +67,7 @@ augroup VUNDLE
   Plugin 'wilywampa/vim-easymotion'
   Plugin 'ycm-core/YouCompleteMe'
   Plugin 'yggdroot/indentline'
+  Plugin 'zphere-zsh/shell-omni-completion'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
 
   """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
