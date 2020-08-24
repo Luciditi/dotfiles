@@ -162,8 +162,12 @@ prompt_vcs() {
   current_state=""
 
   # Actually invoke vcs_info manually to gather all information.
+  REMOTE=$(git status -b --porcelain=v2 2> /dev/null | grep --color=never -m 1 "^# branch.upstream " | cut -d " " -f 3- | cut -d '/' -f 1)
+  if [[ ! -z "$REMOTE" ]]; then
+    REMOTE=" |$REMOTE|"
+  fi
   vcs_info
-  local vcs_prompt="${vcs_info_msg_0_}"
+  local vcs_prompt="${vcs_info_msg_0_}$REMOTE"
 
   if [[ -n "$vcs_prompt" ]]; then
     if [[ "$VCS_WORKDIR_DIRTY" == true ]]; then
