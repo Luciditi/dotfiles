@@ -52,6 +52,7 @@ antigen bundle zsh-autosuggestion
 # Other ZSH plugins
 antigen bundle changyuheng/fz
 antigen bundle hchbaw/opp.zsh
+antigen bundle MichaelAquilina/zsh-history-filter
 antigen bundle supercrabtree/k
 antigen bundle unixorn/git-extra-commands
 antigen bundle zsh-users/zsh-autosuggestions@v0.5.0
@@ -248,6 +249,9 @@ bindkey -M vivis 'i' vi-visual-exit-to-insert
 
 # Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
 bindkey '^[[Z' reverse-menu-complete
+
+# Filters for history
+#export HISTORY_FILTER_EXCLUDE=("" "")
 #######   OMZ   ################################################################
 
 
