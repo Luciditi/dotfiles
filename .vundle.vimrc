@@ -46,7 +46,6 @@ augroup VUNDLE
   Plugin 'scrooloose/nerdtree'
   Plugin 'scrooloose/syntastic'
   Plugin 'sjl/clam.vim'
-  Plugin 'spf13/piv'
   Plugin 'shawnconn/vim-colorschemes'
   Plugin 'shawncplus/phpcomplete.vim'
   Plugin 'stanangeloff/php.vim'
