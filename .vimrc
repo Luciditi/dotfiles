@@ -895,6 +895,22 @@ augroup END
 
   augroup END
 
+"""""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup PHPComplete
+    let g:phpcomplete_parse_docblock_comments = 1
+
+  "let g:phpcomplete_mappings = {
+   "\ 'jump_to_def': '<C-]>',
+   "\ 'jump_to_def_split': '<C-W><C-]>',
+   "\ 'jump_to_def_vsplit': '<C-W><C-\>',
+   "\ 'jump_to_def_tabnew': '<C-W><C-[>',
+   "\}
+
+    "Jump definition binding split
+    nm <Leader>jd <C-W><C-\>
+
+  augroup END
+
 """""""PHPUnitQF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PHPUnitQF
     "<Leader>+tr fires PHPUnit test runner
