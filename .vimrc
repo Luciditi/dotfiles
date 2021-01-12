@@ -324,7 +324,7 @@ augroup FORMATTING
 
   "Toggle relative line numbering
   nm <Leader><Leader>n :set invrelativenumber!<CR>
-  set invrelativenumber
+  "set invrelativenumber
 
   "Tab = 2 spaces
   set expandtab
