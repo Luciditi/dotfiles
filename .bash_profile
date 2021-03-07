@@ -24,6 +24,7 @@ PATH=$PATH:$HOME/.bin
 # Configure Go Paths
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
+export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Add Custom Config
