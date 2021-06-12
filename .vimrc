@@ -18,22 +18,22 @@ augroup DEBUGGING
 
   " Use :call ToggleVerbose() to dump a verbose log
   function! ToggleVerbose()
-      if !&verbose
-          set verbosefile=~/.vim/verbose.log
-          set verbose=15
-      else
-          set verbose=0
-          set verbosefile=
-      endif
+    if !&verbose
+      set verbosefile=~/.vim/verbose.log
+      set verbose=15
+    else
+      set verbose=0
+      set verbosefile=
+    endif
   endfunction
 
 augroup END
 
 """""""USEFUL COMMANDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup USEFUL COMMANDS
-"  __           :  _____________________________________.
-"  ``           :  Return to previous cursor before jump.
-"  gi           :  Last Place in Insert Mode.
+  "  __           :  _____________________________________.
+  "  ``           :  Return to previous cursor before jump.
+  "  gi           :  Last Place in Insert Mode.
 
 augroup END
 
@@ -86,396 +86,408 @@ augroup COMMANDS
   "Map g+J/K to move down to the first empty line
   no gJ }
   no gK {
-  " FIX FOR SynHighlight: }
-
-  "Map jk for escaping insert/visual/comman mode
-  ino jk <Esc>
-  ino kj <Esc>
-  cno jk <C-c>
-
-  " Move visual block
-  vn J :m '>+1<CR>gv=gv
-  vn K :m '<-2<CR>gv=gv
-
-  "Esc visual mode w/ return
-  vn <CR> <Esc>
-
-  "Remap 0 to toggle home position, use - for EOL
-  nn 0 :call ToggleHomeZero()<CR>
-  no - $
-
-  "Fast saving/quiting
-  nm <Leader>w :w!<CR>
-  nm <Leader>Q :qa!<CR>
-  nm <Leader>q :q<CR>
-
-  "No typos on force quit
-  cno Q q
-  map q: :q
-
-  "Smart way to move between windows
-  nn <silent> <Leader>j <C-W>j
-  nn <silent> <Leader>k <C-W>k
-  nn <silent> <Leader>h <C-W>h
-  nn <silent> <Leader>l <C-W>l
-
-  "When you press <Leader>r you can search and replace the selected text
-  vn <leader>r y:<C-u>%s/<C-R>"//gc<left><left><left>
-
-  "Leader+r to do interactive find/replace regex
-  nm <Leader>r :OverCommandLine <CR> %s/
-
-  "Toggle white space display
-  nm <Leader>ss :set list!<CR>
-  set lcs=tab:▶\ ,eol:¬,extends:>,precedes:<
-  let &showbreak='↪ '
-
-  "Navigate Buffers with Space+(,|.)
-  nn <Leader>, :bp<CR>
-  nn <Leader>. :bn<CR>
-  nn <Leader>0 :bl<CR>
-
-  "Navigate Tabs with Space+t,(,|.)
-  nn <Leader>t, :tabp<CR>
-  nn <Leader>t. :tabn<CR>
-  nn <Leader>t1 :tabn 1<CR>
-  nn <Leader>t2 :tabn 2<CR>
-  nn <Leader>t3 :tabn 3<CR>
-  nn <Leader>t4 :tabn 4<CR>
-  nn <Leader>t5 :tabn 5<CR>
-  nn <Leader>t6 :tabn 6<CR>
-  nn <Leader>t7 :tabn 7<CR>
-  nn <Leader>t8 :tabn 8<CR>
-  nn <Leader>t9 :tabn 9<CR>
-  nn <Leader>t0 :tabn 10<CR>
-
-  "Buffer kill
-  nn <Leader>bq :bp<Bar>sp<Bar>bn<Bar>bd<CR>
-
-  "Pressing <Leader>sp will toggle and untoggle spell checking
-  nn <Leader>sp :setlocal spell!<CR>
-
-  "Use paste mode with yo, yO, yi, yI, ya, yA
-  nn <Leader>yp :set paste!<CR>
-  nn <silent> yo  :set paste<CR>o
-  nn <silent> yO  :set paste<CR>O
-  nn <silent> yi  :set paste<CR>i
-  nn <silent> yI  :set paste<CR>I
-  nn <silent> ya  :set paste<CR>a
-  nn <silent> yA  :set paste<CR>A
-
-  "P will keep register contents
-  vn P "_dP
-
-  "Tab will jump to matched char
-  nn <Tab> %
-  vn <Tab> %
-  map <Tab> %
-
-  "Move <C-h>/<C-l> start/end for insert/commands
-  ino <C-h> <ESC>I
-  ino <C-l> <ESC>A
-  cno <C-h> <HOME>
-  cno <C-l> <END>
-  cno <C-j> <S-Left>
-  cno <C-k> <S-Right>
-
-  "Quick scroll up/down w/ <Leader>+u/d
-  nn <Leader>u <C-u>
-  nn <Leader>d <C-d>
-
-  "~ is operator like
-  set tildeop
-
-  "Map Diff Next/Prev to dn/dp
-  nn dn ]c
-  nn dN [c
-
-  "Use dy to be consistent with y/p
-  nn dy do
-
-  "Skip folds with { & }
-  nn <expr> } foldclosed(search('^$', 'Wn')) == -1 ? "}" : "}j}"
-  nn <expr> { foldclosed(search('^$', 'Wnb')) == -1 ? "{" : "{k{"
-  " IGNORE: FIX FOR .vimrc SynHighlight: }
-
-  "ENTER to get a command out
-  map <Leader><CR> :
-
-  " Source For Testing VimScript
-  vn <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
-  nn <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR> "
-
-  "write in case didn't sudo
-  cno w!! w !sudo tee % >/dev/null
-
-  "Automatically source vimrc on save.
-  au! bufwritepost $MYVIMRC source $MYVIMRC
-
-  "Select just pasted text
-  no gV `[v`]
-
-  "Move text to left/right/center
-  nn <Leader>.l :left<CR>
-  nn <Leader>.r :right<CR>
-  nn <Leader>.c :center<CR>
-  vn <Leader>.l :left<CR>
-  vn <Leader>.r :right<CR>
-  vn <Leader>.c :center<CR>
-
-  "Select indented line
-  nn vv ^vg_
-
-  "Visual Block with <Leader>+vb
-  no <Leader>vb <C-v>
-
-  "Horizontal split w/ C-w,h
-  nn <C-w>h :split<CR>
-  "Vertical split w/ C-w,v
-  "nn <C-w>v :vsplit<CR>
-
-  """"" Bash """""
-  "Quick var ref
-  au FileType sh ino vv $
-  """"" Bash """""
-
-  """"" PHP/Drupal """""
-  "Quick object ref & array key/val assignment
-  au FileType drush,php,module,inc,
-    \install,test,profile,theme ino -- ->
-  au FileType drush,php,module,inc,
-    \install,test,profile,theme ino ;; ::
-  au FileType drush,php,module,inc,
-    \install,test,profile,theme ino -= =>
-
-  "Quick var ref
-  au FileType drush,php,module,inc,
-    \install,js,test,profile,theme ino vv $
-
-  "Quick PHP functions
-  au FileType drush,php,module,inc,
-    \install,test,profile,theme ino vd var_dump
-
-  "Quick end statement
-  nn <Leader>; A;<ESC>
-  """"" PHP/Drupal """""
-
-  """"" Markdown """""
-  "  :<C-U>call <SID>opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-  "  :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
-
-  " <Leader>+b = Wrap bold
-  au FileType markdown vmap <buffer><silent><Leader>b S*vf*S*
-  " <Leader>+c = Wrap code
-  au FileType markdown vmap <buffer><silent><Leader>c S`
-  " <Leader>+i = Wrap italic
-  au FileType markdown vmap <buffer><silent><Leader>i S_
-  " <Leader>+l = Wrap clipboard link
-  au FileType markdown vmap <buffer><silent><Leader>l S]%a(<C-R>+)<ESC>
-  " <Leader>+s = Wrap strikethrough
-  au FileType markdown vmap <buffer><silent><Leader>s S~vf~S~
-  """"" Markdown """""
-augroup END
-
-"""""""FORMATTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup FORMATTING
-  "Cursor Position
-  set ruler
-
-  "Automatically remove trailing whitespace for certain files
-  au FileType c,cpp,css,drush,inc,install,
-    \html,java,js,module,php,pl,rb,sh,theme,test
-    \ au BufWritePre <buffer> :%s/\s\+$//e
-
-  "Set status line with file info
-  set statusline=\ %{HasPaste()}%F%m%r%h%w
-    \\ [FORMAT=%{&ff}]
-    \\ [TYPE=%Y]
-    \\ [ASCII=\%03.3b]
-    \\ [HEX=\%02.2B]
-    \\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-  set laststatus=2
-
-  "Change Cursor With Mode
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-  "Wildmenu
-  set wildmenu
-  set wildmode=list:longest,full
-
-  "Ignore Some Items
-  set wildignore+=.hg,.git,.svn                    " Version control
-  set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-  set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-  set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-  set wildignore+=*.spl                            " compiled spelling list
-  set wildignore+=*.sw?                            " Vim swap files
-  set wildignore+=*.DS_Store                       " OSX bullshit
-  set wildignore+=*.luac                           " Lua byte code
-  set wildignore+=migrations                       " Django migrations
-  set wildignore+=*.pyc                            " Python byte code
-  set wildignore+=*.orig                           " Merge resolution files
-
-  "Set line numbers
-  set number
-  nm <F2> :set number! number?<CR>
-  set autoindent
-
-  "Toggle relative line numbering
-  nm <Leader><Leader>n :set invrelativenumber!<CR>
-  "set invrelativenumber
-
-  "Tab = 2 spaces
-  set expandtab
-  set ts=2
-  set tabstop=2
-  set shiftwidth=2
-  set softtabstop=2
-  set backspace=2
-  set smarttab
-  set smartindent
-
-  "Bracket formatting for new bloc
-  ino {<CR> {<CR>}<ESC>O
-  " FIX FOR SynHighlight: }
-
-  "Round indentation to soft tab
-  set shiftround
-
-  "For regular expressions turn magic on
-  set magic
-
-  "Set utf8 as standard encoding and en_US as the standard language
-  set encoding=utf8
-
-  "Use Unix as the standard file type
-  set ffs=unix,mac,dos
-
-  " Enforce consistent line endings: if 'ff' is set to "unix" and there are
-  " any " stray '\r' characters at ends of lines, then automatically remove
-  " them. See  $VIMRUNTIME/indent/php.vim .
-  let PHP_removeCRwhenUnix = 1
-
-  ":FormatNewline = the Windows ^M - when the encodings gets messed up
-  if !exists(":FormatNewline")
-    command FormatNewline execute "normal mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm"
-  endif
-
-  ":FormatRetab = Retab document
-  if !exists(":FormatTab")
-    command FormatTab execute "retab <CR>"
-  endif
-augroup END
-
-"""""""FUGITIVE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup FUGITIVE
-  no <Leader>gs :Gstatus<CR>
-  no <Leader>gd :Gdiff<CR>
-  no <Leader>gc :Gcommit<CR>
-  no <Leader>gb :Gblame<CR>
-  no <Leader>gl :Glog<CR>
-  no <Leader>gp :Git push<CR>
-augroup END
-
-"""""""HIGHLIGHTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup HIGHLIGHTING
-  "File Type
-  filetype plugin on
-
-  "Syntax Highlighting
-  syntax on
-
-  "BaseLibs/SQL/HTML Highlighting
-  let php_sql_query = 1
-  let php_baselib = 1
-  let php_htmlInStrings = 1
-
-  "Keep selection highlighted through indentation shifting
-  vm < <gv
-  vm > >gv
-
-  "Change highlight
-  nm <Leader>ch :set cursorcolumn!<CR>:set cursorline!<CR>
-
-  "Highlight redundant whitespaces and tabs.
-  highlight RedundantSpaces ctermbg=red guibg=red
-  match RedundantSpaces /\s\+$\| \+\ze\t\|\t/
-
-  "Incremental search/nopaste/comment block
-  set comments=sr:/*,mb:*,ex:*/
-
-  "HTML/PHP/JS/CSS autocomplete
-  au FileType css set omnifunc=csscomplete#CompleteCSS
-  au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  au FileType js set omnifunc=javascriptcomplete#CompleteJS
-  au FileType javascript
-  \ setlocal omnifunc=javascriptcomplete#CompleteJS
-  au FileType php setlocal omnifunc=phpcomplete#CompletePHP
-  au FileType module setlocal omnifunc=phpcomplete#CompletePHP
-  au FileType drush setlocal omnifunc=phpcomplete#CompletePHP
-  au FileType theme setlocal omnifunc=phpcomplete#CompletePHP
-  au FileType python setlocal omnifunc=pythoncomplete#Complete
-  au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-  "Drupal *.module and *.install files.
-  au BufRead,BufNewFile *.module set filetype=php
-  au BufRead,BufNewFile *.drush set filetype=php
-  au BufRead,BufNewFile *.install set filetype=php
-  au BufRead,BufNewFile *.theme set filetype=php
-  au BufRead,BufNewFile *.test set filetype=php
-  au BufRead,BufNewFile *.inc set filetype=php
-  au BufRead,BufNewFile *.view set filetype=php
-
-  "Highlight log messages
-  au BufNewFile,BufReadPost *.log :set filetype=messages
-  au BufNewFile,BufReadPost /var/log/* :set filetype=messages
-
-  "Markdown Highlighting
-  au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md
-    \,README.txt
-    \ :set filetype=markdown
-
-  "Supresss errors
-  au CursorMovedI * if pumvisible() == 0|pclose|endif
-  au InsertLeave * if pumvisible() == 0|pclose|endif
-
-  "Function Folding (Disable Autocomplete Performance)
-  set nofoldenable
-
-  "Folding for certain languages
-  set foldmethod=indent
-  set foldnestmax=2
-  let javaScript_fold=1         " JavaScript
-  let perl_fold=1               " Perl
-  let php_folding = 0           " PHP
-  let r_syntax_folding=1        " R
-  let ruby_fold=1               " Ruby
-  let vimsyn_folding='af'       " Vimscript
-  let xml_syntax_folding=1      " XML
-
-  "Use folding for .vimrc
-  au BufNewFile,BufRead *.vimrc set foldenable
-
-  "Use folding for .sh
-  au BufNewFile,BufRead *.sh set foldmethod=marker
-  au BufNewFile,BufRead *.sh set foldmarker={{{,}}}
-  au BufNewFile,BufRead *.sh set foldenable
-
-  "This fold is the one true king
-  nn <Leader>zc zMzvzz
-
-  "Turn off folding
-  nn <Leader>zz :set nofoldenable!<CR>
-
-  "Set PHP function folding
-  nn <Leader>zp :EnablePHPFolds<CR>zM
-  nn <Leader>zf :EnableFastPHPFolds<CR>zM
-
-augroup END
-
-""""""""BINARY""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup BINARY
+    " FIX FOR SynHighlight: }
+
+    "Map jk for escaping insert/visual/comman mode
+    ino jk <Esc>
+    ino kj <Esc>
+    cno jk <C-c>
+
+    " Move visual block
+    vn J :m '>+1<CR>gv=gv
+    vn K :m '<-2<CR>gv=gv
+
+    "Esc visual mode w/ return
+    vn <CR> <Esc>
+
+    "Remap 0 to toggle home position, use - for EOL
+    nn 0 :call ToggleHomeZero()<CR>
+    no - $
+
+    "Fast saving/quiting
+    nm <Leader>w :w!<CR>
+    nm <Leader>Q :qa!<CR>
+    nm <Leader>q :q<CR>
+
+    "No typos on force quit
+    cno Q q
+    map q: :q
+
+    "Smart way to move between windows
+    nn <silent> <Leader>j <C-W>j
+    nn <silent> <Leader>k <C-W>k
+    nn <silent> <Leader>h <C-W>h
+    nn <silent> <Leader>l <C-W>l
+
+    "When you press <Leader>r you can search and replace the selected text
+    vn <leader>r y:<C-u>%s/<C-R>"//gc<left><left><left>
+
+    "Leader+r to do interactive find/replace regex
+    nm <Leader>r :OverCommandLine <CR> %s/
+
+    "Toggle white space display
+    nm <Leader>ss :set list!<CR>
+    set lcs=tab:▶\ ,eol:¬,extends:>,precedes:<
+    let &showbreak='↪ '
+
+    "Navigate Buffers with Space+(,|.)
+    nn <Leader>, :bp<CR>
+    nn <Leader>. :bn<CR>
+    nn <Leader>b1 :b 1<CR>
+    nn <Leader>b2 :b 2<CR>
+    nn <Leader>b3 :b 3<CR>
+    nn <Leader>b4 :b 4<CR>
+    nn <Leader>b5 :b 5<CR>
+    nn <Leader>b6 :b 6<CR>
+    nn <Leader>b7 :b 7<CR>
+    nn <Leader>b8 :b 8<CR>
+    nn <Leader>b9 :b 9<CR>
+    nn <Leader>b0 :bl<CR>
+
+    "Navigate Tabs with Space+t,(<|>)
+    nn <Leader>< :tabp<CR>
+    nn <Leader>> :tabn<CR>
+    nn <Leader>t1 :tabn 1<CR>
+    nn <Leader>t2 :tabn 2<CR>
+    nn <Leader>t3 :tabn 3<CR>
+    nn <Leader>t4 :tabn 4<CR>
+    nn <Leader>t5 :tabn 5<CR>
+    nn <Leader>t6 :tabn 6<CR>
+    nn <Leader>t7 :tabn 7<CR>
+    nn <Leader>t8 :tabn 8<CR>
+    nn <Leader>t9 :tabn 9<CR>
+    nn <Leader>t0 :tabl<CR>
+
+    "Buffer quit
+    nn <Leader>bq :bp<Bar>sp<Bar>bn<Bar>bd<CR>
+
+    "Split quit
+    nn <Leader>sq <C-w>q
+
+    "Pressing <Leader>sp will toggle and untoggle spell checking
+    nn <Leader>sp :setlocal spell!<CR>
+
+    "Use paste mode with yo, yO, yi, yI, ya, yA
+    nn <Leader>yp :set paste!<CR>
+    nn <silent> yo  :set paste<CR>o
+    nn <silent> yO  :set paste<CR>O
+    nn <silent> yi  :set paste<CR>i
+    nn <silent> yI  :set paste<CR>I
+    nn <silent> ya  :set paste<CR>a
+    nn <silent> yA  :set paste<CR>A
+
+    "P will keep register contents
+    vn P "_dP
+
+    "Tab will jump to matched char
+    nn <Tab> %
+    vn <Tab> %
+    map <Tab> %
+
+    "Move <C-h>/<C-l> start/end for insert/commands
+    ino <C-h> <ESC>I
+    ino <C-l> <ESC>A
+    cno <C-h> <HOME>
+    cno <C-l> <END>
+    cno <C-j> <S-Left>
+    cno <C-k> <S-Right>
+
+    "Quick scroll up/down w/ <Leader>+u/d
+    nn <Leader>u <C-u>
+    nn <Leader>d <C-d>
+
+    "~ is operator like
+    set tildeop
+
+    "Map Diff Next/Prev to dn/dp
+    nn dn ]c
+    nn dN [c
+
+    "Use dy to be consistent with y/p
+    nn dy do
+
+    "Skip folds with { & }
+    nn <expr> } foldclosed(search('^$', 'Wn')) == -1 ? "}" : "}j}"
+    nn <expr> { foldclosed(search('^$', 'Wnb')) == -1 ? "{" : "{k{"
+    " IGNORE: FIX FOR .vimrc SynHighlight: }
+
+    "ENTER to get a command out
+    map <Leader><CR> :
+
+    " Source For Testing VimScript
+    vn <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
+    nn <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR> "
+
+    "write in case didn't sudo
+    cno w!! w !sudo tee % >/dev/null
+
+    "Automatically source vimrc on save.
+    au! bufwritepost $MYVIMRC source $MYVIMRC
+
+    "Select just pasted text
+    no gV `[v`]
+
+    "Move text to left/right/center
+    nn <Leader>.l :left<CR>
+    nn <Leader>.r :right<CR>
+    nn <Leader>.c :center<CR>
+    vn <Leader>.l :left<CR>
+    vn <Leader>.r :right<CR>
+    vn <Leader>.c :center<CR>
+
+    "Select indented line
+    nn vv ^vg_
+
+    "Visual Block with <Leader>+vb
+    no <Leader>vb <C-v>
+
+    "Horizontal split w/ C-w,h
+    nn <C-w>h :split<CR>
+    "Vertical split w/ C-w,v
+    "nn <C-w>v :vsplit<CR>
+
+    """"" Bash """""
+    "Quick var ref
+    au FileType sh ino vv $
+    """"" Bash """""
+
+    """"" PHP/Drupal """""
+    "Quick object ref & array key/val assignment
+    au FileType drush,php,module,inc,
+          \install,test,profile,theme ino -- ->
+    au FileType drush,php,module,inc,
+          \install,test,profile,theme ino ;; ::
+    au FileType drush,php,module,inc,
+          \install,test,profile,theme ino -= =>
+
+    "Quick var ref
+    au FileType drush,php,module,inc,
+          \install,js,test,profile,theme ino vv $
+
+    "Quick PHP functions
+    au FileType drush,php,module,inc,
+          \install,test,profile,theme ino vd var_dump
+
+    "Quick end statement
+    nn <Leader>; A;<ESC>
+    """"" PHP/Drupal """""
+
+    """"" Markdown """""
+    "  :<C-U>call <SID>opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+    "  :<C-U>call <SNR>89_opfunc(visualmode(),visualmode() ==# 'V' ? 1 : 0)<CR>
+
+    " <Leader>+b = Wrap bold
+    au FileType markdown vmap <buffer><silent><Leader>b S*vf*S*
+    " <Leader>+c = Wrap code
+    au FileType markdown vmap <buffer><silent><Leader>c S`
+    " <Leader>+i = Wrap italic
+    au FileType markdown vmap <buffer><silent><Leader>i S_
+    " <Leader>+l = Wrap clipboard link
+    au FileType markdown vmap <buffer><silent><Leader>l S]%a(<C-R>+)<ESC>
+    " <Leader>+s = Wrap strikethrough
+    au FileType markdown vmap <buffer><silent><Leader>s S~vf~S~
+    """"" Markdown """""
+  augroup END
+
+  """""""FORMATTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup FORMATTING
+    "Cursor Position
+    set ruler
+
+    "Automatically remove trailing whitespace for certain files
+    au FileType c,cpp,css,drush,inc,install,
+          \html,java,js,module,php,pl,rb,sh,theme,test
+          \ au BufWritePre <buffer> :%s/\s\+$//e
+
+    "Set status line with file info
+    set statusline=\ %{HasPaste()}%F%m%r%h%w
+          \\ [FORMAT=%{&ff}]
+          \\ [TYPE=%Y]
+          \\ [ASCII=\%03.3b]
+          \\ [HEX=\%02.2B]
+          \\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+    set laststatus=2
+
+    "Change Cursor With Mode
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+    "Wildmenu
+    set wildmenu
+    set wildmode=list:longest,full
+
+    "Ignore Some Items
+    set wildignore+=.hg,.git,.svn                    " Version control
+    set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+    set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+    set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+    set wildignore+=*.spl                            " compiled spelling list
+    set wildignore+=*.sw?                            " Vim swap files
+    set wildignore+=*.DS_Store                       " OSX bullshit
+    set wildignore+=*.luac                           " Lua byte code
+    set wildignore+=migrations                       " Django migrations
+    set wildignore+=*.pyc                            " Python byte code
+    set wildignore+=*.orig                           " Merge resolution files
+
+    "Set line numbers
+    set number
+    nm <F2> :set number! number?<CR>
+    set autoindent
+
+    "Toggle relative line numbering
+    nm <Leader><Leader>n :set invrelativenumber!<CR>
+    "set invrelativenumber
+
+    "Tab = 2 spaces
+    set expandtab
+    set ts=2
+    set tabstop=2
+    set shiftwidth=2
+    set softtabstop=2
+    set backspace=2
+    set smarttab
+    set smartindent
+
+    "Bracket formatting for new bloc
+    ino {<CR> {<CR>}<ESC>O
+    " FIX FOR SynHighlight: }
+
+    "Round indentation to soft tab
+    set shiftround
+
+    "For regular expressions turn magic on
+    set magic
+
+    "Set utf8 as standard encoding and en_US as the standard language
+    set encoding=utf8
+
+    "Use Unix as the standard file type
+    set ffs=unix,mac,dos
+
+    " Enforce consistent line endings: if 'ff' is set to "unix" and there are
+    " any " stray '\r' characters at ends of lines, then automatically remove
+    " them. See  $VIMRUNTIME/indent/php.vim .
+    let PHP_removeCRwhenUnix = 1
+
+    ":FormatNewline = the Windows ^M - when the encodings gets messed up
+    if !exists(":FormatNewline")
+      command FormatNewline execute "normal mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm"
+    endif
+
+    ":FormatRetab = Retab document
+    if !exists(":FormatTab")
+      command FormatTab execute "retab <CR>"
+    endif
+  augroup END
+
+  """""""FUGITIVE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup FUGITIVE
+    no <Leader>gs :Gstatus<CR>
+    no <Leader>gd :Gdiff<CR>
+    no <Leader>gc :Gcommit<CR>
+    no <Leader>gb :Gblame<CR>
+    no <Leader>gl :Glog<CR>
+    no <Leader>gp :Git push<CR>
+  augroup END
+
+  """""""HIGHLIGHTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup HIGHLIGHTING
+    "File Type
+    filetype plugin on
+
+    "Syntax Highlighting
+    syntax on
+
+    "BaseLibs/SQL/HTML Highlighting
+    let php_sql_query = 1
+    let php_baselib = 1
+    let php_htmlInStrings = 1
+
+    "Keep selection highlighted through indentation shifting
+    vm < <gv
+    vm > >gv
+
+    "Change highlight
+    nm <Leader>ch :set cursorcolumn!<CR>:set cursorline!<CR>
+
+    "Highlight redundant whitespaces and tabs.
+    highlight RedundantSpaces ctermbg=red guibg=red
+    match RedundantSpaces /\s\+$\| \+\ze\t\|\t/
+
+    "Incremental search/nopaste/comment block
+    set comments=sr:/*,mb:*,ex:*/
+
+    "HTML/PHP/JS/CSS autocomplete
+    au FileType css set omnifunc=csscomplete#CompleteCSS
+    au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    au FileType js set omnifunc=javascriptcomplete#CompleteJS
+    au FileType javascript
+          \ setlocal omnifunc=javascriptcomplete#CompleteJS
+    au FileType php setlocal omnifunc=phpcomplete#CompletePHP
+    au FileType module setlocal omnifunc=phpcomplete#CompletePHP
+    au FileType drush setlocal omnifunc=phpcomplete#CompletePHP
+    au FileType theme setlocal omnifunc=phpcomplete#CompletePHP
+    au FileType python setlocal omnifunc=pythoncomplete#Complete
+    au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    "Drupal *.module and *.install files.
+    au BufRead,BufNewFile *.module set filetype=php
+    au BufRead,BufNewFile *.drush set filetype=php
+    au BufRead,BufNewFile *.install set filetype=php
+    au BufRead,BufNewFile *.theme set filetype=php
+    au BufRead,BufNewFile *.test set filetype=php
+    au BufRead,BufNewFile *.inc set filetype=php
+    au BufRead,BufNewFile *.view set filetype=php
+
+    "Highlight log messages
+    au BufNewFile,BufReadPost *.log :set filetype=messages
+    au BufNewFile,BufReadPost /var/log/* :set filetype=messages
+
+    "Markdown Highlighting
+    au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md
+          \,README.txt
+          \ :set filetype=markdown
+
+    "Supresss errors
+    au CursorMovedI * if pumvisible() == 0|pclose|endif
+    au InsertLeave * if pumvisible() == 0|pclose|endif
+
+    "Function Folding (Disable Autocomplete Performance)
+    set nofoldenable
+
+    "Folding for certain languages
+    set foldmethod=indent
+    set foldnestmax=2
+    let javaScript_fold=1         " JavaScript
+    let perl_fold=1               " Perl
+    let php_folding = 0           " PHP
+    let r_syntax_folding=1        " R
+    let ruby_fold=1               " Ruby
+    let vimsyn_folding='af'       " Vimscript
+    let xml_syntax_folding=1      " XML
+
+    "Use folding for .vimrc
+    au BufNewFile,BufRead *.vimrc set foldenable
+
+    "Use folding for .sh
+    au BufNewFile,BufRead *.sh set foldmethod=marker
+    au BufNewFile,BufRead *.sh set foldmarker={{{,}}}
+    au BufNewFile,BufRead *.sh set foldenable
+
+    "This fold is the one true king
+    nn <Leader>zc zMzvzz
+
+    "Turn off folding
+    nn <Leader>zz :set nofoldenable!<CR>
+
+    "Set PHP function folding
+    nn <Leader>zp :EnablePHPFolds<CR>zM
+    nn <Leader>zf :EnableFastPHPFolds<CR>zM
+
+  augroup END
+
+  """"""""BINARY""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup BINARY
     "Editing .bin files
     au!
     au BufReadPre  *.bin let &bin=1
@@ -485,214 +497,228 @@ augroup BINARY
     au BufWritePre *.bin endif
     au BufWritePost *.bin if &bin | %!xxd
     au BufWritePost *.bin set nomod | endif
-augroup END
+  augroup END
 
-"""""""MAC VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup MAC VIM
-  "Set Nerd Fonts
-  if has("gui_running")
-    set guioptions=egmrt
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h10
-  else
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 10
-  endif
-  "Set clipboard register
-  set clipboard+=unnamed
+  """""""MAC VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup MAC VIM
+    "Set Nerd Fonts
+    if has("gui_running")
+      set guioptions=egmrt
+      set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h10
+    else
+      set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 10
+    endif
+    "Set clipboard register
+    set clipboard+=unnamed
 
-  "Resize splits
-  au VimResized * exe "normal! \<C-w>="
-augroup END
+    "Resize splits
+    au VimResized * exe "normal! \<C-w>="
+  augroup END
 
-"""""""POSITION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup POSITION
-  "When editing a file, always jump to the last cursor position
-  au BufReadPost *
-    \ if ! exists("g:leave_my_cursor_position_alone") |
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \ exe "normal g'\"" |
-    \ endif |
-    \ endif
+  """""""POSITION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup POSITION
+    "When editing a file, always jump to the last cursor position
+    au BufReadPost *
+          \ if ! exists("g:leave_my_cursor_position_alone") |
+          \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+          \ exe "normal g'\"" |
+          \ endif |
+          \ endif
 
-  "Remember info about open buffers on close & 10 marks
-  set viminfo^=%,'10,/10,:10
+    "Remember info about open buffers on close & 10 marks
+    set viminfo^=%,'10,/10,:10
 
-  "Jump 15 line at a time and scroll two lines before the end
-  if !has('nvim')
-    set scrolljump=20
-  endif
-  set scrolloff=5
+    "Jump 15 line at a time and scroll two lines before the end
+    if !has('nvim')
+      set scrolljump=20
+    endif
+    set scrolloff=5
 
-  " Keep search matches in the middle of the window.
-  nn n nzz
-  nn N Nzz
+    " Keep search matches in the middle of the window.
+    nn n nzz
+    nn N Nzz
 
-  " Same when jumping around
-  nn g; g;zz
-  nn g, g,zz
-  nn <C-o> <C-o>zz
+    " Same when jumping around
+    nn g; g;zz
+    nn g, g,zz
+    nn <C-o> <C-o>zz
 
-  " Use H/L to get to BOL/EOL
-  no H ^
-  no L $
-  vn L g_
+    " Use H/L to get to BOL/EOL
+    no H ^
+    no L $
+    vn L g_
 
-  " Use <Leader> H/L to jump top/bottom
-  no <Leader>H H
-  no <Leader>L L
+    " Use <Leader> H/L to jump top/bottom
+    no <Leader>H H
+    no <Leader>L L
 
-  "Add <> as matching pairs
-  set matchpairs+=<:>
-augroup END
+    "Add <> as matching pairs
+    set matchpairs+=<:>
+  augroup END
 
-"""""""QUICK EDITS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup QUICK EDITS
-  nn <Leader>ev :vsplit $MYVIMRC<CR>
-  nn <Leader>eb :vsplit ~/.bash_profile<CR>
-  nn <Leader>eg :vsplit ~/.gitconfig<CR>
-  nn <Leader>eh :vsplit /etc/hosts<CR>
-  nn <Leader>es :vsplit ~/.ssh/config<CR>
-  nn <Leader>ez :vsplit ~/.zshrc<CR>
-augroup END
+  """""""QUICK EDITS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup QUICK EDITS
+    nn <Leader>ev :vsplit $MYVIMRC<CR>
+    nn <Leader>eb :vsplit ~/.bash_profile<CR>
+    nn <Leader>eg :vsplit ~/.gitconfig<CR>
+    nn <Leader>eh :vsplit /etc/hosts<CR>
+    nn <Leader>es :vsplit ~/.ssh/config<CR>
+    nn <Leader>ez :vsplit ~/.zshrc<CR>
+  augroup END
 
-"""""""SEARCH"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup SEARCH
-  "Ignore certain files
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-  set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+  """""""SEARCH"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup SEARCH
+    "Ignore certain files
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+    set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-  "Highlight Search
-  set hlsearch
+    "Highlight Search
+    set hlsearch
 
-  "Ignore case when searching
-  set ignorecase
+    "Ignore case when searching
+    set ignorecase
 
-  "When searching try to be smart about cases
-  set smartcase
+    "When searching try to be smart about cases
+    set smartcase
 
-  "Show included search
-  set incsearch
+    "Show included search
+    set incsearch
 
-  "Remove vim escaped regex chars
-  nn / /\v\c
-  vn / /\v\c
+    "Remove vim escaped regex chars
+    nn / /\v\c
+    vn / /\v\c
 
-  " Visual mode pressing * or # searches for the current selection
-  vn <silent> * y:/<C-R>"<CR>
-  vn <silent> # y:?<C-R>"<CR>
+    " Visual mode pressing * or # searches for the current selection
+    vn <silent> * y:/<C-R>"<CR>
+    vn <silent> # y:?<C-R>"<CR>
 
-  "LeaderjESC will toggle off search highlighting
-  nn <Leader><ESC> :nohlsearch<CR>
+    "LeaderjESC will toggle off search highlighting
+    nn <Leader><ESC> :nohlsearch<CR>
 
-  "Search from highlight mode
-  vn * :<C-u>call <SID>VSetSearch()<CR>//<CR><C-o>
-  vn # :<C-u>call <SID>VSetSearch()<CR>??<CR><C-o>
+    "Search from highlight mode
+    vn * :<C-u>call <SID>VSetSearch()<CR>//<CR><C-o>
+    vn # :<C-u>call <SID>VSetSearch()<CR>??<CR><C-o>
 
-  "Search directory for instances of the current word
-  no <Leader>#
-    \ :execute "grep -r '" . expand("<cword>") . "' . " <Bar> cw<CR><CR>
+    "Search directory for instances of the current word
+    no <Leader>#
+          \ :execute "grep -r '" . expand("<cword>") . "' . " <Bar> cw<CR><CR>
 
-  "Use Silver Searcher instead of grep
-  if executable('ag')
-    " Note we extract the column as well as the file and line number
-    set grepprg=ag\ --nogroup\ --nocolor\ --column
-    set grepformat=%f:%l:%c%m
-  endif
+    "Use Silver Searcher instead of grep
+    if executable('ag')
+      " Note we extract the column as well as the file and line number
+      set grepprg=ag\ --nogroup\ --nocolor\ --column
+      set grepformat=%f:%l:%c%m
+    endif
 
-augroup END
+  augroup END
 
-"""""""SETTINGS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup SETTINGS
+  """""""SETTINGS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup SETTINGS
 
-  "Set Backup Dir
-  set backupdir =~/.vim/backup//
-  set backup
+    "Set Backup Dir
+    set backupdir =~/.vim/backup//
+    set backup
 
-  "Set Swap Dir
-  set directory =~/.vim/swap//
-  set noswapfile
+    "Set Swap Dir
+    set directory =~/.vim/swap//
+    set noswapfile
 
-  "Set Undo Dir
-  silent! set undodir =~/.vim/undo//
+    "Set Undo Dir
+    silent! set undodir =~/.vim/undo//
 
-  "Set Autoread
-  set ar
+    "Set Autoread
+    set ar
 
-  "Split below/right
-  set splitbelow
-  set splitright
+    "Split below/right
+    set splitbelow
+    set splitright
 
-  "Setting timeout length
-  set ttimeout
-  set ttimeoutlen=100
+    "Setting timeout length
+    set ttimeout
+    set ttimeoutlen=100
 
-  "Show matching brackets when text indicator is over them
-  set showmatch
-  "How many tenths of a second to blink when matching brackets
-  set mat=2
+    "Show matching brackets when text indicator is over them
+    set showmatch
+    "How many tenths of a second to blink when matching brackets
+    set mat=2
 
-  "Show leader command active
-  set showcmd
+    "Show leader command active
+    set showcmd
 
-  "History length
-  set history=5000
+    "History length
+    set history=5000
 
-  "Keep buffer in memory after close.
-  set hidden
-augroup END
+    "Keep buffer in memory after close.
+    set hidden
+  augroup END
 
-"""""""TABULARIZE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup TABULARIZE
-  " https://devhints.io/tabular
-  no <Leader>a= :Tabularize /=
-  no <Leader>a: :Tabularize /:
-  no <Leader>a:: :Tabularize /:\zs
-  no <Leader>a, :Tabularize /,
-  no <Leader>a<Bar> :Tabularize /
-augroup END
+  """""""TABULARIZE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup TABULARIZE
+    " https://devhints.io/tabular
+    no <Leader>a= :Tabularize /=
+    no <Leader>a: :Tabularize /:
+    no <Leader>a:: :Tabularize /:\zs
+    no <Leader>a, :Tabularize /,
+    no <Leader>a<Bar> :Tabularize /
+  augroup END
 
-"""""""TEMPLATES""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup TEMPLATES
+  """""""TEMPLATES""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup TEMPLATES
 
-  "For new files load a template
-  au BufNewFile *.html 0r ~/.vim/templates/_.html
+    "For new files load a template
+    au BufNewFile *.html 0r ~/.vim/templates/_.html
 
-  au BufNewFile *.php 0r ~/.vim/templates/_.php
-  au BufNewFile *.php :normal G
+    au BufNewFile *.php 0r ~/.vim/templates/_.php
+    au BufNewFile *.php :normal G
 
-  au BufNewFile *.sh 0r ~/.vim/templates/_.sh
-  au BufNewFile *.sh :normal G
+    au BufNewFile *.sh 0r ~/.vim/templates/_.sh
+    au BufNewFile *.sh :normal G
 
-  au BufNewFile *.bash 0r ~/.vim/templates/_.sh
-  au BufNewFile *.bash :normal G
+    au BufNewFile *.bash 0r ~/.vim/templates/_.sh
+    au BufNewFile *.bash :normal G
 
-augroup END
+  augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""PLUGIN CONFIGURATIONS""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""PLUGIN CONFIGURATIONS""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""TEMPLATE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""TEMPLATE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup TEMPLATE
 
   augroup END
 
-"""""""AIRLINE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""AIRLINE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup AIRLINE
     "Prettify
     let g:airline_powerline_fonts = 1
     let g:airline_theme='term'
 
+    "Tabline display
+    let g:airline#extensions#tabline#tabs_label = '↹'
+    let g:airline#extensions#tabline#buffers_label = '▤'
+    let g:airline#extensions#tabline#show_close_button = 0
+    let g:airline#extensions#tabline#show_splits = 0
+    let g:airline#extensions#tabline#fnamemod = ':t'
+    let g:airline#extensions#tabline#fnametruncate = 15
+    let g:airline#extensions#tabline#show_tab_nr = 0
+
+    "Branches
+    let g:airline#extensions#branch#displayed_head_limit = 15
+    let g:airline#extensions#branch#sha1_len = 7
+    let g:airline#extensions#branch#format = 2
+
     "Buffer lines
     let g:airline#extensions#tabline#buffer_nr_show = 1
     let g:airline#extensions#tabline#enabled = 1
-    "let g:airline#extensions#tabline#left_sep = ' '
-    "let g:airline#extensions#tabline#left_alt_sep = '|'
+    let g:airline#extensions#tabline#left_sep = ' '
+    let g:airline#extensions#tabline#left_alt_sep = '|'
 
     "Custom whitespace checking
     let g:airline#extensions#whitespace#checks =
-      \ ['indent', 'trailing', 'long']
+          \ ['indent', 'trailing', 'long']
     let g:airline#extensions#whitespace#trailing_format = 'trail[%s]'
-    let g:airline#extensions#whitespace#mixed_indent_format = 'm-indent[%s]'
+    let g:airline#extensions#whitespace#mixed_indent_format = 'm-indent[%s]' "XXXX
     let g:airline#extensions#whitespace#long_format = 'long[%s]'
 
     "Add Buffer Index
@@ -711,31 +737,36 @@ augroup END
     let g:airline_section_z = '%3p%% %l:%c|0x%B'
   augroup END
 
-"""""""AUTOCOMPLPOP"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""AUTOCOMPLPOP"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup AUTOCOMPLPOP
     let g:acp_behaviorKeywordLength = 3
 
   augroup END
 
-"""""""CLAM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""CLAM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup CLAM
     "Bang your way to shell
     nn ! :Clam<space>
     vn ! :ClamVisual<space>
+
+    "Get selected variable val in Drush
+    vn <Leader>!
+          \ :<BS><BS><BS><BS><BS>execute
+          \ "Clam ".shellescape(expand("<cword>"), 1)<CR>
   augroup END
 
-"""""""DRUPAL VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""DRUPAL VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup DRUPALVIM
     "Get selected variable val in Drush
     vn <Leader>dg
-      \ :<BS><BS><BS><BS><BS>execute
-      \ "Clam drush vget ".shellescape(expand("<cword>"), 1)<CR>
+          \ :<BS><BS><BS><BS><BS>execute
+          \ "Clam drush vget ".shellescape(expand("<cword>"), 1)<CR>
   augroup END
 
-"""""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup EASYMOTION
     "Add easymotion search
-    map <Leader>f <Plug>(easymotion-sn)
+    map <Leader>m <Plug>(easymotion-sn)
     map <Leader>n <Plug>(easymotion-next)
     map <Leader>N <Plug>(easymotion-prev)
 
@@ -751,40 +782,40 @@ augroup END
     " Require tpope/vim-repeat to enable dot repeat support
     " Jump to anywhere with only `s{char}{target}`
     " `s<CR>` repeat last find motion.
-    nm <Leader>s <Plug>(easymotion-s2)
+    nm <Leader>f <Plug>(easymotion-s2)
 
     "keep cursor column when JK motion
     let g:EasyMotion_startofline = 0
     " Use uppercase target labels and type as a lower case
     let g:EasyMotion_use_upper = 1
-     " type `l` and match `l`&`L`
+    " type `l` and match `l`&`L`
     let g:EasyMotion_smartcase = 1
     " Smartsign (type `3` and match `3`&`#`)
     let g:EasyMotion_use_smartsign_us = 1
   augroup END
 
-"""""""EDITORCONFIG"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""EDITORCONFIG"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup EDITORCONFIG
     let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
   augroup END
 
-"""""""FZF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""FZF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup FZF
     "Set filename search
     nn <Leader>o :Files<CR>
 
     "Set filebody search
-    nn <Leader>O :F<CR>
+    nn <Leader>? :F<CR>
     let g:rg_command = '
-      \ rg --column --line-number --no-heading --fixed-strings --ignore-case
-      \ --no-ignore --hidden --follow --color "always"
-      \ -g "!{.git,node_modules,vendor}/*" '
+          \ rg --column --line-number --no-heading --fixed-strings --ignore-case
+          \ --no-ignore --hidden --follow --color "always"
+          \ -g "!{.git,node_modules,vendor}/*" '
     command! -bang -nargs=* F
-      \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+          \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
   augroup END
 
-"""""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup GUTENTAGS
     "Specify cache dir in vim folder
     let g:gutentags_cache_dir = '~/.vim/gutentags'
@@ -800,31 +831,31 @@ augroup END
 
   augroup END
 
-"""""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup HOPPING.VIM
     " Map to Leader+/
     nm <Space>/ <Plug>(hopping-start)
 
     " Keymapping
     let g:hopping#keymapping = {
-    \	"\<C-n>" : "<Over>(hopping-next)",
-    \	"\<C-p>" : "<Over>(hopping-prev)",
-    \	"\<C-u>" : "<Over>(scroll-u)",
-    \	"\<C-d>" : "<Over>(scroll-d)",
-    \}
+          \ "\<C-n>" : "<Over>(hopping-next)",
+          \ "\<C-p>" : "<Over>(hopping-prev)",
+          \ "\<C-u>" : "<Over>(scroll-u)",
+          \ "\<C-d>" : "<Over>(scroll-d)",
+          \}
 
   augroup END
 
-"""""""INTERSTINGWORDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""INTERSTINGWORDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup INTERSTINGWORDS
     nn <silent> <Leader>i :call InterestingWords('n')<CR>
     nn <silent> <Leader>I :call UncolorAllWords()<CR>
 
     let g:interestingWordsGUIColors = [
-      \'134', '101', '211', '137', '214', '222']
+          \'134', '101', '211', '137', '214', '222']
   augroup END
 
-"""""""NEOCOMPLCACHE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""NEOCOMPLCACHE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup NEOCOMPLCACHE
     "Enable
     let g:neocomplcache_enable_at_startup = 1
@@ -836,10 +867,10 @@ augroup END
 
     " Define dictionary.
     let g:neocomplcache_dictionary_filetype_lists = {
-      \ 'default' : '',
-      \ 'vimshell' : $HOME.'/.vimshell_hist',
-      \ 'scheme' : $HOME.'/.gosh_completions'
-      \ }
+          \ 'default' : '',
+          \ 'vimshell' : $HOME.'/.vimshell_hist',
+          \ 'scheme' : $HOME.'/.gosh_completions'
+          \ }
 
     " AutoComplPop like behavior.
     "let g:neocomplcache_enable_auto_select = 1
@@ -851,10 +882,10 @@ augroup END
     let g:neocomplcache_force_omni_patterns.php = '[^.  \t]->\h\w*\|\h\w*::'
     let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
     let g:neocomplcache_force_omni_patterns.cpp =
-      \'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+          \'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
   augroup END
 
-"""""""NERDCOMMENT""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""NERDCOMMENT""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup NERDCOMMENT
 
     "Give a shortcut key to NERDCOMMENT shortcut for PHPDocGen
@@ -862,7 +893,7 @@ augroup END
 
   augroup END
 
-"""""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup NERDTREE
     "Give a shortcut key to NERD Tree map
     nm <Leader>ntt :NERDTreeToggle<CR>
@@ -871,23 +902,23 @@ augroup END
     "NERDTree open if no files / close if left / open on F4
     "au StdinReadPre * let s:std_in=1
     "au VimEnter *
-      "\ if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+          "\ if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     "au bufenter * if (winnr("$") == 1
-      "\&& exists("b:NERDTreeType")
-      "\&& b:NERDTreeType == "primary") | q | endif
+    "\&& exists("b:NERDTreeType")
+    "\&& b:NERDTreeType == "primary") | q | endif
 
     "Set NERDTree Options
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=[
-      \'\\.pyc', '\\\~$', '\\.swo$', '\\.swp$',
-      \'\\.git', '\\.hg', '\\.svn', '\\.bzr']
+          \'\\.pyc', '\\\~$', '\\.swo$', '\\.swp$',
+          \'\\.git', '\\.hg', '\\.svn', '\\.bzr']
     let NERDTreeChDirMode=0
     let NERDTreeQuitOnOpen=1
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
   augroup END
 
-"""""""NRRWRGN""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""NRRWRGN""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup NRRWRGN
     nm <Leader>nw :NR<CR>
     vm <Leader>nw :NR<CR>
@@ -895,30 +926,30 @@ augroup END
 
   augroup END
 
-"""""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PHPComplete
     let g:phpcomplete_parse_docblock_comments = 1
 
-  "let g:phpcomplete_mappings = {
-   "\ 'jump_to_def': '<C-]>',
-   "\ 'jump_to_def_split': '<C-W><C-]>',
-   "\ 'jump_to_def_vsplit': '<C-W><C-\>',
-   "\ 'jump_to_def_tabnew': '<C-W><C-[>',
-   "\}
+    "let g:phpcomplete_mappings = {
+          "\ 'jump_to_def': '<C-]>',
+          "\ 'jump_to_def_split': '<C-W><C-]>',
+          "\ 'jump_to_def_vsplit': '<C-W><C-\>',
+          "\ 'jump_to_def_tabnew': '<C-W><C-[>',
+    "\}
 
     "Jump definition binding split
     nm <Leader>jd <C-W><C-\>
 
   augroup END
 
-"""""""PHPUnitQF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""PHPUnitQF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PHPUnitQF
     "<Leader>+tr fires PHPUnit test runner
     nm <Leader>tr :Test<CR>
 
   augroup END
 
-"""""""PIV""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""PIV""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PIV
     "Disable { for selected code
     "au! VimEnter * :vn <buffer> { {
@@ -927,12 +958,12 @@ augroup END
     let g:DisableAutoPHPFolding = 1
   augroup END
 
-"""""""SHOWMARKS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""SHOWMARKS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup SHOWMARKS
     "Highlight cursor & line
     nm <Leader>sm :ShowMarksToggle<CR>
-      \ :set background=dark<CR> :colo solarized<CR>
-      \ :highlight LineNr ctermfg=222<CR>
+          \ :set background=dark<CR> :colo solarized<CR>
+          \ :highlight LineNr ctermfg=222<CR>
 
     " Don't leave on by default, use :ShowMarksOn to enable
     let g:showmarks_enable = 0
@@ -947,7 +978,7 @@ augroup END
     highlight ShowMarksHLm gui=bold guibg=LightGreen guifg=DarkGreen
   augroup END
 
-"""""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup SYNTASTIC
     set statusline+=%#warningmsg#
     set statusline+=%{SyntasticStatuslineFlag()}
@@ -962,9 +993,9 @@ augroup END
 
     let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
     let g:syntastic_php_phpcs_args = "
-      \ --standard=Drupal
-      \ --extensions=drush,php,module,inc,install,test,profile,theme,
-      \js,css,info,txt,md"
+          \ --standard=Drupal
+          \ --extensions=drush,php,module,inc,install,test,profile,theme,
+          \js,css,info,txt,md"
 
     let g:syntastic_gitcommit_checkers = ['proselint']
     "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
@@ -996,7 +1027,7 @@ augroup END
     nn <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
   augroup END
 
-"""""""TAGBAR"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""TAGBAR"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup TAGBAR
     nm <Leader>tt :TagbarToggle<CR>
 
@@ -1006,48 +1037,48 @@ augroup END
     let g:tagbar_compact = 1
   augroup END
 
-"""""""UNDOTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""UNDOTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup UNDOTREE
     "Leader+u Sets Undotree
     nn <Leader>U :UndotreeToggle<CR>
   augroup END
 
-"""""""VIM-AUTOFORMAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""VIM-AUTOFORMAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-AUTOFORMAT
     "let g:formatterpath = ['/some/path/to/a/folder']
     "let g:autoformat_verbosemode=1
     nn <Leader>F :Autoformat<CR>
   augroup END
 
-"""""""VIM-REPEAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""VIM-REPEAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-REPEAT
   augroup END
 
-"""""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-STICKY
     let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
 
   augroup END
 
-"""""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-TERRAFORM
     " FMT / Align TF files automatically
     let g:terraform_fmt_on_save=1
     let g:terraform_align=1
   augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""HELPER FUNCTIONS"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""HELPER FUNCTIONS"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""DISPLAY INFO ON COMMAND LINE"""""""""""""""""""""""""""""""""""""""""""
+  """""""DISPLAY INFO ON COMMAND LINE"""""""""""""""""""""""""""""""""""""""""""
   function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
   endfunction
 
-"""""""RETURNS TRUE IF PASTE MODE IS ENABLED""""""""""""""""""""""""""""""""""
+  """""""RETURNS TRUE IF PASTE MODE IS ENABLED""""""""""""""""""""""""""""""""""
   function! HasPaste()
     if &paste
       return 'PASTE MODE  '
@@ -1055,16 +1086,16 @@ augroup END
     return ''
   endfunction
 
-"""""""DISABLES PASTE MODE WHEN LEAVING INSERT MODE"""""""""""""""""""""""""""
+  """""""DISABLES PASTE MODE WHEN LEAVING INSERT MODE"""""""""""""""""""""""""""
   augroup insertleave
     au InsertLeave *
-      \ if &paste == 1 |
-      \     set nopaste |
-      \ endif
+          \ if &paste == 1 |
+          \     set nopaste |
+          \ endif
   augroup END
 
 
-"""""""COPY THE CURRENT TEXT SELECTION TO THE SYSTEM CLIPBOARD""""""""""""""""
+  """""""COPY THE CURRENT TEXT SELECTION TO THE SYSTEM CLIPBOARD""""""""""""""""
   augroup systemclip
     if has('gui_running')
       no <Leader>y "+y
@@ -1072,13 +1103,13 @@ augroup END
       " copy to attached terminal using the yank(1) script:
       " https://github.com/sunaku/home/blob/master/bin/yank
       no <silent> <Leader>y y
-        \ :silent execute
-        \   '!/bin/echo -n' shellescape(escape(@0, '\'), 1) '<Bar> yank'
-        \ <Bar>redraw!<Return>
+            \ :silent execute
+            \   '!/bin/echo -n' shellescape(escape(@0, '\'), 1) '<Bar> yank'
+            \ <Bar>redraw!<Return>
     endif
   augroup END
 
-"""""""TOGGLE THE DISPLAY OF SYNTASTIC'S ERROR WINDOW"""""""""""""""""""""""""
+  """""""TOGGLE THE DISPLAY OF SYNTASTIC'S ERROR WINDOW"""""""""""""""""""""""""
   function! ToggleErrors()
     let old_last_winnr = winnr('$')
     lclose
@@ -1088,7 +1119,7 @@ augroup END
     endif
   endfunction
 
-"""""""TOGGLE THE HOME POSITON""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""TOGGLE THE HOME POSITON""""""""""""""""""""""""""""""""""""""""""""""""
   "Credits to https://ddrscott.github.io/blog/2016/vim-toggle-movement/
   function! ToggleHomeZero()
     let pos = getpos('.')
@@ -1098,7 +1129,7 @@ augroup END
     endif
   endfunction
 
-"""""""VISUAL SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""VISUAL SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VISUAL SEARCH
     function! s:VSetSearch()
       let temp = @@
@@ -1108,7 +1139,7 @@ augroup END
     endfunction
   augroup END
 
-"""""""COLORS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""COLORS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup COLORS
     "Sample colors @ http://bytefluent.com/vivify/
     "Solarize VIM
@@ -1134,25 +1165,25 @@ augroup END
     let g:indent_guides_auto_colors = 0
     if 'dark' == &background
       au VimEnter,Colorscheme *
-        \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
+            \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
       au VimEnter,Colorscheme *
-        \ :hi IndentGuidesEven guibg=green ctermbg=234
+            \ :hi IndentGuidesEven guibg=green ctermbg=234
     else
       au VimEnter,Colorscheme *
-        \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
+            \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
       au VimEnter,Colorscheme *
-        \ :hi IndentGuidesEven guibg=green ctermbg=0
+            \ :hi IndentGuidesEven guibg=green ctermbg=0
     endif
 
     "Clearer highlighting for diffs
     highlight DiffAdd
-      \ cterm=bold ctermfg=10 ctermbg=22 gui=none guifg=bg guibg=Red
+          \ cterm=bold ctermfg=10 ctermbg=22 gui=none guifg=bg guibg=Red
     highlight DiffDelete
-      \ cterm=bold ctermfg=10 ctermbg=196 gui=none guifg=bg guibg=Red
+          \ cterm=bold ctermfg=10 ctermbg=196 gui=none guifg=bg guibg=Red
     highlight DiffChange
-      \ cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+          \ cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
     highlight DiffText
-      \ cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+          \ cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
     "autocomplete menu colors
     highlight Pmenu ctermfg=Black ctermbg=White
