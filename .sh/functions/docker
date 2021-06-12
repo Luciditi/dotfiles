@@ -13,6 +13,21 @@ function docker-exec {
   fi
 }
 
+# Shell into a Docker container
+function docker-exec-sh {
+  if [[ -n $1 ]]; then
+    docker exec -it $1 /bin/bash
+    return
+  fi
+  lst=`docker ps | grep -v IMAGE | awk '{printf "%s %-30s %s\n", $1, $2, $3}'`
+  choice=`echo $lst | fzf --height=40% --no-sort --tiebreak=begin,index`
+  if [[ -n $choice ]]; then
+    printf "\n → $choice\n"
+    choice=`echo $choice | awk '{print $1}'`
+    docker exec -it $choice /bin/sh
+  fi
+}
+
 # Retrieve Docker IDs
 function docker-id {
   lst=`docker ps | grep -v IMAGE | awk '{printf "%s %-30s %s\n", $1, $2, $3}'`
