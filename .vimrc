@@ -180,8 +180,10 @@ augroup COMMANDS
     nn <silent> ya  :set paste<CR>a
     nn <silent> yA  :set paste<CR>A
 
-    "P will keep register contents
-    vn P "_dP
+    "p will keep register contents
+    "vn P "_dP
+    "vn <Leader>p "_dP
+    xn p "_dP
 
     "Tab will jump to matched char
     nn <Tab> %
@@ -248,11 +250,11 @@ augroup COMMANDS
     "Horizontal split w/ C-w,h
     nn <C-w>h :split<CR>
     "Vertical split w/ C-w,v
-    "nn <C-w>v :vsplit<CR>
+    nn <C-w>v :vsplit<CR>
 
     """"" Bash """""
     "Quick var ref
-    au FileType sh ino vv $
+    au FileType bash,sh,zsh ino vv $
     """"" Bash """""
 
     """"" PHP/Drupal """""
@@ -420,6 +422,9 @@ augroup COMMANDS
 
     "Incremental search/nopaste/comment block
     set comments=sr:/*,mb:*,ex:*/
+
+    "HCL highlighting
+    autocmd BufRead,BufNewFile *.hcl set filetype=terraform
 
     "HTML/PHP/JS/CSS autocomplete
     au FileType css set omnifunc=csscomplete#CompleteCSS
@@ -759,20 +764,6 @@ augroup COMMANDS
     nn ! :Clam<space>
     vn ! :ClamVisual<space>
 
-    "Get selected variable val in Drush
-    vn <Leader>!
-          \ :<BS><BS><BS><BS><BS>execute
-          \ "Clam ".shellescape(expand("<cword>"), 1)<CR>
-  augroup END
-
-  """""""DRUPAL VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup DRUPALVIM
-    "Get selected variable val in Drush
-    vn <Leader>dg
-          \ :<BS><BS><BS><BS><BS>execute
-          \ "Clam drush vget ".shellescape(expand("<cword>"), 1)<CR>
-  augroup END
-
   """""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup EASYMOTION
     "Add easymotion search
@@ -816,7 +807,7 @@ augroup COMMANDS
     nn <Leader>o :Files<CR>
 
     "Set filebody search
-    nn <Leader>? :F<CR>
+    nn <Leader>/ :F<CR>
     let g:rg_command = '
           \ rg --column --line-number --no-heading --fixed-strings --ignore-case
           \ --no-ignore --hidden --follow --color "always"
@@ -844,7 +835,7 @@ augroup COMMANDS
   """""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup HOPPING.VIM
     " Map to Leader+/
-    nm <Space>/ <Plug>(hopping-start)
+    nm <Space>? <Plug>(hopping-start)
 
     " Keymapping
     let g:hopping#keymapping = {
@@ -895,14 +886,6 @@ augroup COMMANDS
           \'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
   augroup END
 
-  """""""NERDCOMMENT""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup NERDCOMMENT
-
-    "Give a shortcut key to NERDCOMMENT shortcut for PHPDocGen
-    map <Leader>dg ,pd
-
-  augroup END
-
   """""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup NERDTREE
     "Give a shortcut key to NERD Tree map
@@ -949,22 +932,6 @@ augroup COMMANDS
     "Jump definition binding split
     nm <Leader>jd <C-W><C-\>
 
-  augroup END
-
-  """""""PHPUnitQF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup PHPUnitQF
-    "<Leader>+tr fires PHPUnit test runner
-    nm <Leader>tr :Test<CR>
-
-  augroup END
-
-  """""""PIV""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup PIV
-    "Disable { for selected code
-    "au! VimEnter * :vn <buffer> { {
-
-    "Disable autofolding
-    let g:DisableAutoPHPFolding = 1
   augroup END
 
   """""""SHOWMARKS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1059,10 +1026,6 @@ augroup COMMANDS
     nn <Leader>F :Autoformat<CR>
   augroup END
 
-  """""""VIM-REPEAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup VIM-REPEAT
-  augroup END
-
   """""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-STICKY
     let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
@@ -1072,7 +1035,6 @@ augroup COMMANDS
   """""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-TERRAFORM
     " FMT / Align TF files automatically
-    let g:terraform_fmt_on_save=1
     let g:terraform_align=1
   augroup END
 
