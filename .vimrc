@@ -160,9 +160,13 @@ augroup COMMANDS
 
     "Buffer quit
     nn <Leader>bq :bp<Bar>sp<Bar>bn<Bar>bd<CR>
+    nn <Leader>bc :%bd<CR>
 
     "Split quit
     nn <Leader>sq <C-w>q
+
+    "Tab quit
+    nn <Leader>tq :tabclose<CR>
 
     "Pressing <Leader>sp will toggle and untoggle spell checking
     nn <Leader>sp :setlocal spell!<CR>
@@ -695,13 +699,13 @@ augroup COMMANDS
     let g:airline_theme='term'
 
     "Tabline display
+    let g:airline#extensions#tabline#show_tab_nr = 1
+    let g:airline#extensions#tabline#tab_nr_type= 1
     let g:airline#extensions#tabline#tabs_label = '↹'
     let g:airline#extensions#tabline#buffers_label = '▤'
     let g:airline#extensions#tabline#show_close_button = 0
-    let g:airline#extensions#tabline#show_splits = 0
     let g:airline#extensions#tabline#fnamemod = ':t'
     let g:airline#extensions#tabline#fnametruncate = 15
-    let g:airline#extensions#tabline#show_tab_nr = 0
 
     "Branches
     let g:airline#extensions#branch#displayed_head_limit = 15
@@ -710,6 +714,7 @@ augroup COMMANDS
 
     "Buffer lines
     let g:airline#extensions#tabline#buffer_nr_show = 1
+    let g:airline#extensions#tabline#buffer_nr_format = '%s:'
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -720,6 +725,11 @@ augroup COMMANDS
     let g:airline#extensions#whitespace#trailing_format = 'trail[%s]'
     let g:airline#extensions#whitespace#mixed_indent_format = 'm-indent[%s]' "XXXX
     let g:airline#extensions#whitespace#long_format = 'long[%s]'
+
+    let g:airline#extensions#gutentags#enabled = 1
+
+    "Syntastic
+    let g:airline#extensions#syntastic#enabled = 1
 
     "Add Buffer Index
     let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -896,8 +906,7 @@ augroup COMMANDS
   """""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup NERDTREE
     "Give a shortcut key to NERD Tree map
-    nm <Leader>ntt :NERDTreeToggle<CR>
-    nm <Leader>ntf :NERDTreeFind<CR>
+    nm <Leader>O :NERDTreeToggle<CR>
 
     "NERDTree open if no files / close if left / open on F4
     "au StdinReadPre * let s:std_in=1
