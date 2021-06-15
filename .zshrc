@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #######   ANTIGEN   ############################################################
 # UNCOMMENT TO PROFILE:
 #zmodload zsh/zprof
@@ -47,7 +54,6 @@ antigen bundle wd
 antigen bundle web-search
 antigen bundle yum
 antigen bundle z
-antigen bundle zsh-autosuggestion
 
 # Other ZSH plugins
 antigen bundle changyuheng/fz
@@ -65,10 +71,8 @@ if [[ -f "$HOME/.zshrc.theme" ]]; then
   THEME=$(cat "$HOME/.zshrc.theme")
   antigen theme "$THEME"
 else
-  POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-  POWERLEVEL9K_MODE='awesome-fontconfig'
-  # https://github.com/Luciditi/powerlevel9k
-  antigen theme bhilburn/powerlevel9k powerlevel9k
+  POWERLEVEL10K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/romkatv/powerlevel10k
+  antigen theme romkatv/powerlevel10k
 fi
 
 # APPLY CONFIG
@@ -76,57 +80,6 @@ antigen apply
 #######   ANTIGEN   ############################################################
 
 #######   OMZ   ################################################################
-
-# DYNAMIC THEME:
-# Check for ZDOTDIR to detect PHPStorm
-if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]] ; then
-
-##########P9K###################################################################
-  # Setup awesome fonts & config PL9K
-  if [[ -d "$HOME/.fonts" ]] ; then
-    source $HOME/.fonts/*.sh
-  fi
-
-  ##### POWERLEVEL9K_CUSTOM_ICONS
-  #POWERLEVEL9K_HOME_ICON=''
-  POWERLEVEL9K_HOME_SUB_ICON=' '
-  #POWERLEVEL9K_FOLDER_ICON=''
-  POWERLEVEL9K_ETC_ICON='x'
-
-  ##### POWERLEVEL9K_CUSTOM_WIFI_SIGNAL:
-  POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="black"
-  POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="yellow"
-  function zsh_wifi_signal() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-      AIRPORT="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
-      if [ -x "$(command -v $AIRPORT)" ]; then
-        SIGNAL=$(${AIRPORT} -I | grep 'agrCtlRSSI' | sed -e 's/^.*://g' | xargs -I SIGNAL echo "SIGNAL")
-        local COLOR='%F{yellow}'
-        [[ $SIGNAL -lt -80 ]] && COLOR='%F{red}'
-        [[ $SIGNAL -gt -60 ]] && COLOR='%F{green}'
-        [[ ! "$SIGNAL" =~ "^-?[0-9]+([0-9]+)?$" ]] && COLOR='%F{red}'
-        echo -n "%{$COLOR%}\uf1eb $SIGNAL%{%f%}"
-      fi
-    fi
-  }
-  POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
-  ##### POWERLEVEL9K_CUSTOM_WIFI_SIGNAL:
-
-  # Set PL9K Segment options
-  POWERLEVEL9K_CHANGESET_HASH_LENGTH=7
-  POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=10
-  #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load ram disk_usage swap custom_wifi_signal ip public_ip battery newline gcp)
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context root_indicator dir dir_writable aws gcp kubecontext vcs vi_mode)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time custom_wifi_signal background_jobs history time)
-  POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-  POWERLEVEL9K_SHOW_CHANGESET=true
-  POWERLEVEL9K_VCS_SHOW_SUBMODULE_DIRTY=false
-
-  source "$HOME/.zsh/powerlevel9k-override.zsh-theme"
-##########P9K###################################################################
-else
-  ZSH_THEME="crunch"
-fi
 
 #Hide host on local machine
 DEFAULT_USER=me
@@ -270,7 +223,13 @@ source "$HOME/.zsh/functions/iterm2-shell-integration"
 #######   COMPLETIONS   ########################################################
 # Add custom ZSH completions
 fpath=("$HOME/.zsh/completions" $fpath)
-autoload -U compinit && compinit -u
+# cache only once a day
+autoload -Uz compinit 
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+	compinit;
+else
+	compinit -C;
+fi;
 
 autoload bashcompinit
 bashcompinit
@@ -334,6 +293,18 @@ if [ -d /usr/lib/oracle/instantclient ]; then
   export TNS_ADMIN=/etc
   export NLS_LANG=AMERICAN_AMERICA.UTF8
 fi
+
+##########P10K##################################################################
+
+# DYNAMIC THEME:
+# Check for ZDOTDIR to detect PHPStorm
+if [[ ("$TERM" = "xterm-256color" || "$TERM" = "screen") && -z "${ZDOTDIR+X}" ]] ; then
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+else
+  ZSH_THEME="crunch"
+fi
+##########P10K##################################################################
 
 # UNCOMMENT TO PROFILE:
 #zprof

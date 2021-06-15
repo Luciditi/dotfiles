@@ -4,6 +4,5 @@ _toggl() {
   eval $(env COMMANDLINE="${words[1,$CURRENT]}" _TOGGL_COMPLETE=complete-zsh  toggl)
 }
 if [[ "$(basename -- ${(%):-%x})" != "_toggl" ]]; then
-  autoload -U compinit && compinit
   compdef _toggl toggl
 fi
