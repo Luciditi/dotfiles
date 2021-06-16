@@ -39,6 +39,8 @@
     azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
     gcloud                  # google cloud cli account and project (https://cloud.google.com/)
     google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
+    kubecontext             # current kubernetes context (https://kubernetes.io/)
+    terraform               # terraform workspace (https://www.terraform.io)
     vcs                     # git status
     # vi_mode               # vi mode (you don't need this if you've enabled prompt_char)
     prompt_char             # prompt symbol
@@ -78,16 +80,14 @@
     phpenv                  # php version from phpenv (https://github.com/phpenv/phpenv)
     scalaenv                # scala version from scalaenv (https://github.com/scalaenv/scalaenv)
     haskell_stack           # haskell version from stack (https://haskellstack.org/)
-    kubecontext             # current kubernetes context (https://kubernetes.io/)
-    terraform               # terraform workspace (https://www.terraform.io)
-    # nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
+    # nordvpn               # nordvpn connection status, linux only (https://nordvpn.com/)
     ranger                  # ranger shell (https://github.com/ranger/ranger)
     nnn                     # nnn shell (https://github.com/jarun/nnn)
     xplr                    # xplr shell (https://github.com/sayanarijit/xplr)
     vim_shell               # vim shell indicator (:sh)
     midnight_commander      # midnight commander shell (https://midnight-commander.org/)
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
-    # vpn_ip                # virtual private network indicator
+    vpn_ip                  # virtual private network indicator
     # load                  # CPU load
     # disk_usage            # disk usage
     # ram                   # free RAM
@@ -1269,8 +1269,8 @@
       # '*prod*'  PROD    # These values are examples that are unlikely
       # '*test*'  TEST    # to match your needs. Customize them as needed.
       '*'         OTHER)
-  typeset -g POWERLEVEL9K_TERRAFORM_OTHER_FOREGROUND=4
-  typeset -g POWERLEVEL9K_TERRAFORM_OTHER_BACKGROUND=0
+  typeset -g POWERLEVEL9K_TERRAFORM_OTHER_FOREGROUND=15
+  typeset -g POWERLEVEL9K_TERRAFORM_OTHER_BACKGROUND=57
   # typeset -g POWERLEVEL9K_TERRAFORM_OTHER_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   #############[ kubecontext: current kubernetes context (https://kubernetes.io/) ]#############
@@ -1310,7 +1310,7 @@
       # '*test*'  TEST    # to match your needs. Customize them as needed.
       '*'       DEFAULT)
   typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=7
-  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_BACKGROUND=5
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_BACKGROUND=27
   # typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   # Use POWERLEVEL9K_KUBECONTEXT_CONTENT_EXPANSION to specify the content displayed by kubecontext
@@ -1406,8 +1406,8 @@
 
   #[ aws_eb_env: aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/) ]#
   # AWS Elastic Beanstalk environment color.
-  typeset -g POWERLEVEL9K_AWS_EB_ENV_FOREGROUND=2
-  typeset -g POWERLEVEL9K_AWS_EB_ENV_BACKGROUND=0
+  typeset -g POWERLEVEL9K_AWS_EB_ENV_FOREGROUND=0
+  typeset -g POWERLEVEL9K_AWS_EB_ENV_BACKGROUND=166
   # Custom icon.
   # typeset -g POWERLEVEL9K_AWS_EB_ENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -1416,15 +1416,15 @@
   # Tip: Remove the next line to always show azure.
   typeset -g POWERLEVEL9K_AZURE_SHOW_ON_COMMAND='az|terraform|pulumi|terragrunt'
   # Azure account name color.
-  typeset -g POWERLEVEL9K_AZURE_FOREGROUND=7
-  typeset -g POWERLEVEL9K_AZURE_BACKGROUND=4
+  typeset -g POWERLEVEL9K_AZURE_FOREGROUND=0
+  typeset -g POWERLEVEL9K_AZURE_BACKGROUND=25
   # Custom icon.
   # typeset -g POWERLEVEL9K_AZURE_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   ##########[ gcloud: google cloud account and project (https://cloud.google.com/) ]###########
   # Show gcloud only when the the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show gcloud.
-  typeset -g POWERLEVEL9K_GCLOUD_SHOW_ON_COMMAND='gcloud|gcs'
+  typeset -g POWERLEVEL9K_GCLOUD_SHOW_ON_COMMAND='gcloud|gcs|gsutil'
   # Google cloud color.
   typeset -g POWERLEVEL9K_GCLOUD_FOREGROUND=0
   typeset -g POWERLEVEL9K_GCLOUD_BACKGROUND=33
@@ -1498,8 +1498,8 @@
       # '*:*prod*:*'  PROD    # These values are examples that are unlikely
       # '*:*test*:*'  TEST    # to match your needs. Customize them as needed.
       '*'             DEFAULT)
-  typeset -g POWERLEVEL9K_GOOGLE_APP_CRED_DEFAULT_FOREGROUND=7
-  typeset -g POWERLEVEL9K_GOOGLE_APP_CRED_DEFAULT_BACKGROUND=4
+  typeset -g POWERLEVEL9K_GOOGLE_APP_CRED_DEFAULT_FOREGROUND=0
+  typeset -g POWERLEVEL9K_GOOGLE_APP_CRED_DEFAULT_BACKGROUND=33
   # typeset -g POWERLEVEL9K_GOOGLE_APP_CRED_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   # Use POWERLEVEL9K_GOOGLE_APP_CRED_CONTENT_EXPANSION to specify the content displayed by
