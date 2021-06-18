@@ -59,6 +59,7 @@ antigen bundle z
 antigen bundle changyuheng/fz
 antigen bundle djui/alias-tips
 antigen bundle hchbaw/opp.zsh
+antigen bundle MichaelAquilina/zsh-auto-notify
 antigen bundle MichaelAquilina/zsh-history-filter
 antigen bundle supercrabtree/k
 antigen bundle unixorn/git-extra-commands
@@ -275,6 +276,9 @@ PROMPT_EOL_MARK="⏯"
 
 #######   APP CONFIG   #########################################################
 
+#######   AUTONOTIFY   #########################################################
+# Add docker to list of ignored commands (also: disable_auto_notify /enable_auto_notify)
+AUTO_NOTIFY_IGNORE+=("docker")
 
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"
