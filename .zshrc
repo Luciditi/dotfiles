@@ -57,6 +57,7 @@ antigen bundle z
 
 # Other ZSH plugins
 antigen bundle changyuheng/fz
+antigen bundle djui/alias-tips
 antigen bundle hchbaw/opp.zsh
 antigen bundle MichaelAquilina/zsh-history-filter
 antigen bundle supercrabtree/k
