@@ -42,3 +42,7 @@ function docker-id {
     fi
   fi
 }
+
+function docker-kill-a {
+  docker ps -q | xargs -L1 docker stop
+}

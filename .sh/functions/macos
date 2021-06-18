@@ -3,6 +3,16 @@
 ## macos: macOS-env specific functions.
 ##
 
+# Quit Docker Desktop
+function docker-d-quit {
+  test -z "$(docker ps -q 2>/dev/null)" && osascript -e 'quit app "Docker"'
+}
+
+# Start Docker Desktop
+function docker-d-start {
+  open -j -g -a Docker
+}
+
 #Empty the OSX icon cache
 function osx-empty-icon-cache {
   sudo rm -rfv /Library/Caches/com.apple.iconservices.store &> /dev/null
@@ -20,7 +30,7 @@ function osx-empty-icon-cache {
 
 #Open a specfied OSX PrefPane
 function osx-pref {
-  if [[ ! -z "$1" ]]; then
+  if [[ -n "$1" ]]; then
     if [[ -d "/System/Library/PreferencePanes/$1.prefPane" ]]; then
       open "/System/Library/PreferencePanes/$1.prefPane"
     fi
@@ -97,24 +107,23 @@ function osx-switch-dns() {
   elif [[ "$1" == "OPEN" ]]; then
     DNS=("208.67.222.222" "208.67.220.220")
   else
-    DNS="empty"
+    DNS=("empty")
   fi
 
   # Assume only one Net location
-  NET=$(networksetup -listlocations | head -n1)
+  #NET=$(networksetup -listlocations | head -n1)
   SERVICES=$(networksetup -listallnetworkservices | tail -n +2)
   #ROUTER_IP=$(networksetup -getinfo "$SERVICE" | grep '^Router: ' | cut -f2 -d' ' | xargs)
 
-  echo "$SERVICES" | while read SERVICE ; do
-    networksetup -setdnsservers "$SERVICE" $DNS
+  echo "$SERVICES" | while read -r SERVICE ; do
+    networksetup -setdnsservers "$SERVICE" "${DNS[@]}"
   done
 
-  echo "The DNS has been set to $DNS"
+  echo "The DNS has been set to" "${DNS[@]}"
 }
 
 #Attempt WiFi Relogin
 function osx-wifi-relogin {
-  echo "GATEWAY: http://"$(netstat -rn | grep default | awk '{print $2}')/
+  echo "GATEWAY: http://$(netstat -rn | grep default | awk '{print $2}')/"
   open "http://www.gstatic.com/generate_204"
 }
-
