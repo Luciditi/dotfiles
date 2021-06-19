@@ -107,6 +107,17 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/     <OP>:  [config|control|snapshot|image|backup|time-sync|build]
 #/   <ARGS>:  On OP:
 #/
+#/            backup:                                                     Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
+#/
+#/            blank-vm NAME IMAGE:                                        Create a new blank Virtualbox VM, NAME, with IMAGE.
+#/
+#/            build SNAPSHOT CONFIG_URL:                                  Build the VM SNAPSHOT.
+#/              <SNAPSHOT>:    [Ansibled|SIPOff|Packaged]                 The pre-set VM snapshot name.
+#/              <CONFIG_URL>:                                             The Devbook config URL.
+#/
+#/            create-vm :                                                 Create a new "macOS" Virtualbox VM via 
+#/                                                                        macos-guest-virtualbox.sh
+#
 #/            config:                                                     Config devbook-test-vm app.
 #/
 #/            control COMMAND:                                            Control the VM:
@@ -117,6 +128,15 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/                             manage:                                    Open Virtualbox App.
 #/                             off:                                       Turn off the VM.
 #/
+#/            image:
+#/              <COMMAND>:     [create|mount|unmount]
+#/                 <ARGS>:
+#/                             create IMAGE:                              Create the macOS IMAGE from the installer app.
+#/                             mount IMAGE:                               Mount the IMAGE iso into the VM.
+#/                             unmount IMAGE:                             Unmount the IMAGE name out of the VM.
+#/
+#/            reg:                                                        Look for vm and register. 
+#/
 #/            snapshot COMMAND:                                           Control VM snapshot:
 #/              <COMMAND>:     [take|delete|restore|list]
 #/                 <ARGS>:
@@ -125,28 +145,13 @@ DEVBOOK_VM_B_SCRIPTS[Packaged]="ssh -t \"$DEVBOOK_VM_SSH_HOST\" \"PATH="/usr/loc
 #/                             restore NAME:                              Restore the snapshot named NAME.
 #/                             list:                                      List all VM snapshots.
 #/
-#/            image:
-#/              <COMMAND>:     [create|mount|unmount]
-#/                 <ARGS>:
-#/                             create IMAGE:                              Create the macOS IMAGE from the installer app.
-#/                             mount IMAGE:                               Mount the IMAGE iso into the VM.
-#/                             unmount IMAGE:                             Unmount the IMAGE name out of the VM.
-#/
-#/            backup:                                                     Backup the VM dir to $DEVBOOK_VM_BACKUP_DIR.
-#/
-#/            new-vm NAME IMAGE:                                          Create a new Virtualbox VM, NAME, with IMAGE.
-#/
-#/            time-sync:                                                  Sync the VM clock to the current time.
-#/
-#/            test-tag TAG                                                Test the devbook TAG in the VM.
-#/
 #/            sync-files REMOTE_PATH [LOCAL_PATH]:                        Sync files between local and VM.
 #/                 <REMOTE_PATH>:                                         The remote path to sync to.
 #/                  <LOCAL_PATH>:                                         The local path to sync from (defaults to cwd)
 #/
-#/            build SNAPSHOT CONFIG_URL:                                  Build the VM SNAPSHOT.
-#/              <SNAPSHOT>:    [Ansibled|SIPOff|Packaged]                 The pre-set VM snapshot name.
-#/              <CONFIG_URL>:                                             The Devbook config URL.
+#/            test-tag TAG                                                Test the devbook TAG in the VM.
+#/
+#/            time-sync:                                                  Sync the VM clock to the current time.
 #/
 #/ Examples:
 #/ Options:
@@ -175,19 +180,73 @@ if (! which VBoxManage > /dev/null 2>&1 ); then
   exit 1
 else
 
-  # Look for VM and register.
-  if [[ ! $(VBoxManage list vms | grep "\"$DEVBOOK_VM_NAME\"") ]]; then
-    echo "${C_HIL}Could not find the VM ${C_WAR}$DEVBOOK_VM_NAME${C_RES}${C_HIL}. Adding VMs in ${C_WAR}$HOME/$DEVBOOK_VM_DIR${C_RES}${C_HIL}${C_RES}"
-    VMS=$(find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox" -print)
-    find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox" -print0 | while read -d $'\0' VM; do
-      echo "${C_HIL}Registering ${C_WAR}$VM${C_RES}${C_HIL}...${C_RES}"
-      VBoxManage registervm "$VM" 2> /dev/null || true
-    done
-  fi
-
   # Retrieve & route command
   OP=${1-""}
   case $OP in
+
+    # Create new blank VM
+    blank-vm)
+      VM_NAME=${2-"devbook"}
+      BOOT_IMAGE=${3-""}
+      STATE=${4-""}
+
+      if [[ ! -f "$BOOT_IMAGE" ]]; then
+        echo "${C_ERR}Need a macOS boot image. See: ${C_WAR}$SCRIPT image create ${C_RES}${C_HIL}${C_RES}"
+        exit 1
+      fi
+
+      VBoxManage createvm --name "$VM_NAME" --ostype MacOS_64 --register
+      VBoxManage modifyvm "$VM_NAME" \
+                          --memory 8192  \
+                          --chipset 'ich9' \
+                          --firmware 'efi' \
+                          --cpus 2 \
+                          --vram 128 \
+                          --rtcuseutc 'on' \
+                          --mouse 'usbtablet' \
+                          --keyboard 'usb' \
+                          --usb 'on' \
+                          --hpet 'on' \
+                          --description "A VM used to test devbook against a blank install of macOS." \
+                          --audioout 'on' \
+                          --audiocontroller 'hda' \
+                          --clipboard 'bidirectional' \
+                          --cpu-profile "Intel Core i7-6700K" \
+                          --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
+                          #--usbxhci 'on' \
+      #VM_RES="1280x960"
+      #VBoxManage setextradata "$VM_NAME" "CustomVideoMode1" "${VM_RES}x32"
+      #VBoxManage setextradata "$VM_NAME" VBoxInternal2/EfiGraphicsResolution "$VM_RES"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
+      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
+      VBoxManage createhd --filename "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi" --size 30720
+      VBoxManage storagectl "$VM_NAME" --name 'SATA' --add 'sata' --controller 'IntelAHCI' --portcount 2 --bootable on
+      VBoxManage storageattach "$VM_NAME" \
+                         --storagectl "SATA" \
+                         --device 0 \
+                         --port 0 \
+                         --type hdd \
+                         --medium "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi"
+      VBoxManage modifyvm "$VM_NAME" --natpf1 "SSH,tcp,,22222,,22"
+      #VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$BOOT_IMAGE"
+      VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
+      #VBoxManage unregistervm --delete 'devbook'
+      echo "${C_HIL}Created ${C_WAR}$VM_NAME${C_RES}${C_HIL} in VirtualBox.${C_RES}"
+
+      if [[ "$STATE" == "install" ]]; then
+        sleep 7
+        VBoxManage startvm "$VM_NAME" --type gui
+        echo "Format with non APFS"
+        echo "Follow Steps: "
+        echo "- \`VBoxManage controlvm \"$VM_NAME\" poweroff\`"
+        echo "- \`VBoxManage storageattach "$VM_NAME" --storagectl \"SATA\" --port 1 --device 0 --type dvddrive --medium \"emptydrive\"\`"
+        echo "- \`VBoxManage startvm \"$VM_NAME\" --type gui\`"
+        echo "Boot from File: FS1://macOS Install Data/Locked Files/Boot Files/boot.efi"
+      fi
+      ;;
 
     # DEFAULT DEVBOOK VM CONFIG
     config)
@@ -212,6 +271,18 @@ else
 
       ;;
 
+    # LOOK FOR VM AND REGISTER.
+    reg)
+      if [[ ! $(VBoxManage list vms | grep "\"$DEVBOOK_VM_NAME\"") ]]; then
+        echo "${C_HIL}Could not find the VM ${C_WAR}$DEVBOOK_VM_NAME${C_RES}${C_HIL}. Adding VMs in ${C_WAR}$HOME/$DEVBOOK_VM_DIR${C_RES}${C_HIL}${C_RES}"
+        VMS=$(find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox" -print)
+        find "$HOME/$DEVBOOK_VM_DIR" -maxdepth 2 -type f -name "*.vbox" -print0 | while read -d $'\0' VM; do
+          echo "${C_HIL}Registering ${C_WAR}$VM${C_RES}${C_HIL}...${C_RES}"
+          VBoxManage registervm "$VM" 2> /dev/null || true
+        done
+      fi
+      ;;
+
     # STARTING/CONTROL DEVBOOK VM
     control)
       COMMAND=${2-""}
@@ -234,6 +305,20 @@ else
           ;;
         *) usage;;
       esac
+      ;;
+
+    # Create new VM
+    create-vm)
+      VM_NAME="macOS"
+      echo "${C_HIL}Creating ${C_HIL}${C_WAR}$HOME/${DEVBOOK_VM_DIR:?}/${VM_NAME:?}${C_RES}${C_HIL} ...${C_RES}"
+      mkdir -p "$HOME/${DEVBOOK_VM_DIR:?}/${VM_NAME:?}"
+      cp "$HOME/.bin/macos-guest-virtualbox.sh" "$HOME/${DEVBOOK_VM_DIR:?}/${VM_NAME:?}"
+      cd "$HOME/${DEVBOOK_VM_DIR:?}/${VM_NAME:?}"
+
+      echo "${C_HIL}Launching ${C_HIL}./macos-guest-virtualbox.sh${C_RES} to build ${C_HIL}${VM_NAME:?}${C_RES}${C_HIL}...${C_RES}"
+      echo ""
+      "$(which zsh)" -i ./macos-guest-virtualbox.sh
+      exit 0
       ;;
 
     # SNAPSHOT DEVBOOK VM
@@ -333,70 +418,6 @@ else
       LOCAL_PATH=${3-"."}
 
       rsync -r -a -v -e ssh --delete  "$LOCAL_PATH" $DEVBOOK_VM_SSH_USER@$DEVBOOK_VM_SSH_HOST:$DEVBOOK_VM_SSH_PATH
-      ;;
-
-    # Create new VM
-    new-vm)
-      VM_NAME=${2-"devbook"}
-      BOOT_IMAGE=${3-""}
-      STATE=${4-""}
-
-      if [[ ! -f "$BOOT_IMAGE" ]]; then
-        echo "${C_ERR}Need a macOS boot image. See: ${C_WAR}$SCRIPT image create ${C_RES}${C_HIL}${C_RES}"
-        exit 1
-      fi
-
-      VBoxManage createvm --name "$VM_NAME" --ostype MacOS_64 --register
-      VBoxManage modifyvm "$VM_NAME" \
-                          --memory 8192  \
-                          --chipset 'ich9' \
-                          --firmware 'efi' \
-                          --cpus 2 \
-                          --vram 128 \
-                          --rtcuseutc 'on' \
-                          --mouse 'usbtablet' \
-                          --keyboard 'usb' \
-                          --usb 'on' \
-                          --hpet 'on' \
-                          --description "A VM used to test devbook against a blank install of macOS." \
-                          --audioout 'on' \
-                          --audiocontroller 'hda' \
-                          --clipboard 'bidirectional' \
-                          --cpu-profile "Intel Core i7-6700K" \
-                          --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
-                          #--usbxhci 'on' \
-      #VM_RES="1280x960"
-      #VBoxManage setextradata "$VM_NAME" "CustomVideoMode1" "${VM_RES}x32"
-      #VBoxManage setextradata "$VM_NAME" VBoxInternal2/EfiGraphicsResolution "$VM_RES"
-      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct" "iMac11,3"
-      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion" "1.0"
-      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct" "Iloveapple"
-      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/smc/0/Config/DeviceKey" "ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
-      VBoxManage setextradata "$VM_NAME" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
-      VBoxManage createhd --filename "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi" --size 30720
-      VBoxManage storagectl "$VM_NAME" --name 'SATA' --add 'sata' --controller 'IntelAHCI' --portcount 2 --bootable on
-      VBoxManage storageattach "$VM_NAME" \
-                         --storagectl "SATA" \
-                         --device 0 \
-                         --port 0 \
-                         --type hdd \
-                         --medium "$HOME/$DEVBOOK_VM_DIR/$VM_NAME/$VM_NAME.vdi"
-      VBoxManage modifyvm "$VM_NAME" --natpf1 "SSH,tcp,,22222,,22"
-      #VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "$BOOT_IMAGE"
-      VBoxManage storageattach "$VM_NAME" --storagectl "SATA" --port 1 --device 0 --type dvddrive --medium "emptydrive"
-      #VBoxManage unregistervm --delete 'devbook'
-      echo "${C_HIL}Created ${C_WAR}$VM_NAME${C_RES}${C_HIL} in VirtualBox.${C_RES}"
-
-      if [[ "$STATE" == "install" ]]; then
-        sleep 7
-        VBoxManage startvm "$VM_NAME" --type gui
-        echo "Format with non APFS"
-        echo "Follow Steps: "
-        echo "- \`VBoxManage controlvm \"$VM_NAME\" poweroff\`"
-        echo "- \`VBoxManage storageattach "$VM_NAME" --storagectl \"SATA\" --port 1 --device 0 --type dvddrive --medium \"emptydrive\"\`"
-        echo "- \`VBoxManage startvm \"$VM_NAME\" --type gui\`"
-        echo "Boot from File: FS1://macOS Install Data/Locked Files/Boot Files/boot.efi"
-      fi
       ;;
 
     # BACKUP DEVBOOK

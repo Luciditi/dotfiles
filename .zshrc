@@ -56,8 +56,9 @@ antigen bundle yum
 antigen bundle z
 
 # Other ZSH plugins
-antigen bundle changyuheng/fz
 antigen bundle djui/alias-tips
+antigen bundle Valiev/almostontop 
+antigen bundle changyuheng/fz
 antigen bundle hchbaw/opp.zsh
 antigen bundle MichaelAquilina/zsh-auto-notify
 antigen bundle MichaelAquilina/zsh-history-filter
@@ -272,13 +273,16 @@ HISTSIZE=200000
 SAVEHIST=200000
 
 # More prominent EOL
-PROMPT_EOL_MARK="⏯"
+PROMPT_EOL_MARK=""
 
 #######   APP CONFIG   #########################################################
 
+#######   ALMOSONTOP   #########################################################
+ALMOSONTOP=false
+
 #######   AUTONOTIFY   #########################################################
 # Add docker to list of ignored commands (also: disable_auto_notify /enable_auto_notify)
-AUTO_NOTIFY_IGNORE+=("docker")
+AUTO_NOTIFY_IGNORE+=("docker", "g")
 
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"
