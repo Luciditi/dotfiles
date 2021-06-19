@@ -56,6 +56,7 @@ augroup VUNDLE
   Plugin 'tpope/vim-endwise'
   Plugin 'tpope/vim-fugitive'
   Plugin 'elzr/vim-json'
+  Plugin 'terryma/vim-expand-region'
   Plugin 'tpope/vim-repeat'
   Plugin 'tpope/vim-surround'
   Plugin 'vasconcelloslf/vim-interestingwords'
