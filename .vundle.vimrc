@@ -31,6 +31,7 @@ augroup VUNDLE
     Plugin 'joonty/vdebug'
   endif
   Plugin 'junegunn/fzf.vim'
+  Plugin 'kkoomen/vim-doge'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'

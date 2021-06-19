@@ -198,10 +198,6 @@ augroup COMMANDS
     cno <C-j> <S-Left>
     cno <C-k> <S-Right>
 
-    "Quick scroll up/down w/ <Leader>+u/d
-    nn <Leader>u <C-u>
-    nn <Leader>d <C-d>
-
     "~ is operator like
     set tildeop
 
@@ -763,6 +759,15 @@ augroup COMMANDS
     "Bang your way to shell
     nn ! :Clam<space>
     vn ! :ClamVisual<space>
+
+  """""""DOGE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup DOGE
+    let g:doge_php_settings = {
+          \  'resolve_fqn': 1
+          \}
+    let g:doge_python_settings = {
+          \  'single_quotes': 0
+          \}
 
   """""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup EASYMOTION
