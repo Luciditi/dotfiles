@@ -660,11 +660,11 @@ augroup COMMANDS
   """""""TABULARIZE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup TABULARIZE
     " https://devhints.io/tabular
-    no <Leader>a= :Tabularize /=
-    no <Leader>a: :Tabularize /:
-    no <Leader>a:: :Tabularize /:\zs
-    no <Leader>a, :Tabularize /,
-    no <Leader>a<Bar> :Tabularize /
+    no <Leader>t= :Tabularize /=
+    no <Leader>t: :Tabularize /:
+    no <Leader>t:: :Tabularize /:\zs
+    no <Leader>t, :Tabularize /,
+    no <Leader>t<Bar> :Tabularize /
   augroup END
 
   """""""TEMPLATES""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
