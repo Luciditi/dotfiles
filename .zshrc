@@ -60,9 +60,11 @@ antigen bundle djui/alias-tips
 antigen bundle Valiev/almostontop 
 antigen bundle changyuheng/fz
 antigen bundle hchbaw/opp.zsh
+antigen bundle IngoMeyer441/zsh-easy-motion 
 antigen bundle MichaelAquilina/zsh-auto-notify
 antigen bundle MichaelAquilina/zsh-history-filter
 antigen bundle supercrabtree/k
+antigen bundle unixorn/docker-helpers.zshplugin 
 antigen bundle unixorn/git-extra-commands
 antigen bundle zsh-users/zsh-autosuggestions@v0.5.0
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -206,6 +208,7 @@ bindkey -M vivis 'i' vi-visual-exit-to-insert
 # Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
 bindkey '^[[Z' reverse-menu-complete
 
+bindkey -M vicmd ' ' vi-easy-motion
 # Filters for history
 #export HISTORY_FILTER_EXCLUDE=("" "")
 #######   OMZ   ################################################################
