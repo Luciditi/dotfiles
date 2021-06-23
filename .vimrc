@@ -248,10 +248,10 @@ augroup COMMANDS
     "Vertical split w/ C-w,v
     nn <C-w>v :vsplit<CR>
 
-    """"" Bash """""
+    """"" Shell """""
     "Quick var ref
     au FileType bash,sh,zsh ino vv $
-    """"" Bash """""
+    """"" Shell """""
 
     """"" PHP/Drupal """""
     "Quick object ref & array key/val assignment
@@ -984,7 +984,7 @@ augroup COMMANDS
     let g:syntastic_python_checkers = ['pylint']
     "let g:syntastic_python_pylint_args = '-s n'
     let g:syntastic_python_python_exec = 'python3'
-    let g:syntastic_sh_checkers = ['shellcheck', 'sh']
+    let g:syntastic_sh_checkers = ['shellcheck', 'sh', 'bashate']
     let g:syntastic_yaml_checkers = ['pyyaml']
 
     "More Significant Symbols
@@ -1028,6 +1028,12 @@ augroup COMMANDS
   augroup VIM-AUTOFORMAT
     "let g:formatterpath = ['/some/path/to/a/folder']
     "let g:autoformat_verbosemode=1
+
+    let g:formatters_sh = ['shellharden', 'shfmt']
+    let g:formatdef_shfmt = '"shfmt -i ".(&expandtab ? shiftwidth() : "0")'
+    let g:formatdef_shellharden = '"cat ". expand("%:p") . " | shellharden --transform '''' "'
+    let g:run_all_formatters_sh = 1
+
     nn <Leader>F :Autoformat<CR>
   augroup END
 
