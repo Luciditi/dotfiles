@@ -452,6 +452,7 @@ augroup COMMANDS
     au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md
           \,README.txt
           \ :set filetype=markdown
+    let g:markdown_fenced_languages = ['css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html', 'typescript', 'ts=typescript', 'dart', 'go', 'python', 'rust', 'bash=sh', 'sh', 'zsh', 'php', 'vim', 'terraform', 'yaml']
 
     "Supresss errors
     au CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -923,7 +924,7 @@ augroup COMMANDS
 
   augroup END
 
-  """""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup PHPComplete
     let g:phpcomplete_parse_docblock_comments = 1
 
@@ -936,6 +937,12 @@ augroup COMMANDS
 
     "Jump definition binding split
     nm <Leader>jd <C-W><C-\>
+
+  augroup END
+
+  """""""SCRATCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup SCRATCH 
+    let g:scratch_filetype = 'markdown'
 
   augroup END
 
@@ -1030,7 +1037,8 @@ augroup COMMANDS
     "let g:autoformat_verbosemode=1
 
     let g:formatters_sh = ['shellharden', 'shfmt']
-    let g:formatdef_shfmt = '"shfmt -i ".(&expandtab ? shiftwidth() : "0")'
+    "let g:formatdef_shfmt = '"shfmt -i ".(&expandtab ? shiftwidth() : "0")'
+    let g:formatdef_shfmt = '"shfmt -i 4"'
     let g:formatdef_shellharden = '"cat ". expand("%:p") . " | shellharden --transform '''' "'
     let g:run_all_formatters_sh = 1
 
@@ -1040,6 +1048,12 @@ augroup COMMANDS
   """""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   augroup VIM-STICKY
     let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
+
+  augroup END
+
+  """""""VIM-SURROUND"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup VIM-SURROUND
+    let b:surround_{char2nr('c')} = "```\r```"
 
   augroup END
 

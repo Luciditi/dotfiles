@@ -36,6 +36,7 @@ augroup VUNDLE
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
   Plugin 'mbbill/undotree'
+  Plugin 'mtth/scratch.vim'
   Plugin 'mxw/vim-jsx'
   Plugin 'myint/syntastic-extras'
   Plugin 'osyo-manga/vim-hopping'
