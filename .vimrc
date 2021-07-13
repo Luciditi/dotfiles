@@ -180,10 +180,9 @@ augroup COMMANDS
     nn <silent> ya  :set paste<CR>a
     nn <silent> yA  :set paste<CR>A
 
-    "p will keep register contents
-    "vn P "_dP
-    "vn <Leader>p "_dP
-    xn p "_dP
+    " P or <Leader>p will keep register contents
+    vn P "_dP
+    vn <Leader>p "_dP
 
     "Tab will jump to matched char
     nn <Tab> %

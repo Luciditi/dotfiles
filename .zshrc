@@ -285,7 +285,7 @@ ALMOSONTOP=false
 
 #######   AUTONOTIFY   #########################################################
 # Add docker to list of ignored commands (also: disable_auto_notify /enable_auto_notify)
-AUTO_NOTIFY_IGNORE+=("docker" "g" "vi")
+AUTO_NOTIFY_IGNORE+=("bat"  "docker" "g" "vi")
 
 #######   CHEAT   ##############################################################
 export CHEAT_EDITOR="vim"
