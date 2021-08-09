@@ -100,9 +100,8 @@ augroup COMMANDS
     "Esc visual mode w/ return
     vn <CR> <Esc>
 
-    "Remap 0 to toggle home position, use - for EOL
+    "Remap 0 to toggle home position
     nn 0 :call ToggleHomeZero()<CR>
-    no - $
 
     "Fast saving/quiting
     nm <Leader>w :w!<CR>
