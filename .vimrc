@@ -77,7 +77,10 @@ augroup COMMANDS
   "Set leader to Space
   let mapleader = "\<Space>"
   let g:mapleader = "\<Space>"
-  let g:maplocalleader = "\<Space>"
+  let g:maplocalleader = "\\"
+
+  "Double tap local leader for prev buffer
+  no <Localleader><Localleader> <c-^>
 
   "Map g+j/k to move down to the first no blank character
   no gj +
