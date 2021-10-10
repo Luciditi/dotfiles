@@ -947,24 +947,10 @@ augroup COMMANDS
 
   augroup END
 
-  """""""SHOWMARKS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup SHOWMARKS
-    "Highlight cursor & line
-    nm <Leader>sm :ShowMarksToggle<CR>
-          \ :set background=dark<CR> :colo solarized<CR>
-          \ :highlight LineNr ctermfg=222<CR>
-
-    " Don't leave on by default, use :ShowMarksOn to enable
-    let g:showmarks_enable = 0
-    let g:showmarks_include="abcdefghipqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    " For marks a-z
-    highlight ShowMarksHLl gui=bold guibg=LightBlue guifg=Black
-    " For marks A-Z
-    highlight ShowMarksHLu gui=bold guibg=LightRed guifg=Black
-    " For all other marks
-    highlight ShowMarksHLo gui=bold guibg=LightYellow guifg=DarkYellow
-    " For multiple marks on the same line.
-    highlight ShowMarksHLm gui=bold guibg=LightGreen guifg=DarkGreen
+  """""""SIGNATURE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  augroup SIGNATURE
+    nm <Leader>sm :SignatureToggle<CR>
+    nm <Leader>sr :SignatureRefresh<CR>
   augroup END
 
   """""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

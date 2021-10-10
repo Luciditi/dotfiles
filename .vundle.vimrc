@@ -1,4 +1,4 @@
-"""""""VUNDLE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""VUNDLE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VUNDLE
   set nocompatible              " be iMproved, required
   filetype off                  " required
@@ -12,9 +12,8 @@ augroup VUNDLE
   " let Vundle manage Vundle, required
   Plugin 'VundleVim/Vundle.vim'
 
-  """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   Plugin 'bling/vim-airline'
-  Plugin 'bootleq/showmarks'
   Plugin 'chiel92/vim-autoformat'
   Plugin 'chr4/nginx.vim'
   Plugin 'chrisbra/nrrwrgn'
@@ -26,12 +25,14 @@ augroup VUNDLE
   Plugin 'groenewege/vim-less'
   Plugin 'hashivim/vim-hashicorp-tools'
   Plugin 'itchyny/vim-cursorword'
+
   Plugin 'jelera/vim-javascript-syntax'
   if !has('nvim')
     Plugin 'joonty/vdebug'
   endif
   Plugin 'junegunn/fzf.vim'
   Plugin 'kkoomen/vim-doge'
+  Plugin 'luciditi/vim-signature'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
@@ -71,8 +72,8 @@ augroup VUNDLE
   Plugin 'yggdroot/indentline'
   Plugin 'zphere-zsh/shell-omni-completion'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
+  """""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-  """""""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   " All of your Plugins must be added before the following line
   call vundle#end()            " required
   filetype plugin indent on    " required
