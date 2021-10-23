@@ -699,7 +699,7 @@ augroup COMMANDS
   augroup AIRLINE
     "Prettify
     let g:airline_powerline_fonts = 1
-    let g:airline_theme='term'
+    let g:airline_theme='dark'
 
     "Tabline display
     let g:airline#extensions#tabline#show_tab_nr = 1
