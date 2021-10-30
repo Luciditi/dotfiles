@@ -67,7 +67,7 @@ antigen bundle supercrabtree/k
 antigen bundle unixorn/docker-helpers.zshplugin 
 antigen bundle unixorn/git-extra-commands
 antigen bundle zsh-users/zsh-autosuggestions@v0.5.0
-antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle zdharma-continuum/fast-syntax-highlighting
 antigen bundle b4b4r07/zsh-vimode-visual
 
 # THEMES
