@@ -283,6 +283,10 @@ augroup COMMANDS
     au FileType markdown vmap <buffer><silent><Leader>b S*vf*S*
     " <Leader>+c = Wrap code
     au FileType markdown vmap <buffer><silent><Leader>c S`
+    " <Leader>+e = Wrap example code block 
+    au FileType markdown vmap <buffer><silent><Leader>e Sci<BS><ESC>
+    " <Leader>+p = Wrap picture/image
+    au FileType markdown vmap <buffer><silent><Leader>p S]%a(<C-R>+ "TITLE")<ESC><TAB>h<TAB>i!<ESC>
     " <Leader>+i = Wrap italic
     au FileType markdown vmap <buffer><silent><Leader>i S_
     " <Leader>+l = Wrap clipboard link
