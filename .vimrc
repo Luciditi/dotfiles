@@ -74,21 +74,21 @@ augroup END
 
 """""""COMMANDS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup COMMANDS
-  "Set leader to Space
-  let mapleader = "\<Space>"
-  let g:mapleader = "\<Space>"
-  let g:maplocalleader = "\\"
+    "Set leader to Space
+    let mapleader = "\<Space>"
+    let g:mapleader = "\<Space>"
+    let g:maplocalleader = "\\"
 
-  "Double tap local leader for prev buffer
-  no <Localleader><Localleader> <c-^>
+    "Double tap local leader for prev buffer
+    no <Localleader><Localleader> <c-^>
 
-  "Map g+j/k to move down to the first no blank character
-  no gj +
-  no gk -
+    "Map g+j/k to move down to the first no blank character
+    no gj +
+    no gk -
 
-  "Map g+J/K to move down to the first empty line
-  no gJ }
-  no gK {
+    "Map g+J/K to move down to the first empty line
+    no gJ }
+    no gK {
     " FIX FOR SynHighlight: }
 
     "Map jk for escaping insert/visual/comman mode
@@ -113,7 +113,12 @@ augroup COMMANDS
 
     "No typos on force quit
     cno Q q
-    map q: :q
+
+    "Disable EX-cmd
+    no Q <nop>
+
+    "Adjust EX-mode
+    nn ; Q
 
     "Smart way to move between windows
     nn <silent> <Leader>j <C-W>j
