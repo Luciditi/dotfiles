@@ -117,8 +117,8 @@ augroup COMMANDS
     "Disable EX-cmd
     no Q <nop>
 
-    "Adjust EX-mode
-    nn ; Q
+    "Adjust EX-mode;;
+    nn <Leader>' Q
 
     "Smart way to move between windows
     nn <silent> <Leader>j <C-W>j
@@ -1057,6 +1057,8 @@ augroup COMMANDS
   augroup VIM-TERRAFORM
     " FMT / Align TF files automatically
     let g:terraform_align=1
+    let g:terraform_fmt_on_save=1
+    let g:terraform_fold_sections=1
   augroup END
 
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
