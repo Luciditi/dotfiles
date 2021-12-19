@@ -207,7 +207,7 @@ augroup COMMANDS
     "~ is operator like
     set tildeop
 
-    "Map Diff Next/Prev to dn/dp
+    "map diff next/prev to dn/dN
     nn dn ]c
     nn dN [c
 
