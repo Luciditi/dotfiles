@@ -74,21 +74,21 @@ augroup END
 
 """""""COMMANDS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup COMMANDS
-    "Set leader to Space
-    let mapleader = "\<Space>"
-    let g:mapleader = "\<Space>"
-    let g:maplocalleader = "\\"
+  "Set leader to Space
+  let mapleader = "\<Space>"
+  let g:mapleader = "\<Space>"
+  let g:maplocalleader = "\\"
 
-    "Double tap local leader for prev buffer
-    no <Localleader><Localleader> <c-^>
+  "Double tap local leader for prev buffer
+  no <Localleader><Localleader> <c-^>
 
-    "Map g+j/k to move down to the first no blank character
-    no gj +
-    no gk -
+  "Map g+j/k to move down to the first no blank character
+  no gj +
+  no gk -
 
-    "Map g+J/K to move down to the first empty line
-    no gJ }
-    no gK {
+  "Map g+J/K to move down to the first empty line
+  no gJ }
+  no gK {
     " FIX FOR SynHighlight: }
 
     "Map jk for escaping insert/visual/comman mode
@@ -288,7 +288,7 @@ augroup COMMANDS
     au FileType markdown vmap <buffer><silent><Leader>b S*vf*S*
     " <Leader>+c = Wrap code
     au FileType markdown vmap <buffer><silent><Leader>c S`
-    " <Leader>+e = Wrap example code block 
+    " <Leader>+e = Wrap example code block
     au FileType markdown vmap <buffer><silent><Leader>e Sci<BS><ESC>
     " <Leader>+p = Wrap picture/image
     au FileType markdown vmap <buffer><silent><Leader>p S]%a(<C-R>+ "TITLE")<ESC><TAB>h<TAB>i!<ESC>
@@ -771,415 +771,415 @@ augroup COMMANDS
     nn ! :Clam<space>
     vn ! :ClamVisual<space>
 
-  """""""DOGE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup DOGE
-    let g:doge_php_settings = {
-          \  'resolve_fqn': 1
-          \}
-    let g:doge_python_settings = {
-          \  'single_quotes': 0
-          \}
-
-  """""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup EASYMOTION
-    "Add easymotion search
-    map <Leader>m <Plug>(easymotion-sn)
-    map <Leader>n <Plug>(easymotion-next)
-    map <Leader>N <Plug>(easymotion-prev)
-
-    "Add 2x leader easymotion directions
-    map <Leader><Leader>l <Plug>(easymotion-lineforward)
-    map <Leader><Leader>j <Plug>(easymotion-j)
-    map <Leader><Leader>k <Plug>(easymotion-k)
-    map <Leader><Leader>h <Plug>(easymotion-linebackward)
-
-    "Repeat last motion
-    map <Leader><Leader>s <Plug>(easymotion-repeat)
-
-    " Require tpope/vim-repeat to enable dot repeat support
-    " Jump to anywhere with only `s{char}{target}`
-    " `s<CR>` repeat last find motion.
-    nm <Leader>f <Plug>(easymotion-s2)
-
-    "keep cursor column when JK motion
-    let g:EasyMotion_startofline = 0
-    " Use uppercase target labels and type as a lower case
-    let g:EasyMotion_use_upper = 1
-    " type `l` and match `l`&`L`
-    let g:EasyMotion_smartcase = 1
-    " Smartsign (type `3` and match `3`&`#`)
-    let g:EasyMotion_use_smartsign_us = 1
-  augroup END
-
-  """""""EDITORCONFIG"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup EDITORCONFIG
-    let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-
-  augroup END
-
-  """""""FZF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup FZF
-    "Set filename search
-    nn <Leader>o :Files<CR>
-
-    "Set filebody search
-    nn <Leader>/ :F<CR>
-    let g:rg_command = '
-          \ rg --column --line-number --no-heading --fixed-strings --ignore-case
-          \ --no-ignore --hidden --follow --color "always"
-          \ -g "!{.git,node_modules,vendor}/*" '
-    command! -bang -nargs=* F
-          \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
-  augroup END
-
-  """""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup GUTENTAGS
-    "Specify cache dir in vim folder
-    let g:gutentags_cache_dir = '~/.vim/gutentags'
-
-    "let g:gutentags_exclude = ['*.css', '*.html', '*.js']
-
-    " prevent gutentags from indexing the entire home directory
-    " https://github.com/ludovicchabant/vim-gutentags/issues/13
-    let s:notags = expand('~/.notags')
-    if !filereadable(s:notags)
-      call writefile([], s:notags)
-    endif
-
-  augroup END
-
-  """""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup HOPPING.VIM
-    " Map to Leader+/
-    nm <Space>? <Plug>(hopping-start)
-
-    " Keymapping
-    let g:hopping#keymapping = {
-          \ "\<C-n>" : "<Over>(hopping-next)",
-          \ "\<C-p>" : "<Over>(hopping-prev)",
-          \ "\<C-u>" : "<Over>(scroll-u)",
-          \ "\<C-d>" : "<Over>(scroll-d)",
-          \}
-
-  augroup END
-
-  """""""INTERSTINGWORDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup INTERSTINGWORDS
-    nn <silent> <Leader>i :call InterestingWords('n')<CR>
-    nn <silent> <Leader>I :call UncolorAllWords()<CR>
-
-    let g:interestingWordsGUIColors = [
-          \'134', '101', '211', '137', '214', '222']
-  augroup END
-
-  """""""NEOCOMPLCACHE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup NEOCOMPLCACHE
-    "Enable
-    let g:neocomplcache_enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplcache_enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplcache_min_syntax_length = 3
-    let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = {
-          \ 'default' : '',
-          \ 'vimshell' : $HOME.'/.vimshell_hist',
-          \ 'scheme' : $HOME.'/.gosh_completions'
-          \ }
-
-    " AutoComplPop like behavior.
-    "let g:neocomplcache_enable_auto_select = 1
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplcache_force_omni_patterns')
-      let g:neocomplcache_force_omni_patterns = {}
-    endif
-    let g:neocomplcache_force_omni_patterns.php = '[^.  \t]->\h\w*\|\h\w*::'
-    let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplcache_force_omni_patterns.cpp =
-          \'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-  augroup END
-
-  """""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup NERDTREE
-    "Give a shortcut key to NERD Tree map
-    nm <Leader>O :NERDTreeToggle<CR>
-
-    "NERDTree open if no files / close if left / open on F4
-    "au StdinReadPre * let s:std_in=1
-    "au VimEnter *
-          "\ if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-    "au bufenter * if (winnr("$") == 1
-    "\&& exists("b:NERDTreeType")
-    "\&& b:NERDTreeType == "primary") | q | endif
-
-    "Set NERDTree Options
-    let NERDTreeShowBookmarks=1
-    let NERDTreeIgnore=[
-          \'\\.pyc', '\\\~$', '\\.swo$', '\\.swp$',
-          \'\\.git', '\\.hg', '\\.svn', '\\.bzr']
-    let NERDTreeChDirMode=0
-    let NERDTreeQuitOnOpen=1
-    let NERDTreeShowHidden=1
-    let NERDTreeKeepTreeInNewTab=1
-  augroup END
-
-  """""""NRRWRGN""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup NRRWRGN
-    nm <Leader>nw :NR<CR>
-    vm <Leader>nw :NR<CR>
-    let g:nrrw_topbot_leftright = 'botright'
-
-  augroup END
-
-  """""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup PHPComplete
-    let g:phpcomplete_parse_docblock_comments = 1
-
-    "let g:phpcomplete_mappings = {
-          "\ 'jump_to_def': '<C-]>',
-          "\ 'jump_to_def_split': '<C-W><C-]>',
-          "\ 'jump_to_def_vsplit': '<C-W><C-\>',
-          "\ 'jump_to_def_tabnew': '<C-W><C-[>',
-    "\}
-
-    "Jump definition binding split
-    nm <Leader>jd <C-W><C-\>
-
-  augroup END
-
-  """""""SCRATCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup SCRATCH 
-    let g:scratch_filetype = 'markdown'
-
-  augroup END
-
-  """""""SIGNATURE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup SIGNATURE
-    nm <Leader>sm :SignatureToggle<CR>
-    nm <Leader>sr :SignatureRefresh<CR>
-  augroup END
-
-  """""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup SYNTASTIC
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
-
-    let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
-
-    let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-    let g:syntastic_php_phpcs_args = "
-          \ --standard=Drupal
-          \ --extensions=drush,php,module,inc,install,test,profile,theme,
-          \js,css,info,txt,md"
-
-    let g:syntastic_gitcommit_checkers = ['proselint']
-    "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
-    let g:syntastic_javascript_checkers = ['standard', 'jsonlint']
-    let g:syntastic_python_checkers = ['pylint']
-    "let g:syntastic_python_pylint_args = '-s n'
-    let g:syntastic_python_python_exec = 'python3'
-    let g:syntastic_sh_checkers = ['shellcheck', 'sh', 'bashate']
-    let g:syntastic_yaml_checkers = ['pyyaml']
-
-    "More Significant Symbols
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = '!'
-    let g:syntastic_style_error_symbol = '✗§'
-    let g:syntastic_style_warning_symbol = '!§'
-
-    "Error options
-    "let g:syntastic_debug = 3
-    let g:syntastic_exit_checks = 0
-
-    "Toggle off checkers by default.
-    let g:loaded_syntastic_ansible_ansible_lint_checker = 0
-
-    "Scroll through errors with ^ & v
-    nm <silent> <UP> :lprev<CR>
-    nm <silent> <DOWN> :lnext<CR>
-
-    "Toggle display of Syntastic error window
-    nn <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
-  augroup END
-
-  """""""TAGBAR"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup TAGBAR
-    nm <Leader>tt :TagbarToggle<CR>
-
-    "TagBar-PHPCTags Options
-    let g:tagbar_phpctags_memory_limit = '2G'
-    "Compact tags
-    let g:tagbar_compact = 1
-  augroup END
-
-  """""""UNDOTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup UNDOTREE
-    "Leader+u Sets Undotree
-    nn <Leader>U :UndotreeToggle<CR>
-  augroup END
-
-  """""""VIM-AUTOFORMAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup VIM-AUTOFORMAT
-    "let g:formatterpath = ['/some/path/to/a/folder']
-    "let g:autoformat_verbosemode=1
-
-    let g:formatters_sh = ['shellharden', 'shfmt']
-    "let g:formatdef_shfmt = '"shfmt -i ".(&expandtab ? shiftwidth() : "0")'
-    let g:formatdef_shfmt = '"shfmt -i 4"'
-    let g:formatdef_shellharden = '"cat ". expand("%:p") . " | shellharden --transform '''' "'
-    let g:run_all_formatters_sh = 1
-
-    nn <Leader>F :Autoformat<CR>
-  augroup END
-
-  """""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup VIM-STICKY
-    let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
-
-  augroup END
-
-  """""""VIM-SURROUND"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup VIM-SURROUND
-    let b:surround_{char2nr('c')} = "```\r```"
-
-  augroup END
-
-  """""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup VIM-TERRAFORM
-    " FMT / Align TF files automatically
-    let g:terraform_align=1
-    let g:terraform_fmt_on_save=1
-    let g:terraform_fold_sections=1
-  augroup END
-
-  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  """""""HELPER FUNCTIONS"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-  """""""DISPLAY INFO ON COMMAND LINE"""""""""""""""""""""""""""""""""""""""""""
-  function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-  endfunction
-
-  """""""RETURNS TRUE IF PASTE MODE IS ENABLED""""""""""""""""""""""""""""""""""
-  function! HasPaste()
-    if &paste
-      return 'PASTE MODE  '
-    en
-    return ''
-  endfunction
-
-  """""""DISABLES PASTE MODE WHEN LEAVING INSERT MODE"""""""""""""""""""""""""""
-  augroup insertleave
-    au InsertLeave *
-          \ if &paste == 1 |
-          \     set nopaste |
-          \ endif
-  augroup END
-
-
-  """""""COPY THE CURRENT TEXT SELECTION TO THE SYSTEM CLIPBOARD""""""""""""""""
-  augroup systemclip
-    if has('gui_running')
-      no <Leader>y "+y
-    else
-      " copy to attached terminal using the yank(1) script:
-      " https://github.com/sunaku/home/blob/master/bin/yank
-      no <silent> <Leader>y y
-            \ :silent execute
-            \   '!/bin/echo -n' shellescape(escape(@0, '\'), 1) '<Bar> yank'
-            \ <Bar>redraw!<Return>
-    endif
-  augroup END
-
-  """""""TOGGLE THE DISPLAY OF SYNTASTIC'S ERROR WINDOW"""""""""""""""""""""""""
-  function! ToggleErrors()
-    let old_last_winnr = winnr('$')
-    lclose
-    if old_last_winnr == winnr('$')
-      " Nothing was closed, open syntastic error location panel
-      Errors
-    endif
-  endfunction
-
-  """""""TOGGLE THE HOME POSITON""""""""""""""""""""""""""""""""""""""""""""""""
-  "Credits to https://ddrscott.github.io/blog/2016/vim-toggle-movement/
-  function! ToggleHomeZero()
-    let pos = getpos('.')
-    execute "normal! ^"
-    if pos == getpos('.')
-      execute "normal! 0"
-    endif
-  endfunction
-
-  """""""VISUAL SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup VISUAL SEARCH
-    function! s:VSetSearch()
-      let temp = @@
-      norm! gvy
-      let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-      let @@ = temp
-    endfunction
-  augroup END
-
-  """""""COLORS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  augroup COLORS
-    "Sample colors @ http://bytefluent.com/vivify/
-    "Solarize VIM
-    set background=dark
-    let g:solarized_termtrans=1
-    let g:solarized_termcolors=256
-    let g:solarized_degrade=1
-    colorscheme solarized
-
-    "Line Colors
-    highlight LineNr ctermbg=236
-    highlight LineNr ctermfg=222
-    highlight LineNr gui=NONE guifg=DarkGrey guibg=NONE
-
-    "Cursor Highlight Colors
-    hi CursorLine  cterm=NONE ctermbg=234 ctermfg=253
-    hi CursorColumn  cterm=NONE ctermbg=234 ctermfg=253
-
-    " Mark 80 char boundary
-    set colorcolumn=81
-
-    "Set indent guides
-    let g:indent_guides_auto_colors = 0
-    if 'dark' == &background
-      au VimEnter,Colorscheme *
-            \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
-      au VimEnter,Colorscheme *
-            \ :hi IndentGuidesEven guibg=green ctermbg=234
-    else
-      au VimEnter,Colorscheme *
-            \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
-      au VimEnter,Colorscheme *
-            \ :hi IndentGuidesEven guibg=green ctermbg=0
-    endif
-
-    "Clearer highlighting for diffs
-    highlight DiffAdd
-          \ cterm=bold ctermfg=10 ctermbg=22 gui=none guifg=bg guibg=Red
-    highlight DiffDelete
-          \ cterm=bold ctermfg=10 ctermbg=196 gui=none guifg=bg guibg=Red
-    highlight DiffChange
-          \ cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-    highlight DiffText
-          \ cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
-
-    "autocomplete menu colors
-    highlight Pmenu ctermfg=Black ctermbg=White
-  augroup END
+    """""""DOGE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    augroup DOGE
+      let g:doge_php_settings = {
+            \  'resolve_fqn': 1
+            \}
+      let g:doge_python_settings = {
+            \  'single_quotes': 0
+            \}
+
+      """""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup EASYMOTION
+        "Add easymotion search
+        map <Leader>m <Plug>(easymotion-sn)
+        map <Leader>n <Plug>(easymotion-next)
+        map <Leader>N <Plug>(easymotion-prev)
+
+        "Add 2x leader easymotion directions
+        map <Leader><Leader>l <Plug>(easymotion-lineforward)
+        map <Leader><Leader>j <Plug>(easymotion-j)
+        map <Leader><Leader>k <Plug>(easymotion-k)
+        map <Leader><Leader>h <Plug>(easymotion-linebackward)
+
+        "Repeat last motion
+        map <Leader><Leader>s <Plug>(easymotion-repeat)
+
+        " Require tpope/vim-repeat to enable dot repeat support
+        " Jump to anywhere with only `s{char}{target}`
+        " `s<CR>` repeat last find motion.
+        nm <Leader>f <Plug>(easymotion-s2)
+
+        "keep cursor column when JK motion
+        let g:EasyMotion_startofline = 0
+        " Use uppercase target labels and type as a lower case
+        let g:EasyMotion_use_upper = 1
+        " type `l` and match `l`&`L`
+        let g:EasyMotion_smartcase = 1
+        " Smartsign (type `3` and match `3`&`#`)
+        let g:EasyMotion_use_smartsign_us = 1
+      augroup END
+
+      """""""EDITORCONFIG"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup EDITORCONFIG
+        let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
+      augroup END
+
+      """""""FZF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup FZF
+        "Set filename search
+        nn <Leader>o :Files<CR>
+
+        "Set filebody search
+        nn <Leader>/ :F<CR>
+        let g:rg_command = '
+              \ rg --column --line-number --no-heading --fixed-strings --ignore-case
+              \ --no-ignore --hidden --follow --color "always"
+              \ -g "!{.git,node_modules,vendor}/*" '
+        command! -bang -nargs=* F
+              \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+      augroup END
+
+      """""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup GUTENTAGS
+        "Specify cache dir in vim folder
+        let g:gutentags_cache_dir = '~/.vim/gutentags'
+
+        "let g:gutentags_exclude = ['*.css', '*.html', '*.js']
+
+        " prevent gutentags from indexing the entire home directory
+        " https://github.com/ludovicchabant/vim-gutentags/issues/13
+        let s:notags = expand('~/.notags')
+        if !filereadable(s:notags)
+          call writefile([], s:notags)
+        endif
+
+      augroup END
+
+      """""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup HOPPING.VIM
+        " Map to Leader+/
+        nm <Space>? <Plug>(hopping-start)
+
+        " Keymapping
+        let g:hopping#keymapping = {
+              \ "\<C-n>" : "<Over>(hopping-next)",
+              \ "\<C-p>" : "<Over>(hopping-prev)",
+              \ "\<C-u>" : "<Over>(scroll-u)",
+              \ "\<C-d>" : "<Over>(scroll-d)",
+              \}
+
+      augroup END
+
+      """""""INTERSTINGWORDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup INTERSTINGWORDS
+        nn <silent> <Leader>i :call InterestingWords('n')<CR>
+        nn <silent> <Leader>I :call UncolorAllWords()<CR>
+
+        let g:interestingWordsGUIColors = [
+              \'134', '101', '211', '137', '214', '222']
+      augroup END
+
+      """""""NEOCOMPLCACHE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup NEOCOMPLCACHE
+        "Enable
+        let g:neocomplcache_enable_at_startup = 1
+        " Use smartcase.
+        let g:neocomplcache_enable_smart_case = 1
+        " Set minimum syntax keyword length.
+        let g:neocomplcache_min_syntax_length = 3
+        let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+        " Define dictionary.
+        let g:neocomplcache_dictionary_filetype_lists = {
+              \ 'default' : '',
+              \ 'vimshell' : $HOME.'/.vimshell_hist',
+              \ 'scheme' : $HOME.'/.gosh_completions'
+              \ }
+
+        " AutoComplPop like behavior.
+        "let g:neocomplcache_enable_auto_select = 1
+
+        " Enable heavy omni completion.
+        if !exists('g:neocomplcache_force_omni_patterns')
+          let g:neocomplcache_force_omni_patterns = {}
+        endif
+        let g:neocomplcache_force_omni_patterns.php = '[^.  \t]->\h\w*\|\h\w*::'
+        let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+        let g:neocomplcache_force_omni_patterns.cpp =
+              \'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+      augroup END
+
+      """""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup NERDTREE
+        "Give a shortcut key to NERD Tree map
+        nm <Leader>O :NERDTreeToggle<CR>
+
+        "NERDTree open if no files / close if left / open on F4
+        "au StdinReadPre * let s:std_in=1
+        "au VimEnter *
+              "\ if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+        "au bufenter * if (winnr("$") == 1
+        "\&& exists("b:NERDTreeType")
+        "\&& b:NERDTreeType == "primary") | q | endif
+
+        "Set NERDTree Options
+        let NERDTreeShowBookmarks=1
+        let NERDTreeIgnore=[
+              \'\\.pyc', '\\\~$', '\\.swo$', '\\.swp$',
+              \'\\.git', '\\.hg', '\\.svn', '\\.bzr']
+        let NERDTreeChDirMode=0
+        let NERDTreeQuitOnOpen=1
+        let NERDTreeShowHidden=1
+        let NERDTreeKeepTreeInNewTab=1
+      augroup END
+
+      """""""NRRWRGN""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup NRRWRGN
+        nm <Leader>nw :NR<CR>
+        vm <Leader>nw :NR<CR>
+        let g:nrrw_topbot_leftright = 'botright'
+
+      augroup END
+
+      """""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup PHPComplete
+        let g:phpcomplete_parse_docblock_comments = 1
+
+        "let g:phpcomplete_mappings = {
+              "\ 'jump_to_def': '<C-]>',
+              "\ 'jump_to_def_split': '<C-W><C-]>',
+              "\ 'jump_to_def_vsplit': '<C-W><C-\>',
+              "\ 'jump_to_def_tabnew': '<C-W><C-[>',
+        "\}
+
+        "Jump definition binding split
+        nm <Leader>jd <C-W><C-\>
+
+      augroup END
+
+      """""""SCRATCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup SCRATCH
+        let g:scratch_filetype = 'markdown'
+
+      augroup END
+
+      """""""SIGNATURE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup SIGNATURE
+        nm <Leader>sm :SignatureToggle<CR>
+        nm <Leader>sr :SignatureRefresh<CR>
+      augroup END
+
+      """""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup SYNTASTIC
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
+
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 0
+        let g:syntastic_check_on_open = 0
+        let g:syntastic_check_on_wq = 0
+
+        let g:syntastic_html_tidy_ignore_errors=['proprietary attribute "ng-']
+
+        let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+        let g:syntastic_php_phpcs_args = "
+              \ --standard=Drupal
+              \ --extensions=drush,php,module,inc,install,test,profile,theme,
+              \js,css,info,txt,md"
+
+        let g:syntastic_gitcommit_checkers = ['proselint']
+        "let g:syntastic_javascript_checkers = ['eslint', 'json_tool', 'standard']
+        let g:syntastic_javascript_checkers = ['standard', 'jsonlint']
+        let g:syntastic_python_checkers = ['pylint']
+        "let g:syntastic_python_pylint_args = '-s n'
+        let g:syntastic_python_python_exec = 'python3'
+        let g:syntastic_sh_checkers = ['shellcheck', 'sh', 'bashate']
+        let g:syntastic_yaml_checkers = ['pyyaml']
+
+        "More Significant Symbols
+        let g:syntastic_error_symbol = '✗'
+        let g:syntastic_warning_symbol = '!'
+        let g:syntastic_style_error_symbol = '✗§'
+        let g:syntastic_style_warning_symbol = '!§'
+
+        "Error options
+        "let g:syntastic_debug = 3
+        let g:syntastic_exit_checks = 0
+
+        "Toggle off checkers by default.
+        let g:loaded_syntastic_ansible_ansible_lint_checker = 0
+
+        "Scroll through errors with ^ & v
+        nm <silent> <UP> :lprev<CR>
+        nm <silent> <DOWN> :lnext<CR>
+
+        "Toggle display of Syntastic error window
+        nn <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
+      augroup END
+
+      """""""TAGBAR"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup TAGBAR
+        nm <Leader>tt :TagbarToggle<CR>
+
+        "TagBar-PHPCTags Options
+        let g:tagbar_phpctags_memory_limit = '2G'
+        "Compact tags
+        let g:tagbar_compact = 1
+      augroup END
+
+      """""""UNDOTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup UNDOTREE
+        "Leader+u Sets Undotree
+        nn <Leader>U :UndotreeToggle<CR>
+      augroup END
+
+      """""""VIM-AUTOFORMAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup VIM-AUTOFORMAT
+        "let g:formatterpath = ['/some/path/to/a/folder']
+        "let g:autoformat_verbosemode=1
+
+        let g:formatters_sh = ['shellharden', 'shfmt']
+        "let g:formatdef_shfmt = '"shfmt -i ".(&expandtab ? shiftwidth() : "0")'
+        let g:formatdef_shfmt = '"shfmt -i 4"'
+        let g:formatdef_shellharden = '"cat ". expand("%:p") . " | shellharden --transform '''' "'
+        let g:run_all_formatters_sh = 1
+
+        nn <Leader>F :Autoformat<CR>
+      augroup END
+
+      """""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup VIM-STICKY
+        let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
+
+      augroup END
+
+      """""""VIM-SURROUND"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup VIM-SURROUND
+        let b:surround_{char2nr('c')} = "```\r```"
+
+      augroup END
+
+      """""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup VIM-TERRAFORM
+        " FMT / Align TF files automatically
+        let g:terraform_align=1
+        let g:terraform_fmt_on_save=1
+        let g:terraform_fold_sections=1
+      augroup END
+
+      """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      """""""HELPER FUNCTIONS"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+      """""""DISPLAY INFO ON COMMAND LINE"""""""""""""""""""""""""""""""""""""""""""
+      function! CmdLine(str)
+        exe "menu Foo.Bar :" . a:str
+        emenu Foo.Bar
+        unmenu Foo
+      endfunction
+
+      """""""RETURNS TRUE IF PASTE MODE IS ENABLED""""""""""""""""""""""""""""""""""
+      function! HasPaste()
+        if &paste
+          return 'PASTE MODE  '
+        en
+        return ''
+      endfunction
+
+      """""""DISABLES PASTE MODE WHEN LEAVING INSERT MODE"""""""""""""""""""""""""""
+      augroup insertleave
+        au InsertLeave *
+              \ if &paste == 1 |
+              \     set nopaste |
+              \ endif
+      augroup END
+
+
+      """""""COPY THE CURRENT TEXT SELECTION TO THE SYSTEM CLIPBOARD""""""""""""""""
+      augroup systemclip
+        if has('gui_running')
+          no <Leader>y "+y
+        else
+          " copy to attached terminal using the yank(1) script:
+          " https://github.com/sunaku/home/blob/master/bin/yank
+          no <silent> <Leader>y y
+                \ :silent execute
+                \   '!/bin/echo -n' shellescape(escape(@0, '\'), 1) '<Bar> yank'
+                \ <Bar>redraw!<Return>
+        endif
+      augroup END
+
+      """""""TOGGLE THE DISPLAY OF SYNTASTIC'S ERROR WINDOW"""""""""""""""""""""""""
+      function! ToggleErrors()
+        let old_last_winnr = winnr('$')
+        lclose
+        if old_last_winnr == winnr('$')
+          " Nothing was closed, open syntastic error location panel
+          Errors
+        endif
+      endfunction
+
+      """""""TOGGLE THE HOME POSITON""""""""""""""""""""""""""""""""""""""""""""""""
+      "Credits to https://ddrscott.github.io/blog/2016/vim-toggle-movement/
+      function! ToggleHomeZero()
+        let pos = getpos('.')
+        execute "normal! ^"
+        if pos == getpos('.')
+          execute "normal! 0"
+        endif
+      endfunction
+
+      """""""VISUAL SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup VISUAL SEARCH
+        function! s:VSetSearch()
+          let temp = @@
+          norm! gvy
+          let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+          let @@ = temp
+        endfunction
+      augroup END
+
+      """""""COLORS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      augroup COLORS
+        "Sample colors @ http://bytefluent.com/vivify/
+        "Solarize VIM
+        set background=dark
+        let g:solarized_termtrans=1
+        let g:solarized_termcolors=256
+        let g:solarized_degrade=1
+        colorscheme solarized
+
+        "Line Colors
+        highlight LineNr ctermbg=236
+        highlight LineNr ctermfg=222
+        highlight LineNr gui=NONE guifg=DarkGrey guibg=NONE
+
+        "Cursor Highlight Colors
+        hi CursorLine  cterm=NONE ctermbg=234 ctermfg=253
+        hi CursorColumn  cterm=NONE ctermbg=234 ctermfg=253
+
+        " Mark 80 char boundary
+        set colorcolumn=81
+
+        "Set indent guides
+        let g:indent_guides_auto_colors = 0
+        if 'dark' == &background
+          au VimEnter,Colorscheme *
+                \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
+          au VimEnter,Colorscheme *
+                \ :hi IndentGuidesEven guibg=green ctermbg=234
+        else
+          au VimEnter,Colorscheme *
+                \ :hi IndentGuidesOdd  guibg=gray ctermbg=0
+          au VimEnter,Colorscheme *
+                \ :hi IndentGuidesEven guibg=green ctermbg=0
+        endif
+
+        "Clearer highlighting for diffs
+        highlight DiffAdd
+              \ cterm=bold ctermfg=10 ctermbg=22 gui=none guifg=bg guibg=Red
+        highlight DiffDelete
+              \ cterm=bold ctermfg=10 ctermbg=196 gui=none guifg=bg guibg=Red
+        highlight DiffChange
+              \ cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+        highlight DiffText
+              \ cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+        "autocomplete menu colors
+        highlight Pmenu ctermfg=Black ctermbg=White
+      augroup END
 
