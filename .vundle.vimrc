@@ -1,4 +1,4 @@
-""""""VUNDLE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""VUNDLE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VUNDLE
   set nocompatible              " be iMproved, required
   filetype off                  " required
@@ -25,7 +25,6 @@ augroup VUNDLE
   Plugin 'groenewege/vim-less'
   Plugin 'hashivim/vim-hashicorp-tools'
   Plugin 'itchyny/vim-cursorword'
-
   Plugin 'jelera/vim-javascript-syntax'
   if !has('nvim')
     Plugin 'joonty/vdebug'
@@ -33,6 +32,7 @@ augroup VUNDLE
   Plugin 'junegunn/fzf.vim'
   Plugin 'kkoomen/vim-doge'
   Plugin 'luciditi/vim-signature'
+  Plugin 'luciditi/openai.vim'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
