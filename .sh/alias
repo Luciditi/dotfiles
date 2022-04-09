@@ -53,11 +53,11 @@ alias lsl='ls -al'
 alias nrcvim='vim -u NONE'
 
 #Toggle Show/Hide hidden files in Finder
-alias osx-file-hide='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
-alias osx-file-show='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+alias macos-file-hide='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+alias macos-file-show='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 
 #Network setup
-alias osx-net-change='networksetup -switchtolocation'
+alias macos-net-change='networksetup -switchtolocation'
 
 #Previous dir
 alias pd='cd -'

@@ -14,7 +14,7 @@ function docker-d-start {
 }
 
 #Empty the OSX icon cache
-function osx-empty-icon-cache {
+function macos-empty-icon-cache {
   sudo rm -rfv /Library/Caches/com.apple.iconservices.store &> /dev/null
   sudo find /private/var/folders/ \( -name com.apple.dock.iconcache -or -name com.apple.iconservices \) -exec rm -rfv {} \; &> /dev/null
   sleep 3
@@ -29,7 +29,7 @@ function osx-empty-icon-cache {
 }
 
 #Open a specfied OSX PrefPane
-function osx-pref {
+function macos-pref {
   if [[ -n "$1" ]]; then
     if [[ -d "/System/Library/PreferencePanes/$1.prefPane" ]]; then
       open "/System/Library/PreferencePanes/$1.prefPane"
@@ -38,7 +38,13 @@ function osx-pref {
 }
 
 #Connect to a Tunnelblick configured VPN
-function osx-ovpn-connect {
+function macos-mic-vol {
+  VOL_PERCENT=${1:-0}
+  osascript -e "tell application \"System Events\" to set volume input volume $VOL_PERCENT"
+}
+
+#Connect to a Tunnelblick configured VPN
+function macos-ovpn-connect {
   if [[ -z "$1" ]]; then
     return 1
   fi
@@ -50,7 +56,7 @@ EOF
 }
 
 #Disconnect to a Tunnelblick configured VPN
-function osx-ovpn-disconnect {
+function macos-ovpn-disconnect {
   if [[ -z "$1" ]]; then
     return 1
   fi
@@ -63,7 +69,7 @@ EOF
 
 #Connect to a MacOSX configured VPN
 #Config is stored in /Library/Preferences/SystemConfiguration/preferences.plist
-function osx-vpn-connect {
+function macos-vpn-connect {
   if [[ -z "$1" ]]; then
     return 1
   fi
@@ -82,7 +88,7 @@ EOF
 
 #Disconnect from a MacOSX configured VPN
 #Config is stored in /Library/Preferences/SystemConfiguration/preferences.plist
-function osx-vpn-disconnect {
+function macos-vpn-disconnect {
   if [[ -z "$1" ]]; then
     return 1
   fi
@@ -98,7 +104,7 @@ EOF
 }
 
 #Set the DNS for all net services
-function osx-switch-dns() {
+function macos-switch-dns() {
   # Select DNS option
   if [[ "$1" == "CF" ]]; then
     DNS=("1.1.1.1" "1.0.0.1")
@@ -123,7 +129,7 @@ function osx-switch-dns() {
 }
 
 #Attempt WiFi Relogin
-function osx-wifi-relogin {
+function macos-wifi-relogin {
   echo "GATEWAY: http://$(netstat -rn | grep default | awk '{print $2}')/"
   open "http://www.gstatic.com/generate_204"
 }
