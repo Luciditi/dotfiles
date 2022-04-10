@@ -32,7 +32,6 @@ augroup VUNDLE
   Plugin 'junegunn/fzf.vim'
   Plugin 'kkoomen/vim-doge'
   Plugin 'luciditi/vim-signature'
-  Plugin 'luciditi/openai.vim'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
   Plugin 'majutsushi/tagbar'
