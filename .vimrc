@@ -710,6 +710,7 @@ augroup AIRLINE
   let g:airline_theme='dark'
 
   "Tabline display
+  let g:airline#extensions#tabline#show_tabs = 1
   let g:airline#extensions#tabline#show_tab_nr = 1
   let g:airline#extensions#tabline#tab_nr_type= 1
   let g:airline#extensions#tabline#tabs_label = '↹'
@@ -724,6 +725,7 @@ augroup AIRLINE
   let g:airline#extensions#branch#format = 2
 
   "Buffer lines
+  let g:airline#extensions#tabline#show_buffers = 1
   let g:airline#extensions#tabline#buffer_nr_show = 1
   let g:airline#extensions#tabline#buffer_nr_format = '%s:'
   let g:airline#extensions#tabline#enabled = 1

@@ -138,20 +138,6 @@ bindkey '^[[[CE' autosuggest-execute
 # Check bin existence
 function exists { which $1 &> /dev/null }
 
-# Activate Percol on Ctrl+R
-if exists percol; then
-    function percol_select_history() {
-        local tac
-        exists gtac && tac="gtac" || { exists tac && tac="tac" || { tac="tail -r" } }
-        BUFFER=$(fc -l -n 1 | eval $tac | percol --query "$LBUFFER")
-        CURSOR=$#BUFFER         # move cursor
-        zle -R -c               # refresh
-    }
-
-    zle -N percol_select_history
-    bindkey '^R' percol_select_history
-fi
-
 #ZSH-AUTOSUGGESTIONS: Ctrl+Space to auto complete history command | (or Ctrl+R if empty)
 function _zle-autosuggest-accept {
   if [ -z "$BUFFER" ]; then
@@ -297,6 +283,7 @@ eval "$(direnv hook zsh)"
 
 #######   FZF   ################################################################
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #######   ORACLE   #############################################################
 # Setup Oracle Environment If Installed
