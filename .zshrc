@@ -195,7 +195,7 @@ bindkey -M vivis 'i' vi-visual-exit-to-insert
 # Fix shift-tab bug: See https://github.com/robbyrussell/oh-my-zsh/pull/3761
 bindkey '^[[Z' reverse-menu-complete
 
-bindkey -M vicmd ' ' zce
+bindkey -M vicmd '^ ' zce
 # Filters for history
 #export HISTORY_FILTER_EXCLUDE=("" "")
 #######   OMZ   ################################################################
