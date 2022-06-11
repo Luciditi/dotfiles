@@ -992,6 +992,7 @@ augroup SYNTASTIC
   let g:syntastic_python_python_exec = 'python3'
   let g:syntastic_sh_checkers = ['shellcheck', 'sh', 'bashate']
   let g:syntastic_yaml_checkers = ['pyyaml']
+  let g:syntastic_solidity_checkers = ['solhint']
 
   "More Significant Symbols
   let g:syntastic_error_symbol = '✗'

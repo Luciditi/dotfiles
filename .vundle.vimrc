@@ -65,6 +65,7 @@ augroup VUNDLE
   Plugin 'vim-php/tagbar-phpctags.vim'
   Plugin 'vim-scripts/sql.vim'
   Plugin 'vim-scripts/repmo.vim'
+  Plugin 'tomlion/vim-solidity'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
   Plugin 'ycm-core/YouCompleteMe'
