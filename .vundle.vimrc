@@ -20,6 +20,7 @@ augroup VUNDLE
   Plugin 'editorconfig/editorconfig-vim'
   Plugin 'ernstwi/vim-sticky'
   Plugin 'evidens/vim-twig'
+  Plugin 'github/copilot.vim'
   Plugin 'glench/vim-jinja2-syntax'
   Plugin 'godlygeek/tabular'
   Plugin 'groenewege/vim-less'
