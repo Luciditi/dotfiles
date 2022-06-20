@@ -59,6 +59,7 @@ antigen bundle z
 antigen bundle djui/alias-tips
 antigen bundle Valiev/almostontop 
 antigen bundle changyuheng/fz
+antigen bundle cal2195/q
 antigen bundle gerges/oh-my-zsh-jira-plus
 antigen bundle hchbaw/opp.zsh
 antigen bundle hchbaw/zce.zsh 
