@@ -56,6 +56,7 @@ antigen bundle yum
 antigen bundle z
 
 # Other ZSH plugins
+antigen bundle AlexisBRENON/oh-my-zsh-reminder
 antigen bundle djui/alias-tips
 antigen bundle Valiev/almostontop 
 antigen bundle changyuheng/fz
