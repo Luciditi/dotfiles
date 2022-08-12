@@ -1,19 +1,19 @@
-"""""""LUCIDITI .VIMRC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""LUCIDITI .VIMRC"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""VUNDLE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""VUNDLE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source $HOME/.vundle.vimrc
 
-"""""""SOURCES""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""SOURCES"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SOURCES
 
 augroup END
 
-"""""""TEMPLATE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""TEMPLATE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TEMPLATE
 
 augroup END
 
-"""""""DEBUGGING""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""DEBUGGING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup DEBUGGING
 
   " Use :call ToggleVerbose() to dump a verbose log
@@ -29,7 +29,7 @@ augroup DEBUGGING
 
 augroup END
 
-"""""""USEFUL COMMANDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""USEFUL COMMANDS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup USEFUL COMMANDS
   "  __           :  _____________________________________.
   "  ``           :  Return to previous cursor before jump.
@@ -37,18 +37,18 @@ augroup USEFUL COMMANDS
 
 augroup END
 
-"""""""NEOVIM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""NEOVIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup NEOVIM
   "CONFIGURE FOR NEOVIM
   if has('nvim')
   endif
 augroup END
 
-"""""""ABBREVIATIONS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""ABBREVIATIONS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup ABBREVIATIONS
 augroup END
 
-"""""""AUTOCOMPLETE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""AUTOCOMPLETE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup AUTOCOMPLETE
   "j/k to naviate
   "autocomplete menu
@@ -68,7 +68,7 @@ augroup AUTOCOMPLETE
   silent! set dict +=~/.vim/dictionaries/personal.dict
 augroup END
 
-"""""""BAD COMMANDS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""BAD COMMANDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup BAD COMMANDS
 augroup END
 
@@ -290,7 +290,8 @@ augroup COMMANDS
   " <Leader>+e = Wrap example code block
   au FileType markdown vmap <buffer><silent><Leader>e Sci<BS><ESC>
   " <Leader>+p = Wrap picture/image
-  au FileType markdown vmap <buffer><silent><Leader>p S]%a(<C-R>+ "TITLE")<ESC><TAB>h<TAB>i!<ESC>
+  au FileType markdown vmap
+      \ <buffer><silent><Leader>p S]%a(<C-R>+ "TITLE")<ESC><TAB>h<TAB>i!<ESC>
   " <Leader>+i = Wrap italic
   au FileType markdown vmap <buffer><silent><Leader>i S_
   " <Leader>+l = Wrap clipboard link
@@ -300,7 +301,7 @@ augroup COMMANDS
   """"" Markdown """""
 augroup END
 
-"""""""""FORMATTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""FORMATTING""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup FORMATTING
   "Cursor Position
   set ruler
@@ -391,17 +392,18 @@ augroup FORMATTING
   endif
 augroup END
 
-"""""""""FUGITIVE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""FUGITIVE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup FUGITIVE
-  no <Leader>gs :Gstatus<CR>
-  no <Leader>gd :Gdiff<CR>
-  no <Leader>gc :Gcommit<CR>
-  no <Leader>gb :Gblame<CR>
-  no <Leader>gl :Glog<CR>
+  no <Leader>gs :Git<CR>
+  no <Leader>gd :Git difftool -y<CR>
+  no <Leader>gc :Git commit<CR>
+  no <Leader>gb :Git blame<CR>
+  no <Leader>gl :Git log<CR>
+  no <Leader>gm :Git mergetool -y<CR>
   no <Leader>gp :Git push<CR>
 augroup END
 
-"""""""""HIGHLIGHTING"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""HIGHLIGHTING""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup HIGHLIGHTING
   "File Type
   filetype plugin on
@@ -461,7 +463,12 @@ augroup HIGHLIGHTING
   au BufNewFile,BufRead *.markdown,*.mdown,*.mkd,*.mkdn,*.mdwn,*.md
         \,README.txt
         \ :set filetype=markdown
-  let g:markdown_fenced_languages = ['css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html', 'typescript', 'ts=typescript', 'dart', 'go', 'python', 'rust', 'bash=sh', 'sh', 'zsh', 'php', 'vim', 'terraform', 'yaml']
+  let g:markdown_fenced_languages = [
+        \ 'css', 'erb=eruby', 'javascript', 'js=javascript',
+        \ 'json=javascript', 'ruby', 'sass', 'xml', 'html', 'typescript',
+        \ 'ts=typescript', 'dart', 'go', 'python', 'rust', 'bash=sh', 'sh',
+        \ 'zsh', 'php', 'vim', 'terraform', 'yaml'
+        \ ]
 
   "Supresss errors
   au CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -501,7 +508,7 @@ augroup HIGHLIGHTING
 
 augroup END
 
-""""""""""BINARY""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""BINARY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup BINARY
   "Editing .bin files
   au!
@@ -514,7 +521,7 @@ augroup BINARY
   au BufWritePost *.bin set nomod | endif
 augroup END
 
-"""""""""MAC VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""MAC VIM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup MAC VIM
   "Set Nerd Fonts
   if has("gui_running")
@@ -530,7 +537,7 @@ augroup MAC VIM
   au VimResized * exe "normal! \<C-w>="
 augroup END
 
-"""""""""POSITION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""POSITION""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup POSITION
   "When editing a file, always jump to the last cursor position
   au BufReadPost *
@@ -571,7 +578,7 @@ augroup POSITION
   set matchpairs+=<:>
 augroup END
 
-"""""""""QUICK EDITS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""QUICK EDITS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup QUICK EDITS
   nn <Leader>ev :vsplit $MYVIMRC<CR>
   nn <Leader>eb :vsplit ~/.bash_profile<CR>
@@ -581,7 +588,7 @@ augroup QUICK EDITS
   nn <Leader>ez :vsplit ~/.zshrc<CR>
 augroup END
 
-"""""""""SEARCH"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SEARCH
   "Ignore certain files
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
@@ -627,7 +634,7 @@ augroup SEARCH
 
 augroup END
 
-"""""""""SETTINGS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""SETTINGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SETTINGS
 
   "Set Backup Dir
@@ -667,7 +674,7 @@ augroup SETTINGS
   set hidden
 augroup END
 
-"""""""""TABULARIZE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""TABULARIZE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TABULARIZE
   " https://devhints.io/tabular
   no <Leader>t= :Tabularize /=
@@ -677,7 +684,7 @@ augroup TABULARIZE
   no <Leader>t<Bar> :Tabularize /
 augroup END
 
-"""""""""TEMPLATES""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""TEMPLATES"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TEMPLATES
 
   "For new files load a template
@@ -694,22 +701,23 @@ augroup TEMPLATES
 
 augroup END
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""PLUGIN CONFIGURATIONS""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""PLUGIN CONFIGURATIONS"""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""TEMPLATE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""TEMPLATE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TEMPLATE
 
 augroup END
 
-"""""""""AIRLINE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""AIRLINE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup AIRLINE
   "Prettify
   let g:airline_powerline_fonts = 1
   let g:airline_theme='dark'
 
   "Tabline display
+  let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#show_tabs = 1
   let g:airline#extensions#tabline#show_tab_nr = 1
   let g:airline#extensions#tabline#tab_nr_type= 1
@@ -734,9 +742,9 @@ augroup AIRLINE
 
   "Custom whitespace checking
   let g:airline#extensions#whitespace#checks =
-        \ ['indent', 'trailing', 'long']
+        \ ['indent', 'trailing']
   let g:airline#extensions#whitespace#trailing_format = 'trail[%s]'
-  let g:airline#extensions#whitespace#mixed_indent_format = 'm-indent[%s]' "XXXX
+  let g:airline#extensions#whitespace#mixed_indent_format = 'm-indent[%s]'
   let g:airline#extensions#whitespace#long_format = 'long[%s]'
 
   let g:airline#extensions#gutentags#enabled = 1
@@ -760,20 +768,20 @@ augroup AIRLINE
   let g:airline_section_z = '%3p%% %l:%c|0x%B'
 augroup END
 
-"""""""""AUTOCOMPLPOP"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""AUTOCOMPLPOP""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup AUTOCOMPLPOP
   let g:acp_behaviorKeywordLength = 3
 
 augroup END
 
-"""""""""CLAM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""CLAM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup CLAM
   "Bang your way to shell
   nn ! :Clam<space>
   vn ! :ClamVisual<space>
 augroup END
 
-"""""""DOGE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""DOGE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup DOGE
   let g:doge_php_settings = {
         \  'resolve_fqn': 1
@@ -783,7 +791,7 @@ augroup DOGE
         \}
 augroup END
 
-"""""""EASYMOTION"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""EASYMOTION""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup EASYMOTION
   "Add easymotion search
   map <Leader>m <Plug>(easymotion-sn)
@@ -814,13 +822,13 @@ augroup EASYMOTION
   let g:EasyMotion_use_smartsign_us = 1
 augroup END
 
-"""""""EDITORCONFIG"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""EDITORCONFIG""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup EDITORCONFIG
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 augroup END
 
-"""""""FZF""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""FZF"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup FZF
   "Set filename search
   nn <Leader>o :Files<CR>
@@ -835,7 +843,7 @@ augroup FZF
         \ call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 augroup END
 
-"""""""GUTENTAGS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""GUTENTAGS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup GUTENTAGS
   "Specify cache dir in vim folder
   let g:gutentags_cache_dir = '~/.vim/gutentags'
@@ -851,7 +859,7 @@ augroup GUTENTAGS
 
 augroup END
 
-"""""""HOPPING.VIM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""HOPPING.VIM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup HOPPING.VIM
   " Map to Leader+/
   nm <Space>? <Plug>(hopping-start)
@@ -866,7 +874,7 @@ augroup HOPPING.VIM
 
 augroup END
 
-"""""""INTERSTINGWORDS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""INTERSTINGWORDS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup INTERSTINGWORDS
   nn <silent> <Leader>i :call InterestingWords('n')<CR>
   nn <silent> <Leader>I :call UncolorAllWords()<CR>
@@ -875,7 +883,7 @@ augroup INTERSTINGWORDS
         \'134', '101', '211', '137', '214', '222']
 augroup END
 
-"""""""NEOCOMPLCACHE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""NEOCOMPLCACHE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup NEOCOMPLCACHE
   "Enable
   let g:neocomplcache_enable_at_startup = 1
@@ -905,7 +913,7 @@ augroup NEOCOMPLCACHE
         \'[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 augroup END
 
-"""""""NERDTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""NERDTREE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup NERDTREE
   "Give a shortcut key to NERD Tree map
   nm <Leader>O :NERDTreeToggle<CR>
@@ -929,7 +937,7 @@ augroup NERDTREE
   let NERDTreeKeepTreeInNewTab=1
 augroup END
 
-"""""""NRRWRGN""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""NRRWRGN"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup NRRWRGN
   nm <Leader>nw :NR<CR>
   vm <Leader>nw :NR<CR>
@@ -937,8 +945,8 @@ augroup NRRWRGN
 
 augroup END
 
-"""""""PHPComplete""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup PHPComplete
+"""""""PHPComplete"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup PHPComple""
   let g:phpcomplete_parse_docblock_comments = 1
 
   "let g:phpcomplete_mappings = {
@@ -953,19 +961,19 @@ augroup PHPComplete
 
 augroup END
 
-"""""""SCRATCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""SCRATCH"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SCRATCH
   let g:scratch_filetype = 'markdown'
 
 augroup END
 
-"""""""SIGNATURE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""SIGNATURE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SIGNATURE
   nm <Leader>sm :SignatureToggle<CR>
   nm <Leader>sr :SignatureRefresh<CR>
 augroup END
 
-"""""""SYNTASTIC""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""SYNTASTIC"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup SYNTASTIC
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
@@ -1015,7 +1023,7 @@ augroup SYNTASTIC
   nn <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
 augroup END
 
-"""""""TAGBAR"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""TAGBAR""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup TAGBAR
   nm <Leader>tt :TagbarToggle<CR>
 
@@ -1025,13 +1033,13 @@ augroup TAGBAR
   let g:tagbar_compact = 1
 augroup END
 
-"""""""UNDOTREE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""UNDOTREE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup UNDOTREE
   "Leader+u Sets Undotree
   nn <Leader>U :UndotreeToggle<CR>
 augroup END
 
-"""""""VIM-AUTOFORMAT"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""VIM-AUTOFORMAT""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VIM-AUTOFORMAT
   "let g:formatterpath = ['/some/path/to/a/folder']
   "let g:autoformat_verbosemode=1
@@ -1039,25 +1047,26 @@ augroup VIM-AUTOFORMAT
   let g:formatters_sh = ['shellharden', 'shfmt']
   "let g:formatdef_shfmt = '"shfmt -i ".(&expandtab ? shiftwidth() : "0")'
   let g:formatdef_shfmt = '"shfmt -i 4"'
-  let g:formatdef_shellharden = '"cat ". expand("%:p") . " | shellharden --transform '''' "'
+  let g:formatdef_shellharden =
+        \ '"cat ". expand("%:p") . " | shellharden --transform '''' "'
   let g:run_all_formatters_sh = 1
 
   nn <Leader>F :Autoformat<CR>
 augroup END
 
-"""""""VIM-STICKY"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""VIM-STICKY""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VIM-STICKY
   let g:sticky_all = ['cursorcolumn', 'cursorline', 'list']
 
 augroup END
 
-"""""""VIM-SURROUND"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""VIM-SURROUND""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VIM-SURROUND
   let b:surround_{char2nr('c')} = "```\r```"
 
 augroup END
 
-"""""""VIM-TERRAFORM""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""VIM-TERRAFORM"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VIM-TERRAFORM
   " FMT / Align TF files automatically
   let g:terraform_align=1
@@ -1066,19 +1075,19 @@ augroup VIM-TERRAFORM
 augroup END
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""HELPER FUNCTIONS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""HELPER FUNCTIONS""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup HELPER
 
-"""""""""DISPLAY INFO ON COMMAND LINE"""""""""""""""""""""""""""""""""""""""""""
+"""""""""DISPLAY INFO ON COMMAND LINE""""""""""""""""""""""""""""""""""""""""""
   function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
   endfunction
 
-"""""""""RETURNS TRUE IF PASTE MODE IS ENABLED""""""""""""""""""""""""""""""""""
+"""""""""RETURNS TRUE IF PASTE MODE IS ENABLED"""""""""""""""""""""""""""""""""
   function! HasPaste()
     if &paste
       return 'PASTE MODE  '
@@ -1086,13 +1095,13 @@ augroup HELPER
     return ''
   endfunction
 
-"""""""""DISABLES PASTE MODE WHEN LEAVING INSERT MODE"""""""""""""""""""""""""""
+"""""""""DISABLES PASTE MODE WHEN LEAVING INSERT MODE""""""""""""""""""""""""""
   au InsertLeave *
         \ if &paste == 1 |
         \     set nopaste |
         \ endif
 
-"""""""""COPY THE CURRENT TEXT SELECTION TO THE SYSTEM CLIPBOARD""""""""""""""""
+"""""""""COPY THE CURRENT TEXT SELECTION TO THE SYSTEM CLIPBOARD"""""""""""""""
   if has('gui_running')
     no <Leader>y "+y
   else
@@ -1104,7 +1113,7 @@ augroup HELPER
           \ <Bar>redraw!<Return>
   endif
 
-"""""""""TOGGLE THE DISPLAY OF SYNTASTIC'S ERROR WINDOW"""""""""""""""""""""""""
+"""""""""TOGGLE THE DISPLAY OF SYNTASTIC'S ERROR WINDOW""""""""""""""""""""""""
   function! ToggleErrors()
     let old_last_winnr = winnr('$')
     lclose
@@ -1114,7 +1123,7 @@ augroup HELPER
     endif
   endfunction
 
-"""""""""TOGGLE THE HOME POSITON""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""TOGGLE THE HOME POSITON"""""""""""""""""""""""""""""""""""""""""""""""
   "Credits to https://ddrscott.github.io/blog/2016/vim-toggle-movement/
   function! ToggleHomeZero()
     let pos = getpos('.')
@@ -1124,7 +1133,7 @@ augroup HELPER
     endif
   endfunction
 
-"""""""VISUAL SEARCH""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""VISUAL SEARCH"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   function! s:VSetSearch()
     let temp = @@
     norm! gvy
@@ -1134,7 +1143,7 @@ augroup HELPER
 
 augroup END
 
-"""""""COLORS"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""COLORS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup COLORS
   "Sample colors @ http://bytefluent.com/vivify/
   "Solarize VIM
