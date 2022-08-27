@@ -64,7 +64,7 @@ antigen bundle cal2195/q
 antigen bundle gerges/oh-my-zsh-jira-plus
 antigen bundle hchbaw/opp.zsh
 antigen bundle hchbaw/zce.zsh
-antigen bundle kutsan/zsh-system-clipboard 
+antigen bundle macunha1/zsh-terraform
 antigen bundle MichaelAquilina/zsh-auto-notify
 antigen bundle MichaelAquilina/zsh-history-filter
 antigen bundle supercrabtree/k
