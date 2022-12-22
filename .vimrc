@@ -883,6 +883,12 @@ augroup INTERSTINGWORDS
         \'134', '101', '211', '137', '214', '222']
 augroup END
 
+
+"""""""LOGVIEWER""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup LOGVIEWER
+  let g:LogViewer_Filetypes = 'log4j,syslog,log'
+augroup END
+
 """""""NEOCOMPLCACHE"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup NEOCOMPLCACHE
   "Enable
