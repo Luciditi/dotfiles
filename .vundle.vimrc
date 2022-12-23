@@ -13,6 +13,7 @@ augroup VUNDLE
   Plugin 'VundleVim/Vundle.vim'
 
   """""VIM PLUGINS""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  Plugin 'aduros/ai.vim'
   Plugin 'bling/vim-airline'
   Plugin 'chiel92/vim-autoformat'
   Plugin 'chr4/nginx.vim'
