@@ -30,6 +30,7 @@ augroup VUNDLE
   Plugin 'jelera/vim-javascript-syntax'
   if !has('nvim')
     Plugin 'joonty/vdebug'
+    Plugin 'tabnine/YouCompleteMe'
   endif
   Plugin 'junegunn/fzf.vim'
   Plugin 'kkoomen/vim-doge'
@@ -70,7 +71,6 @@ augroup VUNDLE
   Plugin 'tomlion/vim-solidity'
   Plugin 'wellle/targets.vim'
   Plugin 'wilywampa/vim-easymotion'
-  Plugin 'tabnine/YouCompleteMe'
   Plugin 'yggdroot/indentline'
   Plugin 'zphere-zsh/shell-omni-completion'
   Plugin 'https://git.drupal.org/project/vimrc.git', {'rtp': 'bundle/vim-plugin-for-drupal/'}
