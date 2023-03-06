@@ -37,6 +37,7 @@ augroup VUNDLE
   Plugin 'luciditi/vim-signature'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
+  Plugin 'madox2/vim-ai'
   Plugin 'majutsushi/tagbar'
   Plugin 'mbbill/undotree'
   Plugin 'mtth/scratch.vim'
