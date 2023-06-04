@@ -1045,6 +1045,26 @@ augroup UNDOTREE
   nn <Leader>U :UndotreeToggle<CR>
 augroup END
 
+"""""""VIM-AI""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup VIM-AI
+  " complete text on the current line or in visual selection
+  nn <leader>a :AI<CR>
+  xn <leader>a :AI<CR>
+  nn <leader>r :AIRedo<CR>
+
+  ":AI                                 complete the text on the current line
+  ":AI {prompt}                        complete the prompt
+  "<selection> :AI                     complete the selection
+  "<selection> :AI {instruction}       complete the selection using the instruction
+  "
+  "<selection>? :AIEdit                edit the current line or the selection
+  "<selection>? :AIEdit {instruction}  edit the current line or the selection using
+  "                                    the instruction
+  ":AIChat                             continue or start a new conversation.
+  "<selection>? :AIChat {instruction}? start a new conversation given the selection,
+  "                                    the instruction or both
+augroup END
+
 """""""VIM-AUTOFORMAT""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup VIM-AUTOFORMAT
   "let g:formatterpath = ['/some/path/to/a/folder']
