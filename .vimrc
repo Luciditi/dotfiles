@@ -398,9 +398,11 @@ augroup FUGITIVE
   no <Leader>gd :Git difftool -y<CR>
   no <Leader>gc :Git commit<CR>
   no <Leader>gb :Git blame<CR>
+  no <Leader>gh :Gclog<CR>
   no <Leader>gl :Git log<CR>
   no <Leader>gm :Git mergetool -y<CR>
   no <Leader>gp :Git push<CR>
+  no <Leader>gv :GBrowse<CR>
 augroup END
 
 """""""""HIGHLIGHTING""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

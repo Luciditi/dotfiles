@@ -29,6 +29,7 @@ augroup VUNDLE
   Plugin 'itchyny/vim-cursorword'
   Plugin 'jelera/vim-javascript-syntax'
   if !has('nvim')
+    Plugin 'madox2/vim-ai'
     Plugin 'joonty/vdebug'
     Plugin 'tabnine/YouCompleteMe'
   endif
@@ -37,7 +38,6 @@ augroup VUNDLE
   Plugin 'luciditi/vim-signature'
   Plugin 'leafgarland/typescript-vim'
   Plugin 'ludovicchabant/vim-gutentags'
-  Plugin 'madox2/vim-ai'
   Plugin 'majutsushi/tagbar'
   Plugin 'mbbill/undotree'
   Plugin 'mtth/scratch.vim'
@@ -64,6 +64,7 @@ augroup VUNDLE
   Plugin 'terryma/vim-expand-region'
   Plugin 'tpope/vim-repeat'
   Plugin 'tpope/vim-surround'
+  Plugin 'tpope/vim-rhubarb'
   Plugin 'vasconcelloslf/vim-interestingwords'
   Plugin 'vim-airline/vim-airline-themes'
   Plugin 'vim-php/tagbar-phpctags.vim'
