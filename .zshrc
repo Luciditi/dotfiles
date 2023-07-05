@@ -8,13 +8,28 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+#######   BREW #################################################################
+if [[ ! -x "$(command -v brew)" && -d "/home/linuxbrew/" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+#######   M1   #################################################################
+CPU=$(sysctl -n machdep.cpu.brand_string 2>&1 || true)
+if [[ $CPU =~ "M1" ]]; then
+  eval $(/opt/homebrew/bin/brew shellenv)
+fi
+
 #######   ANTIGEN   ############################################################
-# @TODO: Determine if we'll lookup source
-source /usr/local/share/antigen/antigen.zsh
+HB=$(brew config | grep HOMEBREW_PREFIX | cut -d':' -f2 | xargs)
+source $HB/share/antigen/antigen.zsh
 
 # OMZ
 # https://github.com/Luciditi/oh-my-zsh
 antigen use oh-my-zsh
+
+if [[ ! -d "$HOME/.antigen/bundles/robbyrussell/oh-my-zsh/cache/completions" ]]; then
+  mkdir -p "$HOME/.antigen/bundles/robbyrussell/oh-my-zsh/cache/completions"
+fi
 
 # PLUGINS
 # Bundles from oh-my-zsh

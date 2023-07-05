@@ -1,4 +1,9 @@
 
+#######   BREW #################################################################
+if [[ ! -x "$(command -v brew)" && -d "/home/linuxbrew/" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 #######   ALIASES   ############################################################
 source "$HOME/.sh/alias"
 

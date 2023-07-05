@@ -394,6 +394,10 @@ augroup END
 
 """""""""FUGITIVE""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup FUGITIVE
+  function! GBrowseLine()
+    exe ':'.line('.').'GBrowse'
+  endfunction
+
   no <Leader>gs :Git<CR>
   no <Leader>gd :Git difftool -y<CR>
   no <Leader>gc :Git commit<CR>
@@ -402,7 +406,7 @@ augroup FUGITIVE
   no <Leader>gl :Git log<CR>
   no <Leader>gm :Git mergetool -y<CR>
   no <Leader>gp :Git push<CR>
-  no <Leader>gv :GBrowse<CR>
+  no <Leader>gv :call GBrowseLine()<CR>
 augroup END
 
 """""""""HIGHLIGHTING""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
