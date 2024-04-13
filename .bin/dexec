@@ -78,7 +78,7 @@ while getopts 'h' FLAG; do
   esac
 done
 
-find ./* -prune -type d | while read DIR; do
+find -L ./* -prune -type d | while read DIR; do
   echo -e "${C_HIL}$DIR:${C_RES}"
   ( cd "$DIR" && eval "$@" )
   echo ""
