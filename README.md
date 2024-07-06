@@ -1,8 +1,7 @@
 # Dotfiles
 
-A collection of various config files used in conjunction with 
-[DevBook](https://jig.io/devbook), the repo is intended to be 
-symlinked into the user's `$HOME` directory.
+A collection of various config files.  The repo is intended to be symlinked 
+into the user's `$HOME` directory.
 
 ## Files
 - [`.bin`](.bin): Misc. Bash/Zsh scripts.
