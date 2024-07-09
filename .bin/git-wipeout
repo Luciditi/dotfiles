@@ -18,15 +18,15 @@ printline() {
 #Display usage information
 usage() {
   script=`basename $0`
-  echo "  Wipe out any repo changes and set to HEAD master."
+  echo "  Wipe out any repo changes and set to HEAD main."
   echo "usage: $script"
 }
 
-#Wipe out andy pending files, set to HEAD master
+#Wipe out andy pending files, set to HEAD main
 git_wipe() {
   git clean -f -d
-  git checkout master
-  git reset --hard master
+  git checkout main
+  git reset --hard main
 }
 
 ############################################################################

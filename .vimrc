@@ -399,7 +399,8 @@ augroup FUGITIVE
   endfunction
 
   no <Leader>gs :Git<CR>
-  no <Leader>gd :Git difftool -y<CR>
+  no <Leader>gd :Gdiffsplit<CR>
+  no <Leader>gda :Git difftool -y<CR>
   no <Leader>gc :Git commit<CR>
   no <Leader>gb :Git blame<CR>
   no <Leader>gh :Gclog<CR>
