@@ -33,6 +33,7 @@ augroup VUNDLE
     Plugin 'joonty/vdebug'
     Plugin 'tabnine/YouCompleteMe'
   endif
+  Plugin 'junegunn/fzf'
   Plugin 'junegunn/fzf.vim'
   Plugin 'kkoomen/vim-doge'
   Plugin 'luciditi/vim-signature'
