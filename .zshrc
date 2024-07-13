@@ -290,6 +290,18 @@ PROMPT_EOL_MARK=""
 #######   ALMOSONTOP   #########################################################
 ALMOSONTOP=false
 
+#######   ATUIN   ##############################################################
+
+# init w/disable up arrow mode
+eval "$(atuin init zsh --disable-up-arrow)"
+
+# bind to Ctrl+u
+bindkey '^u' atuin-search
+
+# bind to the up key, which depends on terminal mode
+#bindkey '^[[A' atuin-up-search
+#bindkey '^[OA' atuin-up-search
+
 #######   AUTONOTIFY   #########################################################
 # Add docker to list of ignored commands (also: disable_auto_notify /enable_auto_notify)
 AUTO_NOTIFY_IGNORE+=("bat"  "docker" "g" "vi")
