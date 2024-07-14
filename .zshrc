@@ -293,7 +293,10 @@ ALMOSONTOP=false
 #######   ATUIN   ##############################################################
 
 # init w/disable up arrow mode
-eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(atuin init zsh --disable-up-arrow  --disable-ctrl-r)"
+
+# only use local history for inline suggestions
+ZSH_AUTOSUGGEST_STRATEGY="history"
 
 # bind to Ctrl+u
 bindkey '^u' atuin-search

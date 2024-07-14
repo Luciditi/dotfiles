@@ -13,6 +13,15 @@ function docker-d-start {
   open -j -g -a Docker
 }
 
+#Show all defaults
+function macos-show-defaults {
+  for i in $(defaults domains | tr ',' '\n'); do
+    echo "********* READING DEFAULT DOMAIN $i **********";
+    echo;
+    defaults read "$i";
+  done
+}
+
 #Empty the OSX icon cache
 function macos-empty-icon-cache {
   sudo rm -rfv /Library/Caches/com.apple.iconservices.store &> /dev/null
